@@ -1,32 +1,52 @@
-
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import AdminPage from './page/AdminPage';
-import HomePage from './page/HomePage';
-import NotFoundPage from './page/NotFoundPage';
-import MainLayout from './layout/MainLayout';
-import ProfilePage from './page/ProfilePage';
+import React from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import HomeRoutes from "./route/HomePageRoutes";
+import {ThemeOptions} from "@material-ui/core/styles";
 
 function App() {
-  return (
-    <Router>
-      <MainLayout>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/admin">
-            <AdminPage />
-          </Route>
-          <Route path="/profile">
-            <ProfilePage />
-          </Route>
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
-        </Switch>
-      </MainLayout>
-    </Router>
-  );
+
+    // A useful theme editor can be found here: https://bareynol.github.io/mui-theme-creator/#
+    // For theming, change colors and parameters here.
+    const darkThemeOptions: ThemeOptions = {
+        palette: {
+            type: 'dark',
+            primary: {
+                main: '#12151a',
+            },
+            secondary: {
+                main: '#0FD296',
+            },
+        },
+    };
+
+    const lightThemeOptions: ThemeOptions = {
+        palette: {
+            type: 'light',
+            primary: {
+                main: '#12151a',
+            },
+            secondary: {
+                main: '#0FD296',
+            },
+        },
+    };
+
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    const theme = React.useMemo(
+        () =>
+            createMuiTheme(prefersDarkMode ? darkThemeOptions : lightThemeOptions),
+        [prefersDarkMode],
+    );
+
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <HomeRoutes/>
+        </ThemeProvider>
+    );
 }
 
 export default App;
