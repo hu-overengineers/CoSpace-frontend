@@ -7,7 +7,7 @@ import {ThemeOptions} from "@material-ui/core/styles";
 
 function App() {
 
-    const prefersDarkMode = true//useMediaQuery('(prefers-color-scheme: dark)');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = React.useMemo(
         () =>
