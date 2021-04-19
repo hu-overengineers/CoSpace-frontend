@@ -2,8 +2,7 @@ import React from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import HomeRoutes from "./route/HomePageRoutes";
-import {ThemeOptions} from "@material-ui/core/styles";
+import MainRoutes from "./route/MainRoutes";
 
 function App() {
 
@@ -50,7 +49,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <HomeRoutes/>
+            <MainRoutes/>
         </ThemeProvider>
     );
 }
