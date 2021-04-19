@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
             },
 
         },
+
     },
     search: {
         flexGrow:1,
@@ -79,9 +80,10 @@ export default function PrimaryAppBar() {
         <div className={classes.grow}>
             <AppBar position="fixed" variant="outlined" className={classes.appBar}>
                 <Toolbar>
-                    <img src={logo} alt="CoSpace" className={classes.logo} />
+                    <img src={logo} alt="CoSpace" className={classes.logo} color={'#00e3aa'} />
                     <Typography
                         variant="h6"
+                        style={{color:'#00e3aa', fontWeight:'bold'}}
                         className={classes.title}
                         onClick={() => history.push("/")}
                     >
