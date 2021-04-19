@@ -5,7 +5,7 @@ import AdminPage from "../page/AdminPage";
 import ProfilePage from "../page/ProfilePage";
 import NotFoundPage from "../page/NotFoundPage";
 
-function HomePageRoutes() {
+function MainRoutes() {
 
     return (
         <Router>
@@ -29,4 +29,4 @@ function HomePageRoutes() {
     );
 }
 
-export default HomePageRoutes;
+export default MainRoutes;
