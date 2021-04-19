@@ -14,13 +14,28 @@ function App() {
                 // A useful theme editor can be found here: https://bareynol.github.io/mui-theme-creator/#
                 // For theming, change colors and parameters here.
                 {
+                    overrides: {
+                        MuiAppBar: {
+                            colorPrimary: {
+                                backgroundColor: "#171c23",
+                                color: "#ffffff"
+                            },
+                        }
+                    },
                     palette: {
                         type: 'dark',
                         primary: {
-                            main: '#12151a',
+                            main: '#00e3aa',
                         },
                         secondary: {
-                            main: '#0FD296',
+                            main: '#ffffff',
+                        },
+                        background: {
+                            default: '#12161b',
+                            paper: '#1a1f26',
+                        },
+                        typography: {
+                            fontFamily: ['Inter', 'Roboto', 'Arial', 'sans-serif'],
                         },
                     },
                 } :
