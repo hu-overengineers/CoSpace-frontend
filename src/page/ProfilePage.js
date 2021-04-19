@@ -1,8 +1,13 @@
-import SignUp from "../component/SignUp";
-import SignIn from "../component/SignIn";
+import {Typography} from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+
 
 export default function ProfilePage() {
     return (
-        <SignUp/>
+        <Container>
+            <Typography>
+                Profile page.
+            </Typography>
+        </Container>
     );
 }

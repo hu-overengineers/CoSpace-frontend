@@ -94,7 +94,8 @@ export default function PrimaryAppBar() {
                     </div>
 
                     <IconButton
-                        onClick={() => history.push("/profile")}
+                        // TODO: Add logic to go SignInPage.
+                        onClick={() => history.push("/sign-up")}
                     >
                         <AccountCircle/>
                     </IconButton>

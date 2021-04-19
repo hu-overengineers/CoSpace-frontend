@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Copyright from "./Copyright";
+import Copyright from "../component/Copyright";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignInPage() {
   const classes = useStyles();
 
   return (
@@ -86,7 +86,7 @@ export default function SignIn() {
               <Link href="#" variant="body2"> Forgot password? </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2"> {"Don't have an account? Sign Up"} </Link>
+              <Link href="#" variant="body2"> {"Don't have an account? Sign up."} </Link>
             </Grid>
           </Grid>
         </form>
