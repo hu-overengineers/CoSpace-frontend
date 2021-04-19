@@ -52,7 +52,7 @@ export default function SignInPage() {
             required
             fullWidth
             id="email"
-            label="Email Address or Username"
+            label="Username or email address"
             name="email"
             autoComplete="email"
             autoFocus
@@ -83,10 +83,10 @@ export default function SignInPage() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2"> Forgot password? </Link>
+              <Link href="/password-reset" variant="body2"> Forgot password? </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2"> {"Don't have an account? Sign up."} </Link>
+              <Link href="/sign-up" variant="body2"> {"Don't have an account? Sign up."} </Link>
             </Grid>
           </Grid>
         </form>

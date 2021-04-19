@@ -56,7 +56,7 @@ export default function SignUpPage() {
                 required
                 fullWidth
                 id="uname"
-                label="User Name"
+                label="Username"
                 name="uname"
                 autoComplete="username"
               />
@@ -67,7 +67,7 @@ export default function SignUpPage() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Email address"
                 name="email"
                 autoComplete="email"
               />
@@ -84,12 +84,6 @@ export default function SignUpPage() {
                 autoComplete="current-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="somecheckbox" color="primary" />}
-                label="Some checkbox"
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -102,8 +96,8 @@ export default function SignUpPage() {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
+              <Link href="/sign-in" variant="body2">
+                Already have an account? Sign in.
               </Link>
             </Grid>
           </Grid>
