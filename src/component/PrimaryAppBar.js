@@ -15,26 +15,30 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     title: {
-        flexGrow: 1,
+        flexGrow: 0,
         title: {
             display: 'none',
             [theme.breakpoints.up('sm')]: {
                 display: 'block',
+                marginRight:'none'
             },
         },
     },
     search: {
+        flexGrow:1,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.text.primary, 0.05),
+        backgroundColor: fade(theme.palette.common.white, 0.15),
         '&:hover': {
-            backgroundColor: fade(theme.palette.text.primary, 0.20),
+            backgroundColor: fade(theme.palette.common.white, 0.25),
         },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
+        //marginRight: theme.spacing(20),
+        //marginLeft: theme.spacing(20),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: '15%',
+            marginRight: '15%',
+            //marginRight: theme.spacing(20),
             width: 'auto',
         },
     },
