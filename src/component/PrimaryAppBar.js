@@ -8,6 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {useHistory} from 'react-router-dom';
 import {InputBase} from "@material-ui/core";
+import logo from "../image/logo.png"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
             [theme.breakpoints.up('sm')]: {
                 display: 'block',
-                marginRight:'none'
+                marginRight:'none',
             },
+
         },
     },
     search: {
@@ -64,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
+    logo: {
+        maxWidth: '50px',
+    },
 }));
 
 export default function PrimaryAppBar() {
@@ -74,7 +79,7 @@ export default function PrimaryAppBar() {
         <div className={classes.grow}>
             <AppBar position="fixed" variant="outlined" className={classes.appBar}>
                 <Toolbar>
-
+                    <img src={logo} alt="CoSpace" className={classes.logo} />
                     <Typography
                         variant="h6"
                         className={classes.title}
