@@ -1,20 +1,30 @@
 import React from 'react';
 import PrimaryAppBar from "../component/PrimaryAppBar";
+import {Container} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 
-export default function MainLayout({ children }) {
+const useStyles = makeStyles((theme) => ({
+    // Load app bar information from the theme
+    toolbar: theme.mixins.toolbar,
+}));
 
-  return (
-    <div>
+export default function MainLayout({children}) {
+    const classes = useStyles();
 
-      <PrimaryAppBar/>
-      
-      {/* side drawer */}
-      {/* <div>side drawer</div> */}
+    return (
+        <div>
 
-      {/* main content */}
-      <div>
-        { children }
-      </div>
-    </div>
-  )
+            <PrimaryAppBar/>
+
+            {/* side drawer */}
+            {/* <div>side drawer</div> */}
+
+            {/* main content */}
+            <div>
+                {/* Shift content by appbar width */}
+                <div className={classes.toolbar}/>
+                {children}
+            </div>
+        </div>
+    )
 }
