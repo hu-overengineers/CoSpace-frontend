@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow:1,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        backgroundColor: fade(theme.palette.text.primary, 0.05),
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
