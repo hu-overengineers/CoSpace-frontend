@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Container,
+    Container, Divider,
     List,
     ListItem,
     ListItemIcon,
@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import ForumIcon from '@material-ui/icons/Forum';
 import {makeStyles} from "@material-ui/core/styles";
 import {PostFeedItem} from "../component/Post";
+import Box from "@material-ui/core/Box";
 
 
 function ClubListItem(name) {
@@ -32,6 +33,18 @@ export default function HomePage() {
         root: {
             marginTop: "24px" // I suppose this should not be in pixels
         },
+        divider: {
+            marginTop: "8px",
+            marginBottom: "8px"
+        },
+        feedItem: {
+            marginBottom: "12px",
+            marginTop: "12px",
+        },
+        sectionTitle: {
+            marginLeft: "12px",
+        },
+        feedTitle: {}
     });
 
     const classes = useStyles();
@@ -55,30 +68,29 @@ export default function HomePage() {
         <Grid container className={classes.root}>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
                 <Container>
+                    {/* TODO: Refactor this into a Component named something like "ClubTree" */}
                     <Paper variant="outlined">
-                        <List
-                            subheader={
-                                <ListSubheader component="div" id="nested-list-subheader">
-                                    Club and Sub-clubs
-                                </ListSubheader>
-                            }>
+                        <List>
+                            <Typography variant="h6" className={classes.sectionTitle}>
+                                Clubs and Sub-clubs
+                            </Typography>
+                            <Divider className={classes.divider}/>
                             {clubs}
                         </List>
                     </Paper>
                 </Container>
             </Grid>
-            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto',}}>
+            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Container mx="auto">
-                    <List
-                        subheader={
-                            <ListSubheader component="div" id="nested-list-subheader">
-                                Feed
-                            </ListSubheader>
-                        }>
+                    <List>
+                        <Typography variant="h4" className={classes.feedTitle}>
+                            Title
+                        </Typography>
+                        <Divider className={classes.divider}/>
                         {posts.map((post, index) => (
-                            <Container className={classes.root}>
+                            <Box className={classes.feedItem}>
                                 {post}
-                            </Container>
+                            </Box>
                         ))}
                     </List>
                 </Container>
@@ -86,31 +98,40 @@ export default function HomePage() {
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Container mx="auto">
                     <List>
+                        {/* TODO: Refactor this into a Component named something like "AboutClub" */}
                         <Paper variant="outlined">
-                            <List
-                                subheader={
-                                    <ListSubheader component="div" id="nested-list-subheader">
-                                        Club Info
-                                    </ListSubheader>
-                                }>
+                            <List>
+                                <Typography variant="h6" className={classes.sectionTitle}>
+                                    About
+                                </Typography>
+                                <Divider className={classes.divider}/>
+                                <Typography className={classes.sectionTitle}>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </Typography>
                             </List>
                         </Paper>
+                        {/* TODO: Refactor this into a Component named something like "EventContainer" */}
                         <Paper variant="outlined" className={classes.root}>
-                            <List
-                                subheader={
-                                    <ListSubheader component="div" id="nested-list-subheader">
-                                        Events
-                                    </ListSubheader>
-                                }>
+                            <List>
+                                <Typography variant="h6" className={classes.sectionTitle}>
+                                    Events
+                                </Typography>
+                                <Divider className={classes.divider}/>
+                                <Typography className={classes.sectionTitle}>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </Typography>
                             </List>
                         </Paper>
+                        {/* TODO: Refactor this into a Component named something like "ModeratorNotesSection" */}
                         <Paper variant="outlined" className={classes.root}>
-                            <List
-                                subheader={
-                                    <ListSubheader component="div" id="nested-list-subheader">
-                                        New clubs
-                                    </ListSubheader>
-                                }>
+                            <List>
+                                <Typography variant="h6" className={classes.sectionTitle}>
+                                    Rules and considerations
+                                </Typography>
+                                <Divider className={classes.divider}/>
+                                <Typography className={classes.sectionTitle}>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                </Typography>
                             </List>
                         </Paper>
                     </List>
