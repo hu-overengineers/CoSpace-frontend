@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.text.primary, 0.05),
         '&:hover': {
-            backgroundColor: fade(theme.palette.text.primary, 0.05),
+            backgroundColor: fade(theme.palette.text.primary, 0.20),
         },
         //marginRight: theme.spacing(20),
         //marginLeft: theme.spacing(20),
