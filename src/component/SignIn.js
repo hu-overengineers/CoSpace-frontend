@@ -41,12 +41,10 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
+
+        <Avatar className={classes.avatar}> <LockOutlinedIcon /> </Avatar>
+        <Typography component="h1" variant="h5"> Sign in </Typography>
+
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
@@ -54,7 +52,7 @@ export default function SignIn() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="Email Address or Username"
             name="email"
             autoComplete="email"
             autoFocus
@@ -85,14 +83,10 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <Link href="#" variant="body2"> Forgot password? </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <Link href="#" variant="body2"> {"Don't have an account? Sign Up"} </Link>
             </Grid>
           </Grid>
         </form>
