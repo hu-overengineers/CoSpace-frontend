@@ -1,7 +1,8 @@
-import React from "react";
+import SignUp from "../component/SignUp";
+import SignIn from "../component/SignIn";
 
 export default function ProfilePage() {
     return (
-        <div>Profile Page</div>
+        <SignUp/>
     );
 }
