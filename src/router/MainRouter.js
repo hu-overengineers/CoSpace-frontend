@@ -4,29 +4,34 @@ import HomePage from "../page/HomePage";
 import AdminPage from "../page/AdminPage";
 import ProfilePage from "../page/ProfilePage";
 import NotFoundPage from "../page/NotFoundPage";
+import SignUpPage from "../page/SignUpPage";
+import SignInPage from "../page/SignInPage";
 
-function MainRoutes() {
-
+export default function MainRouter() {
     return (
         <Router>
             <MainLayout>
                 <Switch>
                     <Route exact path="/">
-                        <HomePage />
+                        <HomePage/>
                     </Route>
                     <Route path="/admin">
-                        <AdminPage />
+                        <AdminPage/>
                     </Route>
                     <Route path="/profile">
-                        <ProfilePage />
+                        <ProfilePage/>
+                    </Route>
+                    <Route path="/sign-up">
+                        <SignUpPage/>
+                    </Route>
+                    <Route path="/sign-in">
+                        <SignInPage/>
                     </Route>
                     <Route path="*">
-                        <NotFoundPage />
+                        <NotFoundPage/>
                     </Route>
                 </Switch>
             </MainLayout>
         </Router>
     );
 }
-
-export default MainRoutes;
