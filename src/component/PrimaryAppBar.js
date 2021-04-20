@@ -8,8 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {useHistory} from 'react-router-dom';
 import {InputBase} from "@material-ui/core";
-import logo from "../image/logo.png"
-
+import logo from '../resource/logo.png';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
