@@ -98,13 +98,15 @@ export default function HomePage() {
 
     return (
         <Grid container className={classes.gridContainer}>
-            <Grid item xs={3} className={classes.gridItem}>
+            <Grid item xs={2} className={classes.gridItem}>
                 <Container className={classes.gridColumnContainer}>
                     <ClubTree
                         clubs={clubs}/>
                 </Container>
             </Grid>
-            <Grid item xs={6} className={classes.gridItem}>
+            <Grid item xs={2} className={classes.gridItem}></Grid>
+
+            <Grid item xs={4} className={classes.gridItem}>
                 <Container className={classes.gridColumnContainer}>
                     <Box>
                         <Box display="flex">
