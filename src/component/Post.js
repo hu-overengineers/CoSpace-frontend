@@ -32,9 +32,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export function PostFeedItem({title, body}) {
+export function PostFeedItem({props}) {
     const classes = useStyles();
-
 
     return (
         <Card variant="outlined" className={classes.root}>
@@ -49,13 +48,16 @@ export function PostFeedItem({title, body}) {
                         <MoreVertIcon/>
                     </IconButton>
                 }
-                title={title}
-                subheader="September 14, 2016"
+                title={props.author}
+                subheader={props.time}
             />
 
             <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {props.title}
+                </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {body}
+                    {props.body}
                 </Typography>
             </CardContent>
 
@@ -66,7 +68,6 @@ export function PostFeedItem({title, body}) {
                 <IconButton aria-label="share">
                     <ShareIcon/>
                 </IconButton>
-
             </CardActions>
 
         </Card>
