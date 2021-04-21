@@ -28,7 +28,8 @@ function App() {
                             main: '#00e3aa',
                         },
                         secondary: {
-                            main: '#ffffff',
+                            //main: '#ffffff',
+                            main: '#00e3aa',
                         },
                         background: {
                             default: '#12161b',
@@ -43,7 +44,7 @@ function App() {
                     overrides: {
                         MuiAppBar: {
                             colorPrimary: {
-                                backgroundColor: "#fff",
+                                backgroundColor: "#ffffff",
                                 color: "#12151a"
                             },
                         }
@@ -51,10 +52,18 @@ function App() {
                     palette: {
                         type: 'light',
                         primary: {
-                            main: '#12151a',
+                            main: '#00e3aa',
                         },
                         secondary: {
-                            main: '#0FD296',
+                            //main: '#ffffff',
+                            main: '#00e3aa',
+                        },
+                        background: {
+                            default: '#fafafa',
+                            paper: '#ffffff',
+                        },
+                        typography: {
+                            fontFamily: ['Inter', 'Roboto', 'Arial', 'sans-serif'],
                         },
                     },
                 }),
