@@ -97,72 +97,78 @@ export default function HomePage() {
     }
 
     return (
-        <Grid container className={classes.gridContainer}>
-            <Grid item xs={2} className={classes.gridItem}>
-                <Container className={classes.gridColumnContainer}>
-                    <ClubTree
-                        clubs={clubs}/>
-                </Container>
-            </Grid>
-            <Grid item xs={2} className={classes.gridItem}></Grid>
+        
+        <Container>
+            <Grid container className={classes.gridContainer}>
+                
+                <Grid item xs={3} className={classes.gridItem}>
+                    <Container className={classes.gridColumnContainer}>
+                        <ClubTree
+                            clubs={clubs}/>
+                    </Container>
+                </Grid>
+                
 
-            <Grid item xs={4} className={classes.gridItem}>
-                <Container className={classes.gridColumnContainer}>
-                    <Box>
-                        <Box display="flex">
-                            <ToggleButtonGroup
-                                className={classes.sortingFeedToggleGroup}
-                                value={sortingOrder}
-                                exclusive
-                                onChange={handleSortingOrder}
-                                aria-label="text alignment">
-                                <ToggleButton value="hot" aria-label="left aligned">
-                                    <Whatshot/>
-                                </ToggleButton>
-                                <ToggleButton value="new" aria-label="centered">
-                                    <NewReleases/>
-                                </ToggleButton>
-                                <ToggleButton value="top" aria-label="right aligned">
-                                    <TrendingUp/>
-                                </ToggleButton>
-                            </ToggleButtonGroup>
-                            <Button size="medium"
-                                    variant="contained"
-                                    color="primary"
-                                    startIcon={<Edit/>}
-                                    onClick={() => {
-                                        // TODO.
-                                    }}
-                                    disableElevation>CREATE POST</Button>
+                <Grid item xs={5} className={classes.gridItem}>
+                    <Container className={classes.gridColumnContainer}>
+                        <Box>
+                            <Box display="flex">
+                                <ToggleButtonGroup
+                                    className={classes.sortingFeedToggleGroup}
+                                    value={sortingOrder}
+                                    exclusive
+                                    onChange={handleSortingOrder}
+                                    aria-label="text alignment">
+                                    <ToggleButton value="hot" aria-label="left aligned">
+                                        <Whatshot/>
+                                    </ToggleButton>
+                                    <ToggleButton value="new" aria-label="centered">
+                                        <NewReleases/>
+                                    </ToggleButton>
+                                    <ToggleButton value="top" aria-label="right aligned">
+                                        <TrendingUp/>
+                                    </ToggleButton>
+                                </ToggleButtonGroup>
+                                <Button size="medium"
+                                        variant="contained"
+                                        color="primary"
+                                        startIcon={<Edit/>}
+                                        onClick={() => {
+                                            // TODO.
+                                        }}
+                                        disableElevation>CREATE POST</Button>
+                            </Box>
+                            <Divider className={classes.divider}/>
+                            <List>
+                                {posts.map((post, index) => (
+                                    <Box className={classes.feedItem} key={post.uid}>
+                                        {<PostFeedItem props={post}/>}
+                                    </Box>
+                                ))}
+                            </List>
                         </Box>
-                        <Divider className={classes.divider}/>
-                        <List>
-                            {posts.map((post, index) => (
-                                <Box className={classes.feedItem} key={post.uid}>
-                                    {<PostFeedItem props={post}/>}
-                                </Box>
-                            ))}
-                        </List>
-                    </Box>
-                </Container>
+                    </Container>
+                </Grid>
+                <Grid item xs={4} className={classes.gridItem}>
+                    <Container className={classes.gridColumnContainer}>
+                        <Box>
+                            <Box className={classes.sectionBox}>
+                                <AboutClub clubname={"ADHD"} description={"A place where people with ADHD and their loved ones can interact with each other exchanging stories, struggles, and non-medication strategies. Weekly threads to plan and notice the positive in our lives. Over a million users here say they 'feel at home' and 'finally found a place where people understand them'."}/>
+                            </Box>
+                            <Box className={classes.sectionBox}>
+                                <EventContainer
+                                    events={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                            </Box>
+                            <Box className={classes.sectionBox}>
+                                <ModeratorNotesSection
+                                    notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                            </Box>
+                        </Box>
+                    </Container>
+                </Grid>
             </Grid>
-            <Grid item xs={3} className={classes.gridItem}>
-                <Container className={classes.gridColumnContainer}>
-                    <Box>
-                        <Box className={classes.sectionBox}>
-                            <AboutClub clubname={"ADHD"} description={"A place where people with ADHD and their loved ones can interact with each other exchanging stories, struggles, and non-medication strategies. Weekly threads to plan and notice the positive in our lives. Over a million users here say they 'feel at home' and 'finally found a place where people understand them'."}/>
-                        </Box>
-                        <Box className={classes.sectionBox}>
-                            <EventContainer
-                                events={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
-                        </Box>
-                        <Box className={classes.sectionBox}>
-                            <ModeratorNotesSection
-                                notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
-                        </Box>
-                    </Box>
-                </Container>
-            </Grid>
-        </Grid>
+        </Container>
+
+
     )
 }
