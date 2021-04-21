@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, Divider, List, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
-import {PostFeedItem} from "../component/Post";
+import {PostFeedItem} from "../component/PostFeedItem";
 import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
 import AboutClub from '../component/AboutClub';
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
 export default function HomePage() {
 
     const classes = useStyles();
@@ -80,9 +81,14 @@ export default function HomePage() {
     for (let i = 0; i < 100; i++) {
         posts.push({
             title: "This is a very entertaining post",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula," +
-                " ipsum eget dictum bibendum, quam sem varius justo, id maximus quam neque vitae arcu." +
-                " Phasellus id tincidunt felis. ",
+            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam commodo commodo ante," +
+                " a malesuada nunc bibendum vitae. Sed non nulla viverra, aliquet nibh a, ultricies lorem." +
+                " Praesent quis mattis odio, eu egestas urna. Nunc porta felis orci, non ornare est aliquet aliquet." +
+                " Suspendisse consectetur nulla sit amet ligula gravida, et vestibulum dui suscipit. Aliquam ac metus" +
+                " venenatis, maximus nisi vel, dapibus nisi. Vestibulum laoreet hendrerit urna, et ultrices nunc laoreet" +
+                " ac. Nullam vestibulum turpis ac tellus sollicitudin vulputate. Nulla placerat non orci at tempor. In" +
+                " iaculis sodales mi, a ultricies eros gravida in. Donec et risus sit amet dui dignissim efficitur sit" +
+                " amet non ipsum. Nulla vitae arcu sem. Vivamus sed bibendum augue.",
             time: "September 14, 2016",
             author: "jane_doe",
             uid: `${i}`
@@ -109,8 +115,7 @@ export default function HomePage() {
                                 value={sortingOrder}
                                 exclusive
                                 onChange={handleSortingOrder}
-                                aria-label="text alignment"
-                            >
+                                aria-label="text alignment">
                                 <ToggleButton value="hot" aria-label="left aligned">
                                     <Whatshot/>
                                 </ToggleButton>
