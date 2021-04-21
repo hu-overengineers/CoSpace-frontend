@@ -1,5 +1,7 @@
 import {Divider, List, Paper, Typography} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -7,10 +9,18 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
-    root: {
+    sectionTitle: {
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
     },
+    sectionBody: {
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+    },
+    sectionRoot: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    }
 }));
 
 
@@ -19,15 +29,15 @@ export default function AboutClub({description}) {
 
     return (
         <Paper variant="outlined">
-            <List>
-                <Typography variant="h6" className={classes.root}>
+            <Box className={classes.sectionRoot}>
+                <Typography variant="h6" className={classes.sectionTitle}>
                     About
                 </Typography>
                 <Divider className={classes.divider}/>
-                <Typography className={classes.root}>
+                <Typography className={classes.sectionBody}>
                     {description}
                 </Typography>
-            </List>
+            </Box>
         </Paper>
     );
 }

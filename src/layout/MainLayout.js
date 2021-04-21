@@ -1,6 +1,7 @@
 import React from 'react';
 import PrimaryAppBar from "../component/PrimaryAppBar";
 import {makeStyles} from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
     // Load app bar information from the theme
@@ -11,19 +12,18 @@ export default function MainLayout({children}) {
     const classes = useStyles();
 
     return (
-        <div>
-
+        <Box>
             <PrimaryAppBar/>
 
             {/* side drawer */}
             {/* <div>side drawer</div> */}
 
             {/* main content */}
-            <div>
+            <Box>
                 {/* Shift content by appbar width */}
                 <div className={classes.toolbar}/>
                 {children}
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
