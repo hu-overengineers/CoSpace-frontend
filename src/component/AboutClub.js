@@ -55,18 +55,47 @@ export default function AboutClub({clubname, description}) {
                 </Typography>
                 <Divider className={classes.divider}/>
                 
-                <Grid container >
+                <Grid container className={classes.divider} justify="center">
                         <Grid key={1} item>
-                            <Container><CakeIcon/> </Container>
+
+                            <Container> 
+                                <Typography  variant="h6" >
+                                    {"1.2m"}
+                                </Typography>
+                                <Typography  variant="body1" >
+                                    {"people with ADHD"}
+                                </Typography>
+                            </Container>
                             
+
                         </Grid>
                         <Grid key={2} item>
-                            <Typography  variant="body1" >
-                                {"Created Oct 28, 2008 "}
-                            </Typography>
-                            
+                            <Container>
+                                <Typography  variant="h6" >
+                                    {"2.5k"}
+                                </Typography>
+                                <Typography  variant="body1" >
+                                    {"looking right now"}
+                                </Typography>
+                            </Container>
+
                         </Grid>
+                </Grid>
+
+                <Divider className={classes.divider}/>
+                    <Grid container>
+                            <Grid key={1} item>
+                                <Container><CakeIcon/> </Container>
+                            </Grid>
+                            <Grid key={2} item>
+                                <Typography  variant="body1" >
+                                    {"Created Oct 28, 2008 "}
+                                </Typography>
+                            </Grid>
                     </Grid>
+
+                
+               
 
 
             </Box>
