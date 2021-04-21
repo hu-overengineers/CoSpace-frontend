@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     large: {
         width: theme.spacing(7),
         height: theme.spacing(7),
-      },
+    },
 }));
 
 
@@ -36,66 +36,63 @@ export default function AboutClub({clubname, description}) {
         <Paper variant="outlined">
             <Box className={classes.sectionRoot}>
 
-                    <Grid container >
-                        <Grid key={1} item>
-                            <Container><Avatar className={classes.large}>AD</Avatar> </Container>
-                        </Grid>
-                        <Grid key={2} item>
-                            <Typography  variant="h6" >
-                                {clubname}
-                            </Typography>
-                            
-                        </Grid>
+                <Grid container>
+                    <Grid key={1} item>
+                        <Container><Avatar className={classes.large}>AD</Avatar> </Container>
                     </Grid>
-                    
+                    <Grid key={2} item>
+                        <Typography variant="h6">
+                            {clubname}
+                        </Typography>
+
+                    </Grid>
+                </Grid>
+
 
                 <Divider className={classes.divider}/>
                 <Typography className={classes.sectionBody}>
                     {description}
                 </Typography>
                 <Divider className={classes.divider}/>
-                
+
                 <Grid container className={classes.divider} justify="center">
-                        <Grid key={1} item>
+                    <Grid key={1} item>
 
-                            <Container> 
-                                <Typography  variant="h6" >
-                                    {"1.2m"}
-                                </Typography>
-                                <Typography  variant="body1" >
-                                    {"people with ADHD"}
-                                </Typography>
-                            </Container>
-                            
+                        <Container>
+                            <Typography variant="h6">
+                                {"1.2m"}
+                            </Typography>
+                            <Typography variant="body1">
+                                {"people with ADHD"}
+                            </Typography>
+                        </Container>
 
-                        </Grid>
-                        <Grid key={2} item>
-                            <Container>
-                                <Typography  variant="h6" >
-                                    {"2.5k"}
-                                </Typography>
-                                <Typography  variant="body1" >
-                                    {"looking right now"}
-                                </Typography>
-                            </Container>
 
-                        </Grid>
+                    </Grid>
+                    <Grid key={2} item>
+                        <Container>
+                            <Typography variant="h6">
+                                {"2.5k"}
+                            </Typography>
+                            <Typography variant="body1">
+                                {"looking right now"}
+                            </Typography>
+                        </Container>
+
+                    </Grid>
                 </Grid>
 
                 <Divider className={classes.divider}/>
-                    <Grid container>
-                            <Grid key={1} item>
-                                <Container><CakeIcon/> </Container>
-                            </Grid>
-                            <Grid key={2} item>
-                                <Typography  variant="body1" >
-                                    {"Created Oct 28, 2008 "}
-                                </Typography>
-                            </Grid>
+                <Grid container>
+                    <Grid key={1} item>
+                        <Container><CakeIcon/> </Container>
                     </Grid>
-
-                
-               
+                    <Grid key={2} item>
+                        <Typography variant="body1">
+                            {"Created Oct 28, 2008 "}
+                        </Typography>
+                    </Grid>
+                </Grid>
 
 
             </Box>

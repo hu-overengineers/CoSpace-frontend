@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Divider, List, Typography} from '@material-ui/core';
+import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import {PostFeedItem} from "../component/PostFeedItem";
@@ -9,8 +9,10 @@ import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
 import ModeratorNotesSection from '../component/ModeratorNotesSection';
 import Button from "@material-ui/core/Button";
-import {Edit, NewReleases, TrendingUp, Whatshot} from "@material-ui/icons";
+import {Casino, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import Section from "../component/Section";
+import CreatePost from "../component/CreatePost";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     sortingFeedToggleGroup: {
         flexGrow: 1,
         marginRight: theme.spacing(2)
+    },
+    list: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     }
 }));
 
@@ -78,9 +84,10 @@ export default function HomePage() {
         })
     }
 
-    const posts = [];
+    const init_posts = [];
+
     for (let i = 0; i < 100; i++) {
-        posts.push({
+        init_posts.push({
             title: "This is a very entertaining post",
             body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam commodo commodo ante," +
                 " a malesuada nunc bibendum vitae. Sed non nulla viverra, aliquet nibh a, ultricies lorem." +
@@ -96,20 +103,57 @@ export default function HomePage() {
         })
     }
 
+    const [posts, setPosts] = React.useState(init_posts);
+
+
+    const [postDialogOpen, setPostDialogOpen] = React.useState(false);
+    const handleDialogOpen = () => {
+        setPostDialogOpen(true);
+    };
+
+    const handleNewPost = (newPost) => {
+        //posts.unshift(newPost);
+        newPost.uid = posts.length;
+        setPosts(posts => [newPost, ...posts]);
+    }
+
     return (
-        
-        <Container>
-            <Grid container className={classes.gridContainer}>
-                
+        <div>
+            <Grid container spacing={1} className={classes.gridContainer}>
+
                 <Grid item xs={3} className={classes.gridItem}>
                     <Container className={classes.gridColumnContainer}>
-                        <ClubTree
-                            clubs={clubs}/>
+                        <Box className={classes.sectionBox}>
+                            <Section title={"Feeds"} content={
+                                <List className={classes.list}>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <TrendingUp/>
+                                        </ListItemIcon>
+                                        <ListItemText>
+                                            Popular
+                                        </ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <Casino/>
+                                        </ListItemIcon>
+                                        <ListItemText>
+                                            Random Gems
+                                        </ListItemText>
+                                    </ListItem>
+                                </List>
+                            }/>
+                        </Box>
+                        <Box className={classes.sectionBox}>
+                            <ClubTree
+                                clubs={clubs}/>
+                        </Box>
                     </Container>
                 </Grid>
-                
 
-                <Grid item xs={5} className={classes.gridItem}>
+
+                <Grid item xs={6} className={classes.gridItem}>
                     <Container className={classes.gridColumnContainer}>
                         <Box>
                             <Box display="flex">
@@ -123,7 +167,7 @@ export default function HomePage() {
                                         <Whatshot/>
                                     </ToggleButton>
                                     <ToggleButton value="new" aria-label="centered">
-                                        <NewReleases/>
+                                        <FiberNew/>
                                     </ToggleButton>
                                     <ToggleButton value="top" aria-label="right aligned">
                                         <TrendingUp/>
@@ -134,7 +178,7 @@ export default function HomePage() {
                                         color="primary"
                                         startIcon={<Edit/>}
                                         onClick={() => {
-                                            // TODO.
+                                            handleDialogOpen()
                                         }}
                                         disableElevation>CREATE POST</Button>
                             </Box>
@@ -149,11 +193,12 @@ export default function HomePage() {
                         </Box>
                     </Container>
                 </Grid>
-                <Grid item xs={4} className={classes.gridItem}>
+                <Grid item xs={3} className={classes.gridItem}>
                     <Container className={classes.gridColumnContainer}>
                         <Box>
                             <Box className={classes.sectionBox}>
-                                <AboutClub clubname={"ADHD"} description={"A place where people with ADHD and their loved ones can interact with each other exchanging stories, struggles, and non-medication strategies. Weekly threads to plan and notice the positive in our lives. Over a million users here say they 'feel at home' and 'finally found a place where people understand them'."}/>
+                                <AboutClub clubname={"ADHD"}
+                                           description={"A place where people with ADHD and their loved ones can interact with each other exchanging stories, struggles, and non-medication strategies. Weekly threads to plan and notice the positive in our lives. Over a million users here say they 'feel at home' and 'finally found a place where people understand them'."}/>
                             </Box>
                             <Box className={classes.sectionBox}>
                                 <EventContainer
@@ -167,8 +212,7 @@ export default function HomePage() {
                     </Container>
                 </Grid>
             </Grid>
-        </Container>
-
-
+            <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPost={handleNewPost}/>
+        </div>
     )
 }

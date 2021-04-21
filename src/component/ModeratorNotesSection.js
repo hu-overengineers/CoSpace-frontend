@@ -44,7 +44,7 @@ export default function ModeratorNotesSection({notes}) {
                 <Divider className={classes.divider}/>
                 <Typography className={classes.sectionBody}>
                     <Box className={classes.root}>
-                        <Accordion >
+                        <Accordion>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="panel1a-content"
