@@ -4,6 +4,7 @@ import {
     Paper,
     Typography
 } from '@material-ui/core';
+import EventCard from './EventCard';
 
 
 export default function EventContainer({classes}) {
@@ -15,7 +16,7 @@ export default function EventContainer({classes}) {
             </Typography>
             <Divider className={classes.divider}/>
             <Typography className={classes.sectionTitle}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                <EventCard/>
             </Typography>
         </List>
     </Paper>
