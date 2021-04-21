@@ -21,7 +21,8 @@ import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
 import ModeratorNotesSection from '../component/ModeratorNotesSection';
 import Button from "@material-ui/core/Button";
-import {Edit, Group} from "@material-ui/icons";
+import {Edit, NewReleases, TrendingUp, Whatshot} from "@material-ui/icons";
+import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
 
 function ClubListItem(name) {
@@ -96,8 +97,24 @@ export default function HomePage() {
                             <Typography variant="h4" className={classes.feedTitle}>
                                 Title
                             </Typography>
+                            <ToggleButtonGroup
+                                className={classes.sortingFeedToggleGroup}
+                                value={sortingOrder}
+                                exclusive
+                                onChange={handleSortingOrder}
+                                aria-label="text alignment"
+                            >
+                                <ToggleButton value="hot" aria-label="left aligned">
+                                    <Whatshot/>
+                                </ToggleButton>
+                                <ToggleButton value="new" aria-label="centered">
+                                    <NewReleases/>
+                                </ToggleButton>
+                                <ToggleButton value="top" aria-label="right aligned">
+                                    <TrendingUp/>
+                                </ToggleButton>
+                            </ToggleButtonGroup>
                             <Button size="medium"
-                                    alignContent="flex-end"
                                     variant="contained"
                                     color="primary"
                                     startIcon={<Edit/>}
