@@ -61,7 +61,7 @@ export function PostFeedItem({props}) {
                 </Typography>
             </CardContent>
 
-            <CardActions disableSpacing>
+            <CardActions>
                 <IconButton aria-label="add to favorites">
                     <FavoriteIcon/>
                 </IconButton>
