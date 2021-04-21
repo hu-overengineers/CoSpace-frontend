@@ -9,9 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import {useHistory} from 'react-router-dom';
 import {InputBase} from "@material-ui/core";
 import logo from '../resource/logo.png';
-import Badge from '@material-ui/core/Badge';
-import MailIcon from '@material-ui/icons/Mail';
-
+import {Message, Notifications} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -19,31 +17,20 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 0,
-        title: {
-            display: 'none',
-            [theme.breakpoints.up('sm')]: {
-                display: 'block',
-                marginRight:'none',
-            },
-
-        },
-
+        marginLeft: theme.spacing(1),
     },
     search: {
-        flexGrow:1,
+        flexGrow: 1,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.text.primary, 0.05),
         '&:hover': {
             backgroundColor: fade(theme.palette.text.primary, 0.20),
         },
-        //marginRight: theme.spacing(20),
-        //marginLeft: theme.spacing(20),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: '15%',
-            marginRight: '15%',
-            //marginRight: theme.spacing(20),
+            marginLeft: theme.spacing(50),
+            marginRight: theme.spacing(50),
             width: 'auto',
         },
     },
@@ -72,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         maxWidth: '50px',
     },
+    appBar: {}
 }));
 
 export default function PrimaryAppBar() {
@@ -82,10 +70,11 @@ export default function PrimaryAppBar() {
         <div className={classes.grow}>
             <AppBar position="fixed" variant="outlined" className={classes.appBar}>
                 <Toolbar>
-                    <img src={logo} alt="CoSpace" className={classes.logo} color={'#00e3aa'} />
+                    <img src={logo} alt="CoSpace" className={classes.logo} color={'#00e3aa'}
+                         onClick={() => history.push("/")}/>
                     <Typography
                         variant="h6"
-                        style={{color:'#00e3aa', fontWeight:'bold'}}
+                        style={{color: '#00e3aa', fontWeight: 'bold'}}
                         className={classes.title}
                         onClick={() => history.push("/")}
                     >
@@ -105,10 +94,22 @@ export default function PrimaryAppBar() {
                             inputProps={{'aria-label': 'search'}}
                         />
                     </div>
-                    
-                    <Badge badgeContent={4} color="primary">
-                        <MailIcon />
-                    </Badge>
+
+                    <IconButton
+                        onClick={() => {
+
+                        }}
+                    >
+                        <Notifications/>
+                    </IconButton>
+
+                    <IconButton
+                        onClick={() => {
+
+                        }}
+                    >
+                        <Message/>
+                    </IconButton>
 
                     <IconButton
                         // TODO: Add logic to go SignInPage.
@@ -116,8 +117,6 @@ export default function PrimaryAppBar() {
                     >
                         <AccountCircle/>
                     </IconButton>
-
-
 
                 </Toolbar>
             </AppBar>

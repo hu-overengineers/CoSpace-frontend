@@ -13,8 +13,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 600,
+  root: { 
   },
   media: {
     height: 0,
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: theme.palette.secondary.main,
   },
 }));
 
@@ -44,7 +43,7 @@ export  function PostFeedItem({title, body}) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            P
           </Avatar>
         }
         action={
