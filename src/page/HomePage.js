@@ -150,7 +150,7 @@ export default function HomePage() {
                 <Container className={classes.gridColumnContainer}>
                     <Box>
                         <Box className={classes.sectionBox}>
-                            <AboutClub description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                            <AboutClub clubname={"ADHD"} description={"A place where people with ADHD and their loved ones can interact with each other exchanging stories, struggles, and non-medication strategies. Weekly threads to plan and notice the positive in our lives. Over a million users here say they 'feel at home' and 'finally found a place where people understand them'."}/>
                         </Box>
                         <Box className={classes.sectionBox}>
                             <EventContainer
