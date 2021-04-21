@@ -21,7 +21,7 @@ export default function SimpleAccordion() {
 
   return (
     <div className={classes.root}>
-      <Accordion>
+      <Accordion variant="outlined">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -35,7 +35,7 @@ export default function SimpleAccordion() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion variant="outlined">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
