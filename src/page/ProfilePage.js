@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
-import {PostFeedItem} from "../component/Post";
+import {PostFeedItem} from "../component/PostFeedItem";
 import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
 import UserInfoContainer from '../component/UserInfoContainer';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -7,15 +7,12 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ArrowDropUpOutlinedIcon from '@material-ui/icons/ArrowDropUpOutlined';
-import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
-import { Container } from '@material-ui/core';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
-import ReportIcon from '@material-ui/icons/Report';
-import {useState} from "react";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -36,10 +33,18 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: theme.palette.secondary.main,
     },
-    vote: {
-        //paddingTop: '50.25%',
-    }
+    voteLabel: {
+        flexGrow: 1,
+    },
+    postCardContent: {
+        margin: 0,
+        padding: 0
+    },
+    postContentBox: {
+        marginRight: theme.spacing(2),
+    },
 }));
+
 
 export function PostFeedItem({props}) {
     const classes = useStyles();
@@ -53,6 +58,7 @@ export function PostFeedItem({props}) {
     const handleDownVote = () => {
         setVote(vote - 1);
     }
+
     return (
         <Card variant="outlined" className={classes.root}>
             <CardHeader
@@ -62,50 +68,50 @@ export function PostFeedItem({props}) {
                     </Avatar>
                 }
                 action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon/>
-                    </IconButton>
+                    <CardActions>
+                        <IconButton aria-label="share">
+                            <ShareIcon/>
+                        </IconButton>
+                        <IconButton aria-label="settings">
+                            <MoreVertIcon/>
+                        </IconButton>
+                    </CardActions>
                 }
                 title={props.author}
-                subheader={props.time}
-            />
-            <CardContent>
+                subheader={props.time}/>
 
+            <CardContent className={classes.postCardContent}>
                 <Grid container spacing={1}>
-                    <Grid item xs={1}>       
-                            <IconButton aria-label="up-vote" onClick={handleUpVote}>
-                                <ArrowDropUpOutlinedIcon/>
-                            </IconButton>
-                            
-                            <Typography variant="h6" color="textSecondary" align="left">{vote}</Typography>
-                            
-                            <IconButton aria-label="down-vote" onClick={handleDownVote}>
-                                <ArrowDropDownOutlinedIcon/>
-                            </IconButton>
+                    <Grid item xs={1} style={{textAlign: "center"}}>
+                        <IconButton aria-label="up-vote" onClick={handleUpVote}>
+                            <KeyboardArrowUpIcon/>
+                        </IconButton>
+
+                        <Box display="flex" flexDirection="center">
+                            <Typography className={classes.voteLabel}
+                                        variant="body1"
+                                        color="textSecondary">{vote}</Typography>
+                        </Box>
+
+                        <IconButton aria-label="down-vote" onClick={handleDownVote}>
+                            <KeyboardArrowDownIcon/>
+                        </IconButton>
                     </Grid>
 
                     <Grid item xs={11}>
-                        <Container>
+                        <Box className={classes.postContentBox}>
                             <Typography gutterBottom variant="h5" component="h2">
                                 {props.title}
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
                                 {props.body}
                             </Typography>
-                        </Container>
+                        </Box>
                     </Grid>
                 </Grid>
 
             </CardContent>
 
-            <CardActions>
-                <IconButton aria-label="add to favorites">
-                    <ReportIcon/>
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon/>
-                </IconButton>
-            </CardActions>
 
         </Card>
     );
