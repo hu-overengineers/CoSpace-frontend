@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
     },
-    sectionBody: {
-    },
+    sectionBody: {},
     sectionRoot: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),

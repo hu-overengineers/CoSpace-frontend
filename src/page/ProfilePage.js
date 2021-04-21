@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-    Container, Divider,
-    List,
-    Typography
-} from '@material-ui/core';
+import {Container, Divider, List, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import {PostFeedItem} from "../component/PostFeedItem";
@@ -60,7 +56,7 @@ export default function ProfilePage() {
                 <ClubTree clubs={clubs}/>
             </Grid>
             <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <Container >
+                <Container>
                     <List>
                         <Typography variant="h4" className={classes.feedTitle}>
                             Posts
@@ -68,14 +64,14 @@ export default function ProfilePage() {
                         <Divider className={classes.divider}/>
                         {posts.map((post, index) => (
                             <Box className={classes.feedItem} key={post.uid}>
-                                   {<PostFeedItem props={post}/>}
+                                {<PostFeedItem props={post}/>}
                             </Box>
                         ))}
                     </List>
                 </Container>
             </Grid>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <UserInfoContainer/>
+                <UserInfoContainer/>
             </Grid>
         </Grid>
     )
