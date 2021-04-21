@@ -64,7 +64,6 @@ export default class CreatePost extends Component {
 
     return (
      <div>
-
         <Dialog open={this.props.open} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"md"}>
             <DialogTitle id="form-dialog-title">Create Post</DialogTitle>
             <DialogContent>

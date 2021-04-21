@@ -1,16 +1,17 @@
 import React from 'react';
-import {Container, Divider, List, Typography} from '@material-ui/core';
+import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
-import {PostFeedItem} from "../component/Post";
+import {PostFeedItem} from "../component/PostFeedItem";
 import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
 import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
 import ModeratorNotesSection from '../component/ModeratorNotesSection';
 import Button from "@material-ui/core/Button";
-import {Edit, NewReleases, TrendingUp, Whatshot} from "@material-ui/icons";
+import {Casino, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
 
 
@@ -41,9 +42,15 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2)
     },
     sortingFeedToggleGroup: {
+        flexGrow: 1,
         marginRight: theme.spacing(2)
+    },
+    list: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     }
 }));
+
 
 export default function HomePage() {
 
@@ -78,24 +85,30 @@ export default function HomePage() {
     }
 
     const init_posts = [];
-    
+
     for (let i = 0; i < 100; i++) {
         init_posts.push({
             title: "This is a very entertaining post",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula," +
-                " ipsum eget dictum bibendum, quam sem varius justo, id maximus quam neque vitae arcu." +
-                " Phasellus id tincidunt felis. ",
+            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam commodo commodo ante," +
+                " a malesuada nunc bibendum vitae. Sed non nulla viverra, aliquet nibh a, ultricies lorem." +
+                " Praesent quis mattis odio, eu egestas urna. Nunc porta felis orci, non ornare est aliquet aliquet." +
+                " Suspendisse consectetur nulla sit amet ligula gravida, et vestibulum dui suscipit. Aliquam ac metus" +
+                " venenatis, maximus nisi vel, dapibus nisi. Vestibulum laoreet hendrerit urna, et ultrices nunc laoreet" +
+                " ac. Nullam vestibulum turpis ac tellus sollicitudin vulputate. Nulla placerat non orci at tempor. In" +
+                " iaculis sodales mi, a ultricies eros gravida in. Donec et risus sit amet dui dignissim efficitur sit" +
+                " amet non ipsum. Nulla vitae arcu sem. Vivamus sed bibendum augue.",
             time: "September 14, 2016",
             author: "jane_doe",
             uid: `${i}`
         })
     }
+
     const [posts, setPosts] = React.useState(init_posts);
 
 
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const handleDialogOpen = () => {
-      setPostDialogOpen(true);
+        setPostDialogOpen(true);
     };
 
     const handleNewPost = (newPost) => {
@@ -106,77 +119,100 @@ export default function HomePage() {
 
     return (
         <div>
-        <Grid container className={classes.gridContainer}>
-            <Grid item xs={3} className={classes.gridItem}>
-                <Container className={classes.gridColumnContainer}>
-                    <ClubTree
-                        clubs={clubs}/>
-                </Container>
-            </Grid>
-            <Grid item xs={6} className={classes.gridItem}>
-                <Container className={classes.gridColumnContainer}>
-                    <Box>
-                        <Box display="flex">
-                            <Typography variant="h4" className={classes.feedTitle}>
-                                Title
-                            </Typography>
-                            <ToggleButtonGroup
-                                className={classes.sortingFeedToggleGroup}
-                                value={sortingOrder}
-                                exclusive
-                                onChange={handleSortingOrder}
-                                aria-label="text alignment"
-                            >
-                                <ToggleButton value="hot" aria-label="left aligned">
-                                    <Whatshot/>
-                                </ToggleButton>
-                                <ToggleButton value="new" aria-label="centered">
-                                    <NewReleases/>
-                                </ToggleButton>
-                                <ToggleButton value="top" aria-label="right aligned">
-                                    <TrendingUp/>
-                                </ToggleButton>
-                            </ToggleButtonGroup>
-                            <Button size="medium"
-                                    variant="contained"
-                                    color="primary"
-                                    startIcon={<Edit/>}
-                                    onClick={() => {
-                                        handleDialogOpen()
-                                    }}
-                                    disableElevation>CREATE POST</Button>
-                        </Box>
-                        <Divider className={classes.divider}/>
-                        <List>
-                            {posts.map((post, index) => (
-                                <Box className={classes.feedItem} key={post.uid}>
-                                    {<PostFeedItem props={post}/>}
-                                </Box>
-                            ))}
-                        </List>
-                    </Box>
-                </Container>
-            </Grid>
-            <Grid item xs={3} className={classes.gridItem}>
-                <Container className={classes.gridColumnContainer}>
-                    <Box>
-                        <Box className={classes.sectionBox}>
-                            <AboutClub description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
-                        </Box>
-                        <Box className={classes.sectionBox}>
-                            <EventContainer
-                                events={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
-                        </Box>
-                        <Box className={classes.sectionBox}>
-                            <ModeratorNotesSection
-                                notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
-                        </Box>
-                    </Box>
-                </Container>
-            </Grid>
-        </Grid>
-        <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPost={handleNewPost}></CreatePost>
+            <Grid container spacing={1} className={classes.gridContainer}>
 
+                <Grid item xs={3} className={classes.gridItem}>
+                    <Container className={classes.gridColumnContainer}>
+                        <Box className={classes.sectionBox}>
+                            <Section title={"Feeds"} content={
+                                <List className={classes.list}>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <TrendingUp/>
+                                        </ListItemIcon>
+                                        <ListItemText>
+                                            Popular
+                                        </ListItemText>
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <Casino/>
+                                        </ListItemIcon>
+                                        <ListItemText>
+                                            Random Gems
+                                        </ListItemText>
+                                    </ListItem>
+                                </List>
+                            }/>
+                        </Box>
+                        <Box className={classes.sectionBox}>
+                            <ClubTree
+                                clubs={clubs}/>
+                        </Box>
+                    </Container>
+                </Grid>
+
+
+                <Grid item xs={6} className={classes.gridItem}>
+                    <Container className={classes.gridColumnContainer}>
+                        <Box>
+                            <Box display="flex">
+                                <ToggleButtonGroup
+                                    className={classes.sortingFeedToggleGroup}
+                                    value={sortingOrder}
+                                    exclusive
+                                    onChange={handleSortingOrder}
+                                    aria-label="text alignment">
+                                    <ToggleButton value="hot" aria-label="left aligned">
+                                        <Whatshot/>
+                                    </ToggleButton>
+                                    <ToggleButton value="new" aria-label="centered">
+                                        <FiberNew/>
+                                    </ToggleButton>
+                                    <ToggleButton value="top" aria-label="right aligned">
+                                        <TrendingUp/>
+                                    </ToggleButton>
+                                </ToggleButtonGroup>
+                                <Button size="medium"
+                                        variant="contained"
+                                        color="primary"
+                                        startIcon={<Edit/>}
+                                        onClick={() => {
+                                            handleDialogOpen()
+                                        }}
+                                        disableElevation>CREATE POST</Button>
+                            </Box>
+                            <Divider className={classes.divider}/>
+                            <List>
+                                {posts.map((post, index) => (
+                                    <Box className={classes.feedItem} key={post.uid}>
+                                        {<PostFeedItem props={post}/>}
+                                    </Box>
+                                ))}
+                            </List>
+                        </Box>
+                    </Container>
+                </Grid>
+                <Grid item xs={3} className={classes.gridItem}>
+                    <Container className={classes.gridColumnContainer}>
+                        <Box>
+                            <Box className={classes.sectionBox}>
+                                <AboutClub clubname={"ADHD"}
+                                           description={"A place where people with ADHD and their loved ones can interact with each other exchanging stories, struggles, and non-medication strategies. Weekly threads to plan and notice the positive in our lives. Over a million users here say they 'feel at home' and 'finally found a place where people understand them'."}/>
+                            </Box>
+                            <Box className={classes.sectionBox}>
+                                <EventContainer
+                                    events={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                            </Box>
+                            <Box className={classes.sectionBox}>
+                                <ModeratorNotesSection
+                                    notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                            </Box>
+                        </Box>
+                    </Container>
+                </Grid>
+            </Grid>
+            <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPost={handleNewPost}/>
         </div>
     )
 }

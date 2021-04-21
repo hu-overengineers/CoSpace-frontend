@@ -1,7 +1,6 @@
-import {Divider, ListItem, ListItemIcon, ListItemText, Paper, Typography} from '@material-ui/core';
+import {Divider, Paper, Typography} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import ForumIcon from "@material-ui/icons/Forum";
 import React from "react";
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -10,7 +9,6 @@ import TreeItem from '@material-ui/lab/TreeItem';
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
     divider: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
@@ -26,30 +24,88 @@ const useStyles = makeStyles((theme) => ({
     sectionRoot: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
-    }
+    },
+    sectionClub: {
+        height: 216,
+        flexGrow: 1,
+        maxWidth: 400,
+    },
 }));
 
-/*
-<TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
-      {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-    </TreeItem>
- */
+const useTreeItemStyles = makeStyles((theme) => ({
+    root: {
+        color: theme.palette.text.primary,
+        '&:hover > $content': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        '&:focus > $content': {
+            backgroundColor: '#afffea',
+            color: 'var(--tree-view-color)',
+        },
+        '&$selected > $content': {
+            //backgroundColor: `var(--tree-view-bg-color, ${theme.palette.grey[400]})`,
+            backgroundColor: '#00e3aa',
+            color: 'var(--tree-view-color)',
 
-function ClubListItem({props}) {
-    //
-    // return (
-    //     {renderTree(props)}
-    // );
-}
+        },
+        '&:focus > $content $label, &:hover > $content $label, &$selected > $content $label': {
+            backgroundColor: 'transparent',
+        },
+    },
+    content: {
+        color: theme.palette.text.secondary,
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+        fontWeight: theme.typography.fontWeightMedium
+    },
+    group: {
+        marginLeft: 0,
+        '& $content': {
+            paddingLeft: theme.spacing(2),
 
-function renderTree (nodes) {
-    return (<TreeItem key={nodes.uid} nodeId={nodes.uid} label={nodes.name}>
-        {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-    </TreeItem>);
+        },
+    },
+    expanded: {},
+    selected: {},
+    label: {
+        fontWeight: 'inherit',
+        color: 'inherit',
+    },
+    labelRoot: {
+        //display: 'flex',
+        alignItems: 'center',
+        padding: theme.spacing(0.5, 0),
+    },
+    labelIcon: {
+        marginRight: theme.spacing(1),
+    },
+    labelText: {
+        fontWeight: 'inherit',
+        flexGrow: 1,
+    },
+}));
+
+function renderTree(nodes, classes) {
+    return (
+        <TreeItem classname={classes.root}
+                  key={nodes.uid} nodeId={nodes.uid} label={nodes.name}
+                  classes={{
+                      root: classes.root,
+                      content: classes.content,
+                      expanded: classes.expanded,
+                      selected: classes.selected,
+                      group: classes.group,
+                      label: classes.label,
+                  }}>
+            {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node, classes)) : null}
+        </TreeItem>
+    );
 }
 
 export default function ClubTree({clubs}) {
     const classes = useStyles();
+    const treeClasses = useTreeItemStyles();
 
     return (
         <Paper variant="outlined">
@@ -62,11 +118,13 @@ export default function ClubTree({clubs}) {
                     className={classes.root}
                     defaultCollapseIcon={<ExpandMoreIcon/>}
                     defaultExpanded={["1"]}
-                    defaultExpandIcon={<ChevronRightIcon/>}
-                >
+                    defaultExpandIcon={<ChevronRightIcon/>}>
                     {clubs.map((club, index) => (
-                        renderTree(club)
+                        <Box>
+                            {renderTree(club, treeClasses)}
+                        </Box>
                     ))}
+
                 </TreeView>
             </Box>
         </Paper>
