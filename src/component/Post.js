@@ -40,7 +40,7 @@ export  function PostFeedItem({title, body}) {
   
 
   return (
-    <Card className={classes.root}>
+    <Card variant="outlined" className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
