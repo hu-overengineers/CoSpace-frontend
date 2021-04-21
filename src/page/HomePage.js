@@ -5,7 +5,6 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Paper,
     Typography
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +12,10 @@ import ForumIcon from '@material-ui/icons/Forum';
 import {makeStyles} from "@material-ui/core/styles";
 import {PostFeedItem} from "../component/Post";
 import Box from "@material-ui/core/Box";
+import ClubTree from '../component/ClubTree';
+import AboutClub from '../component/AboutClub';
+import EventContainer from '../component/EventContainer';
+import ModeratorNotesSection from '../component/ModeratorNotesSection';
 
 
 function ClubListItem(name) {
@@ -66,21 +69,10 @@ export default function HomePage() {
     return (
         <Grid container className={classes.root}>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <Container>
-                    {/* TODO: Refactor this into a Component named something like "ClubTree" */}
-                    <Paper variant="outlined">
-                        <List>
-                            <Typography variant="h6" className={classes.sectionTitle}>
-                                Clubs and Sub-clubs
-                            </Typography>
-                            <Divider className={classes.divider}/>
-                            {clubs}
-                        </List>
-                    </Paper>
-                </Container>
+                <ClubTree classes={classes} clubs={clubs}/>
             </Grid>
             <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <Container mx="auto">
+                <Container >
                     <List>
                         <Typography variant="h4" className={classes.feedTitle}>
                             Title
@@ -95,44 +87,11 @@ export default function HomePage() {
                 </Container>
             </Grid>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <Container mx="auto">
+                <Container >
                     <List>
-                        {/* TODO: Refactor this into a Component named something like "AboutClub" */}
-                        <Paper variant="outlined">
-                            <List>
-                                <Typography variant="h6" className={classes.sectionTitle}>
-                                    About
-                                </Typography>
-                                <Divider className={classes.divider}/>
-                                <Typography className={classes.sectionTitle}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </Typography>
-                            </List>
-                        </Paper>
-                        {/* TODO: Refactor this into a Component named something like "EventContainer" */}
-                        <Paper variant="outlined" className={classes.root}>
-                            <List>
-                                <Typography variant="h6" className={classes.sectionTitle}>
-                                    Events
-                                </Typography>
-                                <Divider className={classes.divider}/>
-                                <Typography className={classes.sectionTitle}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </Typography>
-                            </List>
-                        </Paper>
-                        {/* TODO: Refactor this into a Component named something like "ModeratorNotesSection" */}
-                        <Paper variant="outlined" className={classes.root}>
-                            <List>
-                                <Typography variant="h6" className={classes.sectionTitle}>
-                                    Rules and considerations
-                                </Typography>
-                                <Divider className={classes.divider}/>
-                                <Typography className={classes.sectionTitle}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                </Typography>
-                            </List>
-                        </Paper>
+                        <AboutClub classes={classes}/>
+                        <EventContainer classes={classes}/>
+                        <ModeratorNotesSection classes={classes}/>
                     </List>
 
                 </Container>
