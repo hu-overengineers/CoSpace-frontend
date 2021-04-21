@@ -57,7 +57,8 @@ export default function HomePage() {
     const clubs = [];
     for (let i = 0; i < 100; i++) {
         clubs.push({
-            name: `Club ${i}`
+            name: `Club ${i}`,
+            uid: `${i}`
         })
     }
 
@@ -69,7 +70,8 @@ export default function HomePage() {
                 " ipsum eget dictum bibendum, quam sem varius justo, id maximus quam neque vitae arcu." +
                 " Phasellus id tincidunt felis. ",
             time: "September 14, 2016",
-            author: "jane_doe"
+            author: "jane_doe",
+            uid: `${i}`
         })
     }
 
@@ -83,7 +85,7 @@ export default function HomePage() {
             </Grid>
             <Grid item xs={6} className={classes.gridItem}>
                 <Container className={classes.gridColumnContainer}>
-                    <List>
+                    <Box>
                         <Box display="flex">
                             <Typography variant="h4" className={classes.feedTitle}>
                                 Title
@@ -115,12 +117,14 @@ export default function HomePage() {
                                     disableElevation>CREATE POST</Button>
                         </Box>
                         <Divider className={classes.divider}/>
-                        {posts.map((post, index) => (
-                            <Box className={classes.feedItem}>
-                                {<PostFeedItem props={post} key={index}/>}
-                            </Box>
-                        ))}
-                    </List>
+                        <List>
+                            {posts.map((post, index) => (
+                                <Box className={classes.feedItem} key={post.uid}>
+                                    {<PostFeedItem props={post}/>}
+                                </Box>
+                            ))}
+                        </List>
+                    </Box>
                 </Container>
             </Grid>
             <Grid item xs={3} className={classes.gridItem}>

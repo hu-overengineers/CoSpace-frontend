@@ -46,7 +46,7 @@ export default function ClubTree({clubs}) {
                 </Typography>
                 <Divider className={classes.divider}/>
                 {clubs.map((club, index) => (
-                    <Box>
+                    <Box key={club.uid}>
                         {<ClubListItem name={club.name}/>}
                     </Box>)
                 )}
