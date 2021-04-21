@@ -6,7 +6,7 @@ import MainRouter from "./router/MainRouter";
 
 function App() {
 
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
 
     const theme = React.useMemo(
         () =>
@@ -51,10 +51,17 @@ function App() {
                     palette: {
                         type: 'light',
                         primary: {
-                            main: '#12151a',
+                            main: '#00e3aa',
                         },
                         secondary: {
-                            main: '#0FD296',
+                            main: '#ffffff',
+                        },
+                        background: {
+                            default: '#fafafa',
+                            paper: '#ffffff',
+                        },
+                        typography: {
+                            fontFamily: ['Inter', 'Roboto', 'Arial', 'sans-serif'],
                         },
                     },
                 }),
