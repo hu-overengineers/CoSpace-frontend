@@ -1,7 +1,10 @@
+
+
+
 import {Divider, Paper, Typography} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-
+import SimpleAccordion from "./Accordion"
 
 const useStyles = makeStyles((theme) => ({
     divider: {
@@ -21,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     }
 }));
-
-
 export default function ModeratorNotesSection({notes}) {
     const classes = useStyles();
 
@@ -34,7 +35,7 @@ export default function ModeratorNotesSection({notes}) {
                 </Typography>
                 <Divider className={classes.divider}/>
                 <Typography className={classes.sectionBody}>
-                    {notes}
+                    <SimpleAccordion/>
                 </Typography>
             </Box>
         </Paper>
