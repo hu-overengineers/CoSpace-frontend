@@ -2,30 +2,14 @@ import React from 'react';
 import {
     Container, Divider,
     List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
     Typography
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import ForumIcon from '@material-ui/icons/Forum';
 import {makeStyles} from "@material-ui/core/styles";
 import {PostFeedItem} from "../component/Post";
 import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
 import UserInfoContainer from '../component/UserInfoContainer';
-
-
-function ClubListItem(name) {
-    return (
-        <ListItem button>
-            <ListItemIcon>
-                <ForumIcon/>
-            </ListItemIcon>
-            <ListItemText primary={name}/>
-        </ListItem>
-    );
-}
 
 
 export default function ProfilePage() {
@@ -51,23 +35,29 @@ export default function ProfilePage() {
 
     const clubs = [];
     for (let i = 0; i < 10; i++) {
-        clubs.push(ClubListItem(`Club ${i}`))
+        clubs.push({
+            name: `Club ${i}`,
+            uid: `${i}`
+        })
     }
 
     const posts = [];
     for (let i = 0; i < 2; i++) {
-        posts.push(PostFeedItem({
+        posts.push({
             title: "Lorem ipsum",
             body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula," +
                 " ipsum eget dictum bibendum, quam sem varius justo, id maximus quam neque vitae arcu." +
-                " Phasellus id tincidunt felis. "
-        }))
+                " Phasellus id tincidunt felis. ",
+            time: "September 14, 2016",
+            author: "jane_doe",
+            uid: `${i}`
+        })
     }
 
     return (
         <Grid container className={classes.root}>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <ClubTree classes={classes} clubs={clubs}/>
+                <ClubTree clubs={clubs}/>
             </Grid>
             <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Container >
@@ -77,8 +67,8 @@ export default function ProfilePage() {
                         </Typography>
                         <Divider className={classes.divider}/>
                         {posts.map((post, index) => (
-                            <Box className={classes.feedItem}>
-                                {post}
+                            <Box className={classes.feedItem} key={post.uid}>
+                                   {<PostFeedItem props={post}/>}
                             </Box>
                         ))}
                     </List>
