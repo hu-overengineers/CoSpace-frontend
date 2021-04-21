@@ -13,8 +13,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 600,
+  root: { 
   },
   media: {
     height: 0,
