@@ -29,19 +29,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-/*
-<TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
-      {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-    </TreeItem>
- */
-
-function ClubListItem({props}) {
-    //
-    // return (
-    //     {renderTree(props)}
-    // );
-}
-
 function renderTree (nodes) {
     return (<TreeItem key={nodes.uid} nodeId={nodes.uid} label={nodes.name}>
         {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
@@ -62,8 +49,7 @@ export default function ClubTree({clubs}) {
                     className={classes.root}
                     defaultCollapseIcon={<ExpandMoreIcon/>}
                     defaultExpanded={["1"]}
-                    defaultExpandIcon={<ChevronRightIcon/>}
-                >
+                    defaultExpandIcon={<ChevronRightIcon/>}>
                     {clubs.map((club, index) => (
                         renderTree(club)
                     ))}
