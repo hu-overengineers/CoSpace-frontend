@@ -11,6 +11,7 @@ import ModeratorNotesSection from '../component/ModeratorNotesSection';
 import Button from "@material-ui/core/Button";
 import {Edit, NewReleases, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import CreatePost from "../component/CreatePost";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -76,9 +77,10 @@ export default function HomePage() {
         })
     }
 
-    const posts = [];
+    const init_posts = [];
+    
     for (let i = 0; i < 100; i++) {
-        posts.push({
+        init_posts.push({
             title: "This is a very entertaining post",
             body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula," +
                 " ipsum eget dictum bibendum, quam sem varius justo, id maximus quam neque vitae arcu." +
@@ -88,8 +90,22 @@ export default function HomePage() {
             uid: `${i}`
         })
     }
+    const [posts, setPosts] = React.useState(init_posts);
+
+
+    const [postDialogOpen, setPostDialogOpen] = React.useState(false);
+    const handleDialogOpen = () => {
+      setPostDialogOpen(true);
+    };
+
+    const handleNewPost = (newPost) => {
+        //posts.unshift(newPost);
+        newPost.uid = posts.length;
+        setPosts(posts => [newPost, ...posts]);
+    }
 
     return (
+        <div>
         <Grid container className={classes.gridContainer}>
             <Grid item xs={3} className={classes.gridItem}>
                 <Container className={classes.gridColumnContainer}>
@@ -126,7 +142,7 @@ export default function HomePage() {
                                     color="primary"
                                     startIcon={<Edit/>}
                                     onClick={() => {
-                                        // TODO.
+                                        handleDialogOpen()
                                     }}
                                     disableElevation>CREATE POST</Button>
                         </Box>
@@ -159,5 +175,8 @@ export default function HomePage() {
                 </Container>
             </Grid>
         </Grid>
+        <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPost={handleNewPost}></CreatePost>
+
+        </div>
     )
 }

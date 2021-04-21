@@ -16,6 +16,7 @@ import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import ReportIcon from '@material-ui/icons/Report';
 import {useState} from "react";
+import parse from "html-react-parser"
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -89,8 +90,8 @@ export function PostFeedItem({props}) {
                             <Typography gutterBottom variant="h5" component="h2">
                                 {props.title}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {props.body}
+                            <Typography variant="body2" color="textSecondary" component="span">
+                                {parse(props.body)}
                             </Typography>
                         </Container>
                     </Grid>
