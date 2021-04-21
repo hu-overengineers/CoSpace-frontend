@@ -10,6 +10,11 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ArrowDropUpOutlinedIcon from '@material-ui/icons/ArrowDropUpOutlined';
+import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
+import { Container } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import ReportIcon from '@material-ui/icons/Report';
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -51,19 +56,34 @@ export function PostFeedItem({props}) {
                 title={props.author}
                 subheader={props.time}
             />
-
             <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                    {props.title}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {props.body}
-                </Typography>
+                <Grid container spacing={3}>
+
+                    <Grid item xs={1}>
+                        <Container>
+                            <ArrowDropUpOutlinedIcon/>
+                            <Typography variant="body2" color="textSecondary" >12</Typography>
+                            <ArrowDropDownOutlinedIcon/>
+                        </Container>         
+                    </Grid>
+
+                    <Grid item xs={11}>
+                        <Container>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {props.title}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                {props.body}
+                            </Typography>
+                        </Container>
+                    </Grid>
+
+                </Grid>
             </CardContent>
 
             <CardActions>
                 <IconButton aria-label="add to favorites">
-                    <FavoriteIcon/>
+                    <ReportIcon/>
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon/>
