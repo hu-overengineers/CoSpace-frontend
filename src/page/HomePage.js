@@ -1,10 +1,14 @@
 import React from 'react';
 import {
-    Container, Divider,
+    Chip,
+    Container,
+    Divider,
     List,
     ListItem,
     ListItemIcon,
     ListItemText,
+    MenuItem,
+    Select,
     Typography
 } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
@@ -16,6 +20,8 @@ import ClubTree from '../component/ClubTree';
 import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
 import ModeratorNotesSection from '../component/ModeratorNotesSection';
+import Button from "@material-ui/core/Button";
+import {Edit, Group} from "@material-ui/icons";
 
 
 function ClubListItem(name) {
@@ -42,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
     },
-    feedTitle: {},
+    feedTitle: {
+        flexGrow: 1
+    },
     gridItem: {
         maxHeight: '100vh',
         overflow: 'auto',
@@ -84,9 +92,20 @@ export default function HomePage() {
             <Grid item xs={6} className={classes.gridItem}>
                 <Container className={classes.gridColumnContainer}>
                     <List>
-                        <Typography variant="h4" className={classes.feedTitle}>
-                            Title
-                        </Typography>
+                        <Box display="flex">
+                            <Typography variant="h4" className={classes.feedTitle}>
+                                Title
+                            </Typography>
+                            <Button size="medium"
+                                    alignContent="flex-end"
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<Edit/>}
+                                    onClick={() => {
+                                        // TODO.
+                                    }}
+                                    disableElevation>CREATE POST</Button>
+                        </Box>
                         <Divider className={classes.divider}/>
                         {posts.map((post, index) => (
                             <Box className={classes.feedItem}>
@@ -111,7 +130,6 @@ export default function HomePage() {
                                 notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                         </Box>
                     </List>
-
                 </Container>
             </Grid>
         </Grid>
