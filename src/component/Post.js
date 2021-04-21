@@ -1,38 +1,77 @@
-import {Paper, Typography} from "@material-ui/core";
-import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShareIcon from '@material-ui/icons/Share';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 600,
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
 
-const useStyles = makeStyles({
-    // TODO: Add remaining style items here.
-    title: {
-        marginLeft: "12px", // I suppose this should not be in pixels
-        marginTop: "12px"
-    },
-    body: {
-        marginBottom: "12px",
-        marginLeft: "12px",
-        marginRight: "12px",
-    }
-});
+export  function PostFeedItem({title, body}) {
+  const classes = useStyles();
+  
 
-export function PostFeedItem({title, body}) {
-    // TODO: Add remaining information and buttons here.
-    //  Currently, this just a dummy item.
-    const classes = useStyles();
-    return (
-        <Paper variant="outlined">
-            <Box className={classes.title}>
-                <Typography variant="h6">
-                    {title}
-                </Typography>
-            </Box>
-            <Box className={classes.body}>
-                <Typography variant="body2">
-                    {body}
-                </Typography>
-            </Box>
-        </Paper>
-    );
+  return (
+    <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            R
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title={title}
+        subheader="September 14, 2016"
+      />
+
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {body}
+        </Typography>
+      </CardContent>
+
+      <CardActions disableSpacing>
+        <IconButton aria-label="add to favorites">
+          <FavoriteIcon />
+        </IconButton>
+        <IconButton aria-label="share">
+          <ShareIcon />
+        </IconButton>
+
+      </CardActions>
+
+    </Card>
+  );
 }
