@@ -10,3 +10,4 @@ import App from './App';
 //     </React.StrictMode>,
 //     document.getElementById('root')
 // );
+ReactDOM.render(<App />,document.getElementById('root'));
