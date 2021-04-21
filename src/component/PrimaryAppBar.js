@@ -9,6 +9,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import {useHistory} from 'react-router-dom';
 import {InputBase} from "@material-ui/core";
 import logo from '../resource/logo.png';
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -102,6 +105,10 @@ export default function PrimaryAppBar() {
                             inputProps={{'aria-label': 'search'}}
                         />
                     </div>
+                    
+                    <Badge badgeContent={4} color="primary">
+                        <MailIcon />
+                    </Badge>
 
                     <IconButton
                         // TODO: Add logic to go SignInPage.
@@ -109,6 +116,8 @@ export default function PrimaryAppBar() {
                     >
                         <AccountCircle/>
                     </IconButton>
+
+
 
                 </Toolbar>
             </AppBar>
