@@ -15,6 +15,7 @@ import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined'
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import ReportIcon from '@material-ui/icons/Report';
+import {useState} from "react";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -35,11 +36,23 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         backgroundColor: theme.palette.secondary.main,
     },
+    vote: {
+        //paddingTop: '50.25%',
+    }
 }));
 
 export function PostFeedItem({props}) {
     const classes = useStyles();
 
+    const [vote, setVote] = useState(12);
+
+    const handleUpVote = () => {
+        setVote(vote + 1);
+    }
+
+    const handleDownVote = () => {
+        setVote(vote - 1);
+    }
     return (
         <Card variant="outlined" className={classes.root}>
             <CardHeader
@@ -57,14 +70,18 @@ export function PostFeedItem({props}) {
                 subheader={props.time}
             />
             <CardContent>
-                <Grid container spacing={3}>
 
-                    <Grid item xs={1}>
-                        <Container>
-                            <ArrowDropUpOutlinedIcon/>
-                            <Typography variant="body2" color="textSecondary" >12</Typography>
-                            <ArrowDropDownOutlinedIcon/>
-                        </Container>         
+                <Grid container spacing={1}>
+                    <Grid item xs={1}>       
+                            <IconButton aria-label="up-vote" onClick={handleUpVote}>
+                                <ArrowDropUpOutlinedIcon/>
+                            </IconButton>
+                            
+                            <Typography variant="h6" color="textSecondary" align="left">{vote}</Typography>
+                            
+                            <IconButton aria-label="down-vote" onClick={handleDownVote}>
+                                <ArrowDropDownOutlinedIcon/>
+                            </IconButton>
                     </Grid>
 
                     <Grid item xs={11}>
@@ -77,8 +94,8 @@ export function PostFeedItem({props}) {
                             </Typography>
                         </Container>
                     </Grid>
-
                 </Grid>
+
             </CardContent>
 
             <CardActions>
