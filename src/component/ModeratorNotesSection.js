@@ -44,7 +44,7 @@ export default function ModeratorNotesSection({notes}) {
                 <Divider className={classes.divider}/>
                 <Typography className={classes.sectionBody}>
                     <Box className={classes.root}>
-                        <Accordion variant="outlined">
+                        <Accordion >
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="panel1a-content"
@@ -59,7 +59,7 @@ export default function ModeratorNotesSection({notes}) {
                                 </Typography>
                             </AccordionDetails>
                         </Accordion>
-                        <Accordion variant="outlined">
+                        <Accordion>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="panel2a-content"
