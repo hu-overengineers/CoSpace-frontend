@@ -5,7 +5,6 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    ListSubheader,
     Paper,
     Typography
 } from '@material-ui/core';
@@ -13,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import ForumIcon from '@material-ui/icons/Forum';
 import {makeStyles} from "@material-ui/core/styles";
 import {PostFeedItem} from "../component/Post";
-
 import Box from "@material-ui/core/Box";
 
 
