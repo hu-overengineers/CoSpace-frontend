@@ -58,7 +58,21 @@ export default function HomePage() {
     for (let i = 0; i < 100; i++) {
         clubs.push({
             name: `Club ${i}`,
-            uid: `${i}`
+            uid: `${i}`,
+            children: [
+                {
+                    name: `Subclub ${i}`,
+                    uid: `${i}-sub1`,
+                },
+                {
+                    name: `Subclub ${i}`,
+                    uid: `${i}-sub2`,
+                },
+                {
+                    name: `Subclub ${i}`,
+                    uid: `${i}-sub3`,
+                }
+            ]
         })
     }
 
