@@ -8,33 +8,39 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {useHistory} from 'react-router-dom';
 import {InputBase} from "@material-ui/core";
-
+import logo from '../resource/logo.png';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
     },
     title: {
-        flexGrow: 1,
+        flexGrow: 0,
         title: {
             display: 'none',
             [theme.breakpoints.up('sm')]: {
                 display: 'block',
+                marginRight:'none',
             },
+
         },
+
     },
     search: {
+        flexGrow:1,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.text.primary, 0.05),
         '&:hover': {
             backgroundColor: fade(theme.palette.text.primary, 0.20),
         },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
+        //marginRight: theme.spacing(20),
+        //marginLeft: theme.spacing(20),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: '15%',
+            marginRight: '15%',
+            //marginRight: theme.spacing(20),
             width: 'auto',
         },
     },
@@ -60,6 +66,9 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
+    logo: {
+        maxWidth: '50px',
+    },
 }));
 
 export default function PrimaryAppBar() {
@@ -70,9 +79,10 @@ export default function PrimaryAppBar() {
         <div className={classes.grow}>
             <AppBar position="fixed" variant="outlined" className={classes.appBar}>
                 <Toolbar>
-
+                    <img src={logo} alt="CoSpace" className={classes.logo} color={'#00e3aa'} />
                     <Typography
                         variant="h6"
+                        style={{color:'#00e3aa', fontWeight:'bold'}}
                         className={classes.title}
                         onClick={() => history.push("/")}
                     >
@@ -94,7 +104,8 @@ export default function PrimaryAppBar() {
                     </div>
 
                     <IconButton
-                        onClick={() => history.push("/profile")}
+                        // TODO: Add logic to go SignInPage.
+                        onClick={() => history.push("/sign-up")}
                     >
                         <AccountCircle/>
                     </IconButton>
