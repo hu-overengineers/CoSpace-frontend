@@ -1,23 +1,33 @@
-import {
-    Divider,
-    List,
-    Paper,
-    Typography
-} from '@material-ui/core';
+import {Divider, List, Paper, Typography} from '@material-ui/core';
+import {makeStyles} from "@material-ui/core/styles";
 
 
-export default function ModeratorNotesSection({classes}) {
+const useStyles = makeStyles((theme) => ({
+    divider: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+    root: {
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+    },
+}));
+
+
+export default function ModeratorNotesSection({notes}) {
+    const classes = useStyles();
+
     return (
-    <Paper variant="outlined" className={classes.root}>
-        <List>
-            <Typography variant="h6" className={classes.sectionTitle}>
-                Rules and considerations
-            </Typography>
-            <Divider className={classes.divider}/>
-            <Typography className={classes.sectionTitle}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </Typography>
-        </List>
-    </Paper>
+        <Paper variant="outlined">
+            <List>
+                <Typography variant="h6" className={classes.root}>
+                    Rules and considerations
+                </Typography>
+                <Divider className={classes.divider}/>
+                <Typography className={classes.root}>
+                    {notes}
+                </Typography>
+            </List>
+        </Paper>
     );
 }
