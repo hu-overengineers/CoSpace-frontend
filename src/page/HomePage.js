@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2)
     },
     sortingFeedToggleGroup: {
+        flexGrow: 1,
         marginRight: theme.spacing(2)
     }
 }));
@@ -107,9 +108,6 @@ export default function HomePage() {
                 <Container className={classes.gridColumnContainer}>
                     <Box>
                         <Box display="flex">
-                            <Typography variant="h4" className={classes.feedTitle}>
-                                Title
-                            </Typography>
                             <ToggleButtonGroup
                                 className={classes.sortingFeedToggleGroup}
                                 value={sortingOrder}
