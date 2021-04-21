@@ -13,6 +13,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
+import parse from "html-react-parser"
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -103,8 +104,8 @@ export function PostFeedItem({props}) {
                             <Typography gutterBottom variant="h5" component="h2">
                                 {props.title}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {props.body}
+                            <Typography variant="body2" color="textSecondary" component="span">
+                                {parse(props.body)}
                             </Typography>
                         </Box>
                     </Grid>
