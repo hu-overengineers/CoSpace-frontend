@@ -9,7 +9,7 @@ import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
 import ModeratorNotesSection from '../component/ModeratorNotesSection';
 import Button from "@material-ui/core/Button";
-import {Casino, Edit, NewReleases, TrendingUp, Whatshot} from "@material-ui/icons";
+import {Casino, Edit, FiberNew, NewReleases, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import Section from "../component/Section";
 import ForumIcon from "@material-ui/icons/Forum";
@@ -152,7 +152,7 @@ export default function HomePage() {
                                     <Whatshot/>
                                 </ToggleButton>
                                 <ToggleButton value="new" aria-label="centered">
-                                    <NewReleases/>
+                                    <FiberNew/>
                                 </ToggleButton>
                                 <ToggleButton value="top" aria-label="right aligned">
                                     <TrendingUp/>
