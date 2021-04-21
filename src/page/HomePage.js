@@ -29,25 +29,33 @@ function ClubListItem(name) {
     );
 }
 
+const useStyles = makeStyles((theme) => ({
+    gridContainer: {},
+    divider: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+    },
+    feedItem: {
+        marginBottom: theme.spacing(2),
+    },
+    sectionTitle: {
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+    },
+    feedTitle: {},
+    gridItem: {
+        maxHeight: '100vh',
+        overflow: 'auto',
+    },
+    gridColumnContainer: {
+        marginTop: theme.spacing(2)
+    },
+    sectionBox: {
+        marginBottom: theme.spacing(2)
+    }
+}));
 
 export default function HomePage() {
-    const useStyles = makeStyles({
-        root: {
-            marginTop: "24px" // I suppose this should not be in pixels
-        },
-        divider: {
-            marginTop: "8px",
-            marginBottom: "8px"
-        },
-        feedItem: {
-            marginBottom: "12px",
-            marginTop: "12px",
-        },
-        sectionTitle: {
-            marginLeft: "12px",
-        },
-        feedTitle: {}
-    });
 
     const classes = useStyles();
 
@@ -67,12 +75,14 @@ export default function HomePage() {
     }
 
     return (
-        <Grid container className={classes.root}>
-            <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <ClubTree classes={classes} clubs={clubs}/>
+        <Grid container className={classes.gridContainer}>
+            <Grid item xs={3} className={classes.gridItem}>
+                <Container className={classes.gridColumnContainer}>
+                    <ClubTree clubs={clubs}/>
+                </Container>
             </Grid>
-            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <Container >
+            <Grid item xs={6} className={classes.gridItem}>
+                <Container className={classes.gridColumnContainer}>
                     <List>
                         <Typography variant="h4" className={classes.feedTitle}>
                             Title
@@ -86,12 +96,20 @@ export default function HomePage() {
                     </List>
                 </Container>
             </Grid>
-            <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <Container >
+            <Grid item xs={3} className={classes.gridItem}>
+                <Container className={classes.gridColumnContainer}>
                     <List>
-                        <AboutClub classes={classes}/>
-                        <EventContainer classes={classes}/>
-                        <ModeratorNotesSection classes={classes}/>
+                        <Box className={classes.sectionBox}>
+                            <AboutClub description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                        </Box>
+                        <Box className={classes.sectionBox}>
+                            <EventContainer
+                                events={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                        </Box>
+                        <Box className={classes.sectionBox}>
+                            <ModeratorNotesSection
+                                notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                        </Box>
                     </List>
 
                 </Container>
