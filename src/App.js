@@ -6,7 +6,7 @@ import MainRouter from "./router/MainRouter";
 
 function App() {
 
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = React.useMemo(
         () =>
@@ -28,7 +28,8 @@ function App() {
                             main: '#00e3aa',
                         },
                         secondary: {
-                            main: '#ffffff',
+                            //main: '#ffffff',
+                            main: '#00e3aa',
                         },
                         background: {
                             default: '#12161b',
@@ -43,7 +44,7 @@ function App() {
                     overrides: {
                         MuiAppBar: {
                             colorPrimary: {
-                                backgroundColor: "#fff",
+                                backgroundColor: "#ffffff",
                                 color: "#12151a"
                             },
                         }
@@ -54,7 +55,8 @@ function App() {
                             main: '#00e3aa',
                         },
                         secondary: {
-                            main: '#ffffff',
+                            //main: '#ffffff',
+                            main: '#00e3aa',
                         },
                         background: {
                             default: '#fafafa',
