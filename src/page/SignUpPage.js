@@ -47,10 +47,6 @@ export default function SignUpPage() {
 
     const [open, setSnackbarOpen] = React.useState(false);
 
-    const handleClick = () => {
-        setSnackbarOpen(true);
-    };
-
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;

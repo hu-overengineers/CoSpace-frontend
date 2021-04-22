@@ -36,7 +36,7 @@ export default class CreatePost extends Component {
     };
 
     share = () => {
-        const current = new Date();
+        //const current = new Date();
         const post = {
             postTitle: this.state.title,
             postContent: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),

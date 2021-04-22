@@ -13,7 +13,7 @@ import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
 import PostFeed from "../component/PostFeed";
 import {ClubService} from "../service/ClubService";
-
+import ModeratorNotesSection from "../component/ModeratorNotesSection"
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -77,7 +77,7 @@ export default function HomePage() {
             setCurrentSubClub(response.data[0].subClubName);
             doRefresh(!refreshFeed);
         })
-    }, []);
+    });
 
     // create post pop-up
     const handleDialogOpen = () => {
@@ -173,8 +173,7 @@ export default function HomePage() {
                                     events={"There are no events."}/>
                             </Box>
                             <Box className={classes.sectionBox}>
-                                {/* <ModeratorNotesSection
-                                    notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/> */}
+                                <ModeratorNotesSection notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                             </Box>
                         </Box>
                     </Container>

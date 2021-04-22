@@ -35,7 +35,7 @@ const parseSubClubs = (subClubs) => {
             name: clubNames[clb],
             uid: clb,
             children: subClubs.filter(function (subc) {
-                return subc.upperClubName == clubNames[clb]
+                return subc.upperClubName === clubNames[clb]
             })
         }
         clubs.push(clubObj);
