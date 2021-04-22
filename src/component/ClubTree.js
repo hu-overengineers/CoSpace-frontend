@@ -84,6 +84,12 @@ const useTreeItemStyles = makeStyles((theme) => ({
         fontWeight: 'inherit',
         flexGrow: 1,
     },
+    treeItemIcon: {
+        marginLeft: theme.spacing(2)
+    },
+    treeItemText: {
+        marginLeft: theme.spacing(1)
+    }
 }));
 
 function renderTree(nodes, classes) {
@@ -91,7 +97,7 @@ function renderTree(nodes, classes) {
     }
     return (
         <TreeItem className={classes.root} onClick={onSubClubClick}
-                  key={nodes.name} nodeId={nodes.name} label={nodes.name}
+                  key={nodes.name} nodeId={nodes.name} label={<Box className={classes.treeItemText}>{nodes.name}</Box>}
                   classes={{
                       root: classes.root,
                       content: classes.content,
@@ -118,9 +124,9 @@ export default function ClubTree({clubs}) {
                 <Divider className={classes.divider}/>
                 <TreeView
                     className={classes.root}
-                    defaultCollapseIcon={<ExpandMoreIcon/>}
+                    defaultCollapseIcon={<Box ><ExpandMoreIcon className={treeClasses.treeItemIcon}/></Box>}
                     defaultExpanded={["1"]}
-                    defaultExpandIcon={<ChevronRightIcon/>}>
+                    defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon} />}>
                     {clubs.map((club, index) => (
                         <Box>
                             {renderTree(club, treeClasses)}
