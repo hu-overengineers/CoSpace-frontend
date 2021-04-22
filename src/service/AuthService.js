@@ -7,8 +7,8 @@ import axios from "axios";
 import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER} from "../ApiConfig";
 import {headersWithToken} from "./headers";
 
-const login = (email, pass) => {
-    return axios.post(BASE_URL + LOGIN, {email: email, password: pass})
+const login = (username, pass) => {
+    return axios.post(BASE_URL + LOGIN, {username: username, password: pass})
 }
 
 const register = (userData) => {
