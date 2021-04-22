@@ -38,7 +38,7 @@ export default function AboutClub({clubname, description}) {
 
                 <Grid container>
                     <Grid key={1} item>
-                        <Container><Avatar className={classes.large}>AD</Avatar> </Container>
+                        <Container><Avatar className={classes.large}>LI</Avatar> </Container>
                     </Grid>
                     <Grid key={2} item>
                         <Typography variant="h6">
@@ -63,7 +63,7 @@ export default function AboutClub({clubname, description}) {
                                 {"1.2m"}
                             </Typography>
                             <Typography variant="body1">
-                                {"people with ADHD"}
+                                {"lorem ipsum"}
                             </Typography>
                         </Container>
 
@@ -75,7 +75,7 @@ export default function AboutClub({clubname, description}) {
                                 {"2.5k"}
                             </Typography>
                             <Typography variant="body1">
-                                {"looking right now"}
+                                {"dolor sit amet"}
                             </Typography>
                         </Container>
 
@@ -89,7 +89,7 @@ export default function AboutClub({clubname, description}) {
                     </Grid>
                     <Grid key={2} item>
                         <Typography variant="body1">
-                            {"Created Oct 28, 2008 "}
+                            {"Created Jan 1, 1970 "}
                         </Typography>
                     </Grid>
                 </Grid>
