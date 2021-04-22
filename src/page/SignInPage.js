@@ -47,6 +47,7 @@ export default function SignInPage() {
     const [username, setUsername] = React.useState("");
 
     const [open, setSnackbarOpen] = React.useState(false);
+    const [severity, setSnackbarSeverity] = React.useState("success");
 
 
     const handleSnackbarClose = (event, reason) => {
@@ -110,15 +111,18 @@ export default function SignInPage() {
                             console.log("Sign up button clicked.");
                             AuthService.login(username, password).then(r => {
                                 console.log("Response: " + r.data.toString())
+                                if (r.status !== 200) {
+                                    setSnackbarOpen(true)
+                                } else {
+                                    AuthService.saveJwtToken(r.data.toString());
 
-                                AuthService.saveJwtToken(r.data.toString());
+                                    setSnackbarOpen(true);
 
-                                setSnackbarOpen(true);
-
-                                delay(1000).then(() => {
-                                        history.push("/");
-                                    }
-                                );
+                                    delay(1000).then(() => {
+                                            history.push("/");
+                                        }
+                                    );
+                                }
                             })
                         }}
                     >

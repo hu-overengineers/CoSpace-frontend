@@ -8,7 +8,20 @@ import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER} from "../ApiConfig";
 import {headersWithToken} from "./headers";
 
 const login = (username, pass) => {
+    saveUsername(username);
     return axios.post(BASE_URL + LOGIN, {username: username, password: pass})
+}
+
+const saveUsername = (username) => {
+    localStorage.setItem('username', username);
+}
+
+const getUsername = () => {
+    return localStorage.getItem("username")
+}
+
+const removeUsername = () => {
+    localStorage.removeItem('username');
 }
 
 const register = (userData) => {
@@ -36,5 +49,8 @@ const hasJwtToken = () => {
     return jwt != null;
 }
 
-
-export const AuthService = {login, register, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken};
+export const AuthService = {
+    login, register, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken,
+    getUsername,
+    removeUsername,
+};
