@@ -18,10 +18,10 @@ const parseSubClubs = (subClubs) => {
     for (let i = 0; i < subClubs.length; i++) {
         const element = subClubs[i];
         let rns = {
-            name:element.subClubName,
-            details:element.details,
-            uid:i+20,
-            upperClubName:element.upperClubName
+            name: element.subClubName,
+            details: element.details,
+            uid: i + 20,
+            upperClubName: element.upperClubName
         };
         renamedSubClubs.push(rns);
     }
@@ -32,9 +32,11 @@ const parseSubClubs = (subClubs) => {
     const clubs = []
     for (let clb = 0; clb < clubNames.length; clb++) {
         let clubObj = {
-            name:clubNames[clb],
-            uid:clb,
-            children:subClubs.filter(function (subc) {return subc.upperClubName==clubNames[clb]})
+            name: clubNames[clb],
+            uid: clb,
+            children: subClubs.filter(function (subc) {
+                return subc.upperClubName == clubNames[clb]
+            })
         }
         clubs.push(clubObj);
     }

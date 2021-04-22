@@ -54,8 +54,8 @@ class PostFeed extends Component {
                 uid: `${i}`
             })
         }
-    
-    
+
+
         PostService.getPosts(this.props.subclub).then(response => {
             for (let i = 0; i < response.data.length; i++) {
                 response.data[i].time = "September 14, 2016";

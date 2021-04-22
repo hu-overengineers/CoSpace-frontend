@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
@@ -67,7 +67,7 @@ export default function HomePage() {
     const [current_subclub, setCurrentSubClub] = useState("")
 
     // refresh event for posts
-    const [refreshFeed, doRefresh]  = useState(0)
+    const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
 
     // get club and subclubs
@@ -75,7 +75,7 @@ export default function HomePage() {
         ClubService.getSubClubs().then(response => {
             setClubs(ClubService.parseSubClubs(response.data));
             setCurrentSubClub(response.data[0].subClubName);
-            doRefresh(!refreshFeed);            
+            doRefresh(!refreshFeed);
         })
     }, []);
 
