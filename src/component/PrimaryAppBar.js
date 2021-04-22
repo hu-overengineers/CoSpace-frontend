@@ -116,7 +116,7 @@ export default function PrimaryAppBar() {
                         // TODO: Add logic to go SignInPage.
                         onClick={() => {
                             if (AuthService.hasJwtToken()) {
-                                history.push("/profile")
+                                //history.push("/profile")
                             } else {
                                 history.push("/sign-up")
                             }
