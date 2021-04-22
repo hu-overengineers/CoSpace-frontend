@@ -1,18 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
-import {PostFeedItem} from "../component/PostFeedItem";
 import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
 import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
-import ModeratorNotesSection from '../component/ModeratorNotesSection';
 import Button from "@material-ui/core/Button";
 import {Casino, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
+import PostFeed from "../component/PostFeed";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -83,38 +82,17 @@ export default function HomePage() {
             ]
         })
     }
+    const current_subclub = "Sub32";
 
-    const init_posts = [];
-
-    for (let i = 0; i < 100; i++) {
-        init_posts.push({
-            title: "This is a very entertaining post",
-            body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam commodo commodo ante," +
-                " a malesuada nunc bibendum vitae. Sed non nulla viverra, aliquet nibh a, ultricies lorem." +
-                " Praesent quis mattis odio, eu egestas urna. Nunc porta felis orci, non ornare est aliquet aliquet." +
-                " Suspendisse consectetur nulla sit amet ligula gravida, et vestibulum dui suscipit. Aliquam ac metus" +
-                " venenatis, maximus nisi vel, dapibus nisi. Vestibulum laoreet hendrerit urna, et ultrices nunc laoreet" +
-                " ac. Nullam vestibulum turpis ac tellus sollicitudin vulputate. Nulla placerat non orci at tempor. In" +
-                " iaculis sodales mi, a ultricies eros gravida in. Donec et risus sit amet dui dignissim efficitur sit" +
-                " amet non ipsum. Nulla vitae arcu sem. Vivamus sed bibendum augue.",
-            time: "September 14, 2016",
-            author: "jane_doe",
-            uid: `${i}`
-        })
-    }
-
-    const [posts, setPosts] = React.useState(init_posts);
-
-
+    const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const handleDialogOpen = () => {
         setPostDialogOpen(true);
     };
 
-    const handleNewPost = (newPost) => {
-        //posts.unshift(newPost);
-        newPost.uid = posts.length;
-        setPosts(posts => [newPost, ...posts]);
+    const handleNewPost = (postCreated) => {
+        console.log("on home page");
+        doRefresh(!refreshFeed);
     }
 
     return (
@@ -183,13 +161,8 @@ export default function HomePage() {
                                         disableElevation>CREATE POST</Button>
                             </Box>
                             <Divider className={classes.divider}/>
-                            <List>
-                                {posts.map((post, index) => (
-                                    <Box className={classes.feedItem} key={post.uid}>
-                                        {<PostFeedItem props={post}/>}
-                                    </Box>
-                                ))}
-                            </List>
+
+                            <PostFeed refresh={refreshFeed}></PostFeed>
                         </Box>
                     </Container>
                 </Grid>
@@ -205,14 +178,15 @@ export default function HomePage() {
                                     events={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                             </Box>
                             <Box className={classes.sectionBox}>
-                                <ModeratorNotesSection
-                                    notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                                {/* <ModeratorNotesSection
+                                    notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/> */}
                             </Box>
                         </Box>
                     </Container>
                 </Grid>
             </Grid>
-            <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPost={handleNewPost}/>
+            <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
+                        subclub={current_subclub}/>
         </div>
     )
 }

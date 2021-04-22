@@ -11,6 +11,11 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "../component/Copyright";
+import {AuthService} from "../service/AuthService";
+import {Alert} from "@material-ui/lab";
+import {Snackbar} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
+import {delay} from "../util/async";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,6 +39,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpPage() {
     const classes = useStyles();
+    const history = useHistory()
+
+    const [password, setPassword] = React.useState("");
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
+
+    const [open, setSnackbarOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setSnackbarOpen(true);
+    };
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -57,6 +81,10 @@ export default function SignUpPage() {
                                 label="Username"
                                 name="uname"
                                 autoComplete="username"
+                                value={username}
+                                onChange={(event) => {
+                                    setUsername(event.target.value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -68,6 +96,10 @@ export default function SignUpPage() {
                                 label="Email address"
                                 name="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(event) => {
+                                    setEmail(event.target.value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -80,6 +112,9 @@ export default function SignUpPage() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={(event) => {
+                                    setPassword(event.target.value)
+                                }}
                             />
                         </Grid>
                     </Grid>
@@ -89,7 +124,24 @@ export default function SignUpPage() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                    >
+                        onClick={(event) => {
+                            event.preventDefault();
+                            console.log("Sign up button clicked.");
+                            AuthService.register({
+                                "email": email,
+                                "username": username,
+                                "password": password
+                            }).then(r => {
+                                console.log("Response: " + r.data.toString())
+                                if (r.data.toString() === "Registered successfully.") {
+                                    setSnackbarOpen(true);
+                                    delay(1000).then(() => {
+                                            history.push("/sign-in");
+                                        }
+                                    );
+                                }
+                            })
+                        }}>
                         Sign Up
                     </Button>
                     <Grid container justify="flex-end">
@@ -104,6 +156,11 @@ export default function SignUpPage() {
             <Box mt={5}>
                 <Copyright/>
             </Box>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity="success">
+                    You've successfully registered!
+                </Alert>
+            </Snackbar>
         </Container>
     );
 }

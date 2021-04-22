@@ -10,4 +10,9 @@ import App from './App';
 //     </React.StrictMode>,
 //     document.getElementById('root')
 // );
-ReactDOM.render(<App/>, document.getElementById('root'));
+
+const rootElement = document.getElementById('root')
+ReactDOM.render(
+    <App/>,
+    rootElement
+)

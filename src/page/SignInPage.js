@@ -13,6 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "../component/Copyright";
+import {useHistory} from "react-router-dom";
+import {AuthService} from "../service/AuthService";
+import {delay} from "../util/async";
+import {Snackbar} from "@material-ui/core";
+import {Alert} from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -36,6 +41,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInPage() {
     const classes = useStyles();
+    const history = useHistory()
+
+    const [password, setPassword] = React.useState("");
+    const [username, setUsername] = React.useState("");
+
+    const [open, setSnackbarOpen] = React.useState(false);
+
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -56,6 +76,10 @@ export default function SignInPage() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        onChange={(event) => {
+                            // TODO: Accept email as well.
+                            setUsername(event.target.value)
+                        }}
                     />
                     <TextField
                         variant="outlined"
@@ -67,6 +91,9 @@ export default function SignInPage() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={(event) => {
+                            setPassword(event.target.value)
+                        }}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}
@@ -78,6 +105,22 @@ export default function SignInPage() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={(event) => {
+                            event.preventDefault();
+                            console.log("Sign up button clicked.");
+                            AuthService.login(username, password).then(r => {
+                                console.log("Response: " + r.data.toString())
+
+                                AuthService.saveJwtToken(r.data.toString());
+
+                                setSnackbarOpen(true);
+
+                                delay(1000).then(() => {
+                                        history.push("/");
+                                    }
+                                );
+                            })
+                        }}
                     >
                         Sign In
                     </Button>
@@ -94,6 +137,11 @@ export default function SignInPage() {
             <Box mt={8}>
                 <Copyright/>
             </Box>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity="success">
+                    Welcome back!
+                </Alert>
+            </Snackbar>
         </Container>
     );
 }

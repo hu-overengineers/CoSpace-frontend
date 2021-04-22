@@ -10,6 +10,7 @@ import {convertToRaw, EditorState} from 'draft-js';
 import {Editor} from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import {PostService} from "../service/PostService";
 
 export default class CreatePost extends Component {
 
@@ -37,19 +38,23 @@ export default class CreatePost extends Component {
     share = () => {
         const current = new Date();
         const post = {
-            title: this.state.title,
-            body: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
-            time: current.toLocaleString(),
-            author: "jane_doe",
+            postTitle: this.state.title,
+            postContent: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
+            // time: current.toLocaleString(),
+            postAuthor: "jane_doe",
+            postSubClubName: this.props.subclub
         }
-        this.props.newPost(post);
+        PostService.createPost(post).then(result => {
+            this.props.newPostEvent();
+            console.log("post created on dialog");
+        })
         this.handleClose()
 
     }
 
     resetForm = () => {
-        this.state.title = "";
-        this.state.editorState = EditorState.createEmpty();
+        this.setState({title: ""});
+        this.setState({editorState: EditorState.createEmpty()});
     }
 
 
@@ -67,7 +72,7 @@ export default class CreatePost extends Component {
                 <Dialog open={this.props.open} onClose={this.handleClose} aria-labelledby="form-dialog-title"
                         fullWidth={true} maxWidth={"md"}>
                     <DialogTitle id="form-dialog-title">Create Post</DialogTitle>
-                    <DialogContent>
+                    <DialogContent style={{height: '600px'}}>
 
                         <TextField
                             autoFocus
@@ -80,11 +85,11 @@ export default class CreatePost extends Component {
                             fullWidth
                         />
                         <Box border={1} {...this.border_props}>
-                            <Editor
-                                editorState={editorState}
-                                placeholder="Content"
-
-                                onEditorStateChange={this.onEditorStateChange}
+                            <Editor style={{height: 'auto'}}
+                                    editorState={editorState}
+                                    placeholder="Content"
+                                    editorStyle={{height: '400px'}}
+                                    onEditorStateChange={this.onEditorStateChange}
                             />
                         </Box>
                     </DialogContent>
