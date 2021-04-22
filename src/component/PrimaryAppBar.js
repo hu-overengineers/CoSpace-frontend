@@ -10,6 +10,7 @@ import {useHistory} from 'react-router-dom';
 import {InputBase} from "@material-ui/core";
 import logo from '../resource/logo.png';
 import {Message, Notifications} from "@material-ui/icons";
+import {AuthService} from "../service/AuthService";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -113,7 +114,13 @@ export default function PrimaryAppBar() {
 
                     <IconButton
                         // TODO: Add logic to go SignInPage.
-                        onClick={() => history.push("/sign-up")}
+                        onClick={() => {
+                            if (AuthService.hasJwtToken()) {
+                                history.push("/profile")
+                            } else {
+                                history.push("/sign-up")
+                            }
+                        }}
                     >
                         <AccountCircle/>
                     </IconButton>
