@@ -15,6 +15,7 @@ import {AuthService} from "../service/AuthService";
 import {Alert} from "@material-ui/lab";
 import {Snackbar} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import {delay} from "../util/async";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -44,23 +45,19 @@ export default function SignUpPage() {
     const [username, setUsername] = React.useState("");
     const [email, setEmail] = React.useState("");
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setSnackbarOpen] = React.useState(false);
 
     const handleClick = () => {
-        setOpen(true);
+        setSnackbarOpen(true);
     };
 
-    const handleClose = (event, reason) => {
+    const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
 
-        setOpen(false);
+        setSnackbarOpen(false);
     };
-
-    const timeout = (delay: number) => {
-        return new Promise(res => setTimeout(res, delay));
-    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -127,7 +124,6 @@ export default function SignUpPage() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-
                         onClick={(event) => {
                             event.preventDefault();
                             console.log("Sign up button clicked.");
@@ -138,9 +134,8 @@ export default function SignUpPage() {
                             }).then(r => {
                                 console.log("Response: " + r.data.toString())
                                 if (r.data.toString() === "Registered successfully.") {
-                                    setOpen(true);
-
-                                    timeout(1000).then(() => {
+                                    setSnackbarOpen(true);
+                                    delay(1000).then(() => {
                                             history.push("/sign-in");
                                         }
                                     );
@@ -161,8 +156,8 @@ export default function SignUpPage() {
             <Box mt={5}>
                 <Copyright/>
             </Box>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success">
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity="success">
                     You've successfully registered!
                 </Alert>
             </Snackbar>
