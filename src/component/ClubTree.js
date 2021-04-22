@@ -88,7 +88,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
 
 function renderTree(nodes, classes) {
     return (
-        <TreeItem classname={classes.root}
+        <TreeItem className={classes.root}
                   key={nodes.uid} nodeId={nodes.uid} label={nodes.name}
                   classes={{
                       root: classes.root,

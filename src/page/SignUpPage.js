@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Copyright from "../component/Copyright";
+import {AuthService} from "../service/AuthService";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpPage() {
     const classes = useStyles();
+    const [password, setPassword] = React.useState("");
+    const [username, setUsername] = React.useState("");
+    const [email, setEmail] = React.useState("");
 
     return (
         <Container component="main" maxWidth="xs">
@@ -57,6 +61,10 @@ export default function SignUpPage() {
                                 label="Username"
                                 name="uname"
                                 autoComplete="username"
+                                value={username}
+                                onChange={(event) => {
+                                    setUsername(event.target.value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -68,6 +76,10 @@ export default function SignUpPage() {
                                 label="Email address"
                                 name="email"
                                 autoComplete="email"
+                                value={email}
+                                onChange={(event) => {
+                                    setEmail(event.target.value)
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -80,6 +92,9 @@ export default function SignUpPage() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={(event) => {
+                                    setPassword(event.target.value)
+                                }}
                             />
                         </Grid>
                     </Grid>
@@ -89,7 +104,16 @@ export default function SignUpPage() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                    >
+                        onClick={() => {
+                            console.log("Sign up button clicked.");
+                            AuthService.register({
+                                "email": email,
+                                "username": username,
+                                "password": password
+                            }).then(r => {
+                                console.log("Response: " + r)
+                            })
+                        }}>
                         Sign Up
                     </Button>
                     <Grid container justify="flex-end">

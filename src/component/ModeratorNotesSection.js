@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: theme.typography.fontWeightRegular,
     },
 }));
+
 export default function ModeratorNotesSection({notes}) {
     const classes = useStyles();
 
