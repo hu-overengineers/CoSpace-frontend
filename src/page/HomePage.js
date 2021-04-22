@@ -157,7 +157,7 @@ export default function HomePage() {
                             </Box>
                             <Divider className={classes.divider}/>
 
-                            <PostFeed  refresh={refreshFeed} subclub={current_subclub}></PostFeed>
+                            <PostFeed refresh={refreshFeed} subclub={current_subclub}></PostFeed>
                         </Box>
                     </Container>
                 </Grid>
