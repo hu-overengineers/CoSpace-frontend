@@ -102,14 +102,14 @@ export default function HomePage() {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Container className={classes.gridColumnContainer}>
                         <Box className={classes.sectionBox}>
-                            <Section title={"Feeds"} content={
+                            <Section title={"Lorem Ipsum"} content={
                                 <List className={classes.list}>
                                     <ListItem>
                                         <ListItemIcon>
                                             <TrendingUp/>
                                         </ListItemIcon>
                                         <ListItemText>
-                                            Popular
+                                            Dolor
                                         </ListItemText>
                                     </ListItem>
                                     <ListItem>
@@ -117,7 +117,7 @@ export default function HomePage() {
                                             <Casino/>
                                         </ListItemIcon>
                                         <ListItemText>
-                                            Random Gems
+                                            Sit
                                         </ListItemText>
                                     </ListItem>
                                 </List>

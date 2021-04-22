@@ -63,7 +63,7 @@ export default function AboutClub({clubname, description}) {
                                 {"1.2m"}
                             </Typography>
                             <Typography variant="body1">
-                                {"lorem ipsum"}
+                                {"viewers"}
                             </Typography>
                         </Container>
 
@@ -75,7 +75,7 @@ export default function AboutClub({clubname, description}) {
                                 {"2.5k"}
                             </Typography>
                             <Typography variant="body1">
-                                {"dolor sit amet"}
+                                {"users"}
                             </Typography>
                         </Container>
 
