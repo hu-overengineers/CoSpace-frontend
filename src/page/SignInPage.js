@@ -5,19 +5,19 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Copyright from "../component/Copyright";
 import {useHistory} from "react-router-dom";
 import {AuthService} from "../service/AuthService";
-import {delay} from "../util/async";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
 import {Snackbar} from "@material-ui/core";
+import Copyright from "../component/Copyright";
 import {Alert} from "@material-ui/lab";
+import {delay} from "../util/async";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -48,6 +48,7 @@ export default function SignInPage() {
 
     const [open, setSnackbarOpen] = React.useState(false);
     const [severity, setSnackbarSeverity] = React.useState("success");
+    const [snackbarMessage, setSnackbarMessage] = React.useState("Welcome back!");
 
 
     const handleSnackbarClose = (event, reason) => {
@@ -108,21 +109,22 @@ export default function SignInPage() {
                         className={classes.submit}
                         onClick={(event) => {
                             event.preventDefault();
-                            console.log("Sign up button clicked.");
+                            console.log("Sign in button clicked.");
                             AuthService.login(username, password).then(r => {
                                 console.log("Response: " + r.data.toString())
-                                if (r.status !== 200) {
-                                    setSnackbarOpen(true)
-                                } else {
-                                    AuthService.saveJwtToken(r.data.toString());
+                                AuthService.saveJwtToken(r.data.toString());
+                                setSnackbarSeverity("success")
+                                setSnackbarMessage("Welcome back!")
+                                setSnackbarOpen(true);
 
-                                    setSnackbarOpen(true);
-
-                                    delay(1000).then(() => {
-                                            history.push("/");
-                                        }
-                                    );
-                                }
+                                delay(1000).then(() => {
+                                    history.push("/")
+                                })
+                            }).catch(e => {
+                                console.log(e.toString())
+                                setSnackbarSeverity("error")
+                                setSnackbarMessage("Something is wrong!")
+                                setSnackbarOpen(true)
                             })
                         }}
                     >
@@ -142,8 +144,8 @@ export default function SignInPage() {
                 <Copyright/>
             </Box>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="success">
-                    Welcome back!
+                <Alert onClose={handleSnackbarClose} severity={severity}>
+                    {snackbarMessage}
                 </Alert>
             </Snackbar>
         </Container>
