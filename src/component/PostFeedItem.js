@@ -78,7 +78,7 @@ export function PostFeedItem({props}) {
                         </IconButton>
                     </CardActions>
                 }
-                title={props.author}
+                title={props.postAuthor}
                 subheader={props.time}/>
 
             <CardContent className={classes.postCardContent}>
@@ -102,10 +102,10 @@ export function PostFeedItem({props}) {
                     <Grid item xs={11}>
                         <Box className={classes.postContentBox}>
                             <Typography gutterBottom variant="h5" component="h2">
-                                {props.title}
+                                {props.postTitle}
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="span">
-                                {parse(props.body)}
+                                {parse(props.postContent)}
                             </Typography>
                         </Box>
                     </Grid>
