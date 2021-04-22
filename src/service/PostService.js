@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-const getPosts = () => {
-    return axios.get('http://localhost:8080/post/get', {params: {subClubName: 'Sub32'}})
+const getPosts = (subClub) => {
+    return axios.get('http://localhost:8080/post/get', {params:{subClubName: subClub}})
 }
 
 const createPost = (newPost) => {
-    console.log(newPost);
     return axios.post("http://localhost:8080/post/create", newPost);
 }
 

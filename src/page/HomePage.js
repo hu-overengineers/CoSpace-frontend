@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
@@ -12,6 +12,7 @@ import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
 import PostFeed from "../component/PostFeed";
+import {ClubService} from "../service/ClubService";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,37 +62,31 @@ export default function HomePage() {
         setSortingOrder(event.target.value);
     };
 
-    const clubs = [];
-    for (let i = 0; i < 100; i++) {
-        clubs.push({
-            name: `Club ${i}`,
-            uid: `${i}`,
-            children: [
-                {
-                    name: `Subclub ${i}`,
-                    uid: `${i}-sub1`,
-                },
-                {
-                    name: `Subclub ${i}`,
-                    uid: `${i}-sub2`,
-                },
-                {
-                    name: `Subclub ${i}`,
-                    uid: `${i}-sub3`,
-                }
-            ]
-        })
-    }
-    const current_subclub = "Sub32";
+    // clubs and subclubs
+    const [clubs, setClubs] = useState([]);
+    const [current_subclub, setCurrentSubClub] = useState("")
 
-    const [refreshFeed, doRefresh] = useState(0)
+    // refresh event for posts
+    const [refreshFeed, doRefresh]  = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
+
+    // get club and subclubs
+    useEffect(() => {
+        ClubService.getSubClubs().then(response => {
+            setClubs(ClubService.parseSubClubs(response.data));
+            setCurrentSubClub(response.data[0].subClubName);
+            doRefresh(!refreshFeed);            
+        })
+    }, []);
+
+    // create post pop-up
     const handleDialogOpen = () => {
         setPostDialogOpen(true);
     };
 
+    // event for new post creation
     const handleNewPost = (postCreated) => {
-        console.log("on home page");
+        // refresh the posts when the new one sended to db
         doRefresh(!refreshFeed);
     }
 
@@ -162,7 +157,7 @@ export default function HomePage() {
                             </Box>
                             <Divider className={classes.divider}/>
 
-                            <PostFeed refresh={refreshFeed}></PostFeed>
+                            <PostFeed  refresh={refreshFeed} subclub={current_subclub}></PostFeed>
                         </Box>
                     </Container>
                 </Grid>
