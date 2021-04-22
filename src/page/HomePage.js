@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
@@ -6,7 +6,6 @@ import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
 import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
-import ModeratorNotesSection from '../component/ModeratorNotesSection';
 import Button from "@material-ui/core/Button";
 import {Casino, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
@@ -85,7 +84,7 @@ export default function HomePage() {
     }
     const current_subclub = "Sub32";
 
-    const [refreshFeed, doRefresh]  = useState(0)
+    const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const handleDialogOpen = () => {
         setPostDialogOpen(true);
@@ -163,7 +162,7 @@ export default function HomePage() {
                             </Box>
                             <Divider className={classes.divider}/>
 
-                            <PostFeed  refresh={refreshFeed}></PostFeed>
+                            <PostFeed refresh={refreshFeed}></PostFeed>
                         </Box>
                     </Container>
                 </Grid>
@@ -186,7 +185,8 @@ export default function HomePage() {
                     </Container>
                 </Grid>
             </Grid>
-            <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost} subclub={current_subclub}/>
+            <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
+                        subclub={current_subclub}/>
         </div>
     )
 }

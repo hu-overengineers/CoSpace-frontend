@@ -53,8 +53,8 @@ export default class CreatePost extends Component {
     }
 
     resetForm = () => {
-        this.setState({title:""});
-        this.setState({editorState:EditorState.createEmpty()});
+        this.setState({title: ""});
+        this.setState({editorState: EditorState.createEmpty()});
     }
 
 
@@ -72,7 +72,7 @@ export default class CreatePost extends Component {
                 <Dialog open={this.props.open} onClose={this.handleClose} aria-labelledby="form-dialog-title"
                         fullWidth={true} maxWidth={"md"}>
                     <DialogTitle id="form-dialog-title">Create Post</DialogTitle>
-                    <DialogContent style={{height:'600px'}}>
+                    <DialogContent style={{height: '600px'}}>
 
                         <TextField
                             autoFocus
@@ -85,11 +85,11 @@ export default class CreatePost extends Component {
                             fullWidth
                         />
                         <Box border={1} {...this.border_props}>
-                            <Editor style={{height:'auto'}}
-                                editorState={editorState}
-                                placeholder="Content"
-                                editorStyle={{height: '400px'}}
-                                onEditorStateChange={this.onEditorStateChange}
+                            <Editor style={{height: 'auto'}}
+                                    editorState={editorState}
+                                    placeholder="Content"
+                                    editorStyle={{height: '400px'}}
+                                    onEditorStateChange={this.onEditorStateChange}
                             />
                         </Box>
                     </DialogContent>

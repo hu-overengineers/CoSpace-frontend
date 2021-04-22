@@ -1,28 +1,33 @@
 import React, {Component} from "react";
 import {PostService} from "../service/PostService";
-import {PostFeedItem} from "../component/PostFeedItem";
-import {makeStyles} from "@material-ui/core/styles";
-import { List } from '@material-ui/core';
+import {PostFeedItem} from "./PostFeedItem";
+import {List} from '@material-ui/core';
 import Box from "@material-ui/core/Box";
+import {withStyles} from "@material-ui/core/styles";
 
 
+const useStyles = theme => ({
+    feedItem: {
+        marginBottom: theme.spacing(2),
+    },
+})
 
 
-export default class PostFeed extends Component {
-
+class PostFeed extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts:[]
+            posts: []
         };
+
     }
 
 
-    componentDidMount(){
+    componentDidMount() {
         this.getPosts();
     }
 
-    componentDidUpdate(prevProps, prevState){
+    componentDidUpdate(prevProps, prevState) {
         if (prevProps.refresh !== this.props.refresh) {
             console.log('refreshing the feed')
             this.getPosts();
@@ -48,32 +53,35 @@ export default class PostFeed extends Component {
                 uid: `${i}`
             })
         }
-    
-    
+
+
         PostService.getPosts().then(response => {
             for (let i = 0; i < response.data.length; i++) {
-                response.data[i].time="September 14, 2016";
+                response.data[i].time = "September 14, 2016";
                 response.data[i].uid = i;
             }
-            this.setState({posts:response.data});
+            this.setState({posts: response.data});
         })
-        
+
     }
 
 
-
     render() {
+        const {classes} = this.props;
 
         return (
             <div>
                 <List className="">
                     {this.state.posts.map((post, index) => (
-                    <Box  key={post.uid}>
-                        {<PostFeedItem props={post}/>}
-                    </Box>
+                        <Box key={post.uid} className={classes.feedItem}>
+                            {<PostFeedItem props={post}/>}
+                        </Box>
                     ))}
                 </List>
             </div>
         );
     }
 }
+
+
+export default withStyles(useStyles)(PostFeed);
