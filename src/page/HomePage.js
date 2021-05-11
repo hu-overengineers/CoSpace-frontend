@@ -64,7 +64,7 @@ export default function HomePage() {
 
     // clubs and subclubs
     const [clubs, setClubs] = useState([]);
-    const [current_subclub, setCurrentSubClub] = useState("")
+    const [selectedFeed, selectFeed] = useState("")
 
     // refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
@@ -104,7 +104,7 @@ export default function HomePage() {
                                             <TrendingUp/>
                                         </ListItemIcon>
                                         <ListItemText>
-                                            Sed ut perspiciatis
+                                            Popular
                                         </ListItemText>
                                     </ListItem>
                                     <ListItem>
@@ -112,7 +112,7 @@ export default function HomePage() {
                                             <Casino/>
                                         </ListItemIcon>
                                         <ListItemText>
-                                            Quis autem vel
+                                            Random
                                         </ListItemText>
                                     </ListItem>
                                 </List>
@@ -120,6 +120,7 @@ export default function HomePage() {
                         </Box>
                         <Box className={classes.sectionBox}>
                             <ClubTree
+                                callbackOnTreeItemClick={(clubOrSubClubName) => selectFeed(clubOrSubClubName)}
                                 clubs={clubs}/>
                         </Box>
                     </Container>
@@ -157,7 +158,7 @@ export default function HomePage() {
                             </Box>
                             <Divider className={classes.divider}/>
 
-                            <PostFeed refresh={refreshFeed} subclub={current_subclub}></PostFeed>
+                            <PostFeed refresh={refreshFeed} subclub={selectedFeed}/>
                         </Box>
                     </Container>
                 </Grid>
@@ -165,7 +166,7 @@ export default function HomePage() {
                     <Container className={classes.gridColumnContainer}>
                         <Box>
                             <Box className={classes.sectionBox}>
-                                <AboutClub clubname={"Lorem Ipsum"}
+                                <AboutClub clubname={selectedFeed}
                                            description={"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."}/>
                             </Box>
                             <Box className={classes.sectionBox}>
@@ -180,7 +181,7 @@ export default function HomePage() {
                 </Grid>
             </Grid>
             <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
-                        subclub={current_subclub}/>
+                        subclub={selectedFeed}/>
         </div>
     )
 }

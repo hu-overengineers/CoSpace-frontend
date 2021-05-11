@@ -92,12 +92,13 @@ const useTreeItemStyles = makeStyles((theme) => ({
     }
 }));
 
-function renderTree(nodes, classes) {
-    const onSubClubClick = () => {
+function renderTree(node, classes, callback) {
+    const onClubClick = () => {
+        callback(node.name);
     }
     return (
-        <TreeItem className={classes.root} onClick={onSubClubClick}
-                  key={nodes.name} nodeId={nodes.name} label={<Box className={classes.treeItemText}>{nodes.name}</Box>}
+        <TreeItem className={classes.root} onClick={onClubClick}
+                  key={node.name} nodeId={node.name} label={<Box className={classes.treeItemText}>{node.name}</Box>}
                   classes={{
                       root: classes.root,
                       content: classes.content,
@@ -106,12 +107,12 @@ function renderTree(nodes, classes) {
                       group: classes.group,
                       label: classes.label,
                   }}>
-            {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node, classes)) : null}
+            {Array.isArray(node.children) ? node.children.map((node) => renderTree(node, classes, callback)) : null}
         </TreeItem>
     );
 }
 
-export default function ClubTree({clubs}) {
+export default function ClubTree({clubs, callbackOnTreeItemClick}) {
     const classes = useStyles();
     const treeClasses = useTreeItemStyles();
 
@@ -129,7 +130,7 @@ export default function ClubTree({clubs}) {
                     defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon} />}>
                     {clubs.map((club, index) => (
                         <Box>
-                            {renderTree(club, treeClasses)}
+                            {renderTree(club, treeClasses, callbackOnTreeItemClick)}
                         </Box>
                     ))}
 

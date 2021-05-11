@@ -53,7 +53,8 @@ export default function ProfilePage() {
     return (
         <Grid container className={classes.root}>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <ClubTree clubs={clubs}/>
+                <ClubTree clubs={clubs} callbackOnTreeItemClick={(id) => {
+                }}/>
             </Grid>
             <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Container>
