@@ -11,6 +11,7 @@ import {Editor} from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {PostService} from "../service/PostService";
+import {AuthService} from "../service/AuthService";
 
 export default class CreatePost extends Component {
 
@@ -41,7 +42,7 @@ export default class CreatePost extends Component {
             postTitle: this.state.title,
             postContent: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
             // time: current.toLocaleString(),
-            postAuthor: "jane_doe",
+            postAuthor: AuthService.getUsername(),
             postSubClubName: this.props.subclub
         }
         PostService.createPost(post).then(result => {
