@@ -14,6 +14,7 @@ import CreatePost from "../component/CreatePost";
 import PostFeed from "../component/PostFeed";
 import {ClubService} from "../service/ClubService";
 import ModeratorNotesSection from "../component/ModeratorNotesSection"
+import {PostService} from "../service/PostService";
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -62,22 +63,36 @@ export default function HomePage() {
         setSortingOrder(event.target.value);
     };
 
-    // clubs and subclubs
+    // Clubs and sub-clubs
     const [clubs, setClubs] = useState([]);
-    const [selectedFeed, selectFeed] = useState("")
+    const [selectedFeed, selectFeed] = useState("all");
 
-    // refresh event for posts
+    // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
+    const [postsInFeed, setPostsInFeed] = useState([]);
 
-    // get club and subclubs
+    // Get club and sub-clubs
     useEffect(() => {
         ClubService.getSubClubs().then(response => {
+            console.log("Parsing sub-clubs");
             setClubs(ClubService.parseSubClubs(response.data));
-            setCurrentSubClub(response.data[0].subClubName);
-            doRefresh(!refreshFeed);
         })
-    });
+    }, [refreshFeed]);
+
+    // Get posts
+    useEffect(() => {
+        PostService.getPosts(selectedFeed).then(response => {
+            for (let i = 0; i < response.data.length; i++) {
+                response.data[i].time = "<Time>";
+                response.data[i].uid = i;
+            }
+            console.log(`Fetched posts of ${selectedFeed}`);
+            console.log(response.data)
+            setPostsInFeed(response.data);
+        });
+    }, [selectedFeed, refreshFeed]);
+
 
     // create post pop-up
     const handleDialogOpen = () => {
@@ -97,7 +112,7 @@ export default function HomePage() {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Container className={classes.gridColumnContainer}>
                         <Box className={classes.sectionBox}>
-                            <Section title={"Finibus Bonorum"} content={
+                            <Section title={"Browse"} content={
                                 <List className={classes.list}>
                                     <ListItem>
                                         <ListItemIcon>
@@ -158,7 +173,7 @@ export default function HomePage() {
                             </Box>
                             <Divider className={classes.divider}/>
 
-                            <PostFeed refresh={refreshFeed} subclub={selectedFeed}/>
+                            <PostFeed posts={postsInFeed} subclub={selectedFeed}/>
                         </Box>
                     </Container>
                 </Grid>
@@ -174,7 +189,8 @@ export default function HomePage() {
                                     events={"There are no events."}/>
                             </Box>
                             <Box className={classes.sectionBox}>
-                                <ModeratorNotesSection notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
+                                <ModeratorNotesSection
+                                    notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                             </Box>
                         </Box>
                     </Container>
