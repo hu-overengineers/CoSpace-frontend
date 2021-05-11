@@ -1,12 +1,20 @@
 import axios from 'axios';
+import {BASE_URL, CLUB_LIST, SUB_CLUB_INFO, SUB_CLUB_LIST} from "../ApiConfig";
 
 const getClubs = () => {
-    return axios.get('http://localhost:8080/club/all-clubs')
+    return axios.get(BASE_URL + CLUB_LIST)
 }
 
-
 const getSubClubs = () => {
-    return axios.get('http://localhost:8080/subclub/all-subclubs')
+    return axios.get(BASE_URL + SUB_CLUB_LIST)
+}
+
+const getSubClubDetails = (subClubId) => {
+    return axios.get(BASE_URL + SUB_CLUB_INFO, {params: {sub_club_id: subClubId}})
+}
+
+const getClubDetails = (clubId) => {
+    return axios.get(BASE_URL + SUB_CLUB_INFO, {params: {club_id: clubId}})
 }
 
 // this func is a mess right now due to the different db field names
@@ -43,4 +51,4 @@ const parseSubClubs = (subClubs) => {
     return clubs;
 }
 
-export const ClubService = {getClubs, getSubClubs, parseSubClubs}
+export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubDetails, getClubDetails}
