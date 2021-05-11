@@ -43,7 +43,7 @@ export default class CreatePost extends Component {
             postContent: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
             // time: current.toLocaleString(),
             postAuthor: AuthService.getUsername(),
-            postSubClubName: this.props.subclub
+            postSubClubName: this.props.subclub.name
         }
         PostService.createPost(post).then(result => {
             this.props.newPostEvent();
