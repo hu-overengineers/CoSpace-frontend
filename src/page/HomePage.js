@@ -65,7 +65,7 @@ export default function HomePage() {
 
     // Clubs and sub-clubs
     const [clubs, setClubs] = useState([]);
-    const [selectedFeed, selectFeed] = useState("all");
+    const [selectedFeed, selectFeed] = useState({name: "All", details: "..."});
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
@@ -76,22 +76,27 @@ export default function HomePage() {
     useEffect(() => {
         ClubService.getSubClubs().then(response => {
             console.log("Parsing sub-clubs");
+            console.log(response.data);
             setClubs(ClubService.parseSubClubs(response.data));
         })
     }, [refreshFeed]);
 
     // Get posts
     useEffect(() => {
-        PostService.getPosts(selectedFeed).then(response => {
+        PostService.getPosts(selectedFeed.name).then(response => {
             for (let i = 0; i < response.data.length; i++) {
                 response.data[i].time = "<Time>";
                 response.data[i].uid = i;
             }
-            console.log(`Fetched posts of ${selectedFeed}`);
+            console.log(`Fetched posts of ${selectedFeed.name}`);
             console.log(response.data)
             setPostsInFeed(response.data);
         });
     }, [selectedFeed, refreshFeed]);
+
+    useEffect(() => {
+        console.log(clubs);
+    }, [clubs])
 
 
     // create post pop-up
@@ -103,6 +108,10 @@ export default function HomePage() {
     const handleNewPost = (postCreated) => {
         // refresh the posts when the new one sended to db
         doRefresh(!refreshFeed);
+    }
+
+    const handleClubTreeItemClick = (node) => {
+        selectFeed(node);
     }
 
     return (
@@ -135,7 +144,7 @@ export default function HomePage() {
                         </Box>
                         <Box className={classes.sectionBox}>
                             <ClubTree
-                                callbackOnTreeItemClick={(clubOrSubClubName) => selectFeed(clubOrSubClubName)}
+                                callbackOnTreeItemClick={(node) => handleClubTreeItemClick(node)}
                                 clubs={clubs}/>
                         </Box>
                     </Container>
@@ -173,7 +182,7 @@ export default function HomePage() {
                             </Box>
                             <Divider className={classes.divider}/>
 
-                            <PostFeed posts={postsInFeed} subclub={selectedFeed}/>
+                            <PostFeed posts={postsInFeed} subclub={selectedFeed.name}/>
                         </Box>
                     </Container>
                 </Grid>
@@ -181,8 +190,8 @@ export default function HomePage() {
                     <Container className={classes.gridColumnContainer}>
                         <Box>
                             <Box className={classes.sectionBox}>
-                                <AboutClub clubname={selectedFeed}
-                                           description={"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."}/>
+                                <AboutClub clubname={selectedFeed.name}
+                                           description={selectedFeed.details}/>
                             </Box>
                             <Box className={classes.sectionBox}>
                                 <EventContainer

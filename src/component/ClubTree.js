@@ -94,7 +94,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
 
 function renderTree(node, classes, callback) {
     const onClubClick = () => {
-        callback(node.name);
+        callback(node);
     }
     return (
         <TreeItem className={classes.root} onClick={onClubClick}
