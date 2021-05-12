@@ -13,7 +13,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {PostService} from "../service/PostService";
 import {AuthService} from "../service/AuthService";
 
-export default class CreatePost extends Component {
+class CreatePost extends Component {
 
     constructor(props) {
         super(props);
@@ -109,3 +109,5 @@ export default class CreatePost extends Component {
         );
     }
 }
+
+export default CreatePost;

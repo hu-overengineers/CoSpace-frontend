@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {PostService} from "../service/PostService";
 import {PostFeedItem} from "./PostFeedItem";
 import {List} from '@material-ui/core';
 import Box from "@material-ui/core/Box";
@@ -16,9 +15,7 @@ const useStyles = theme => ({
 class PostFeed extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        };
+        this.state = {};
 
     }
 
@@ -30,7 +27,6 @@ class PostFeed extends Component {
     componentDidUpdate(prevProps, prevState) {
 
     }
-
 
 
     render() {
