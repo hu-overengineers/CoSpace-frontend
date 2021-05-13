@@ -46,6 +46,8 @@ export default function SignUpPage() {
     const [email, setEmail] = React.useState("");
 
     const [open, setSnackbarOpen] = React.useState(false);
+    const [severity, setSnackbarSeverity] = React.useState("success");
+    const [snackbarMessage, setSnackbarMessage] = React.useState("Welcome back!");
 
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -129,13 +131,21 @@ export default function SignUpPage() {
                                 "password": password
                             }).then(r => {
                                 console.log("Response: " + r.data.toString())
-                                if (r.data.toString() === "Registered successfully.") {
+                                    setSnackbarSeverity("success");
+                                    setSnackbarMessage("You've registered successfully!");
                                     setSnackbarOpen(true);
                                     delay(1000).then(() => {
                                             history.push("/sign-in");
                                         }
                                     );
+                            }).catch(e => {
+                                setSnackbarSeverity("error");
+                                if (e.response.status === 409) {
+                                    setSnackbarMessage(e.response.data);
+                                } else {
+                                    setSnackbarMessage("Something went wrong: " + e.response.statusText);
                                 }
+                                setSnackbarOpen(true);
                             })
                         }}>
                         Sign Up
@@ -153,8 +163,8 @@ export default function SignUpPage() {
                 <Copyright/>
             </Box>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="success">
-                    You've successfully registered!
+                <Alert onClose={handleSnackbarClose} severity={severity}>
+                    {snackbarMessage}
                 </Alert>
             </Snackbar>
         </Container>

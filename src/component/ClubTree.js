@@ -125,9 +125,9 @@ export default function ClubTree({clubs, callbackOnTreeItemClick}) {
                 <Divider className={classes.divider}/>
                 <TreeView
                     className={classes.root}
-                    defaultCollapseIcon={<Box ><ExpandMoreIcon className={treeClasses.treeItemIcon}/></Box>}
+                    defaultCollapseIcon={<Box><ExpandMoreIcon className={treeClasses.treeItemIcon}/></Box>}
                     defaultExpanded={["1"]}
-                    defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon} />}>
+                    defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon}/>}>
                     {clubs.map((club, index) => (
                         <Box>
                             {renderTree(club, treeClasses, callbackOnTreeItemClick)}
