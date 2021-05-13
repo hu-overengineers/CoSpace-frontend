@@ -1,14 +1,17 @@
 import React from 'react';
-import {Container, Divider, List, Typography} from '@material-ui/core';
+import {Button, Container, Divider, List, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import {PostFeedItem} from "../component/PostFeedItem";
 import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
 import UserInfoContainer from '../component/UserInfoContainer';
-
+import { AuthService } from '../service/AuthService';
+import {useHistory} from 'react-router-dom';
 
 export default function ProfilePage() {
+    const history = useHistory()
+
     const useStyles = makeStyles({
         root: {
             marginTop: "24px" // I suppose this should not be in pixels
@@ -53,8 +56,7 @@ export default function ProfilePage() {
     return (
         <Grid container className={classes.root}>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <ClubTree clubs={clubs} callbackOnTreeItemClick={(id) => {
-                }}/>
+                <ClubTree clubs={clubs} callbackOnTreeItemClick={(id) => {}}/>
             </Grid>
             <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Container>
@@ -63,16 +65,27 @@ export default function ProfilePage() {
                             Posts
                         </Typography>
                         <Divider className={classes.divider}/>
-                        {posts.map((post, index) => (
-                            <Box className={classes.feedItem} key={post.uid}>
-                                {<PostFeedItem props={post}/>}
-                            </Box>
-                        ))}
+                        
+                        
+
                     </List>
                 </Container>
             </Grid>
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <UserInfoContainer/>
+                <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={(event) => {
+                            AuthService.logout()
+                            history.push("/sign-in")
+                        }}
+                    >
+                       Logout
+                    </Button>
             </Grid>
         </Grid>
     )
