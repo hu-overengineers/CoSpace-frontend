@@ -117,7 +117,6 @@ export default function HomePage() {
     return (
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
-
                 <Grid item xs={3} className={classes.gridItem}>
                     <Container className={classes.gridColumnContainer}>
                         <Box className={classes.sectionBox}>

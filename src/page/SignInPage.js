@@ -73,13 +73,12 @@ export default function SignInPage() {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Username or email address"
-                        name="email"
-                        autoComplete="email"
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
                         autoFocus
                         onChange={(event) => {
-                            // TODO: Accept email as well.
                             setUsername(event.target.value)
                         }}
                     />
@@ -113,18 +112,21 @@ export default function SignInPage() {
                             AuthService.login(username, password).then(r => {
                                 console.log("Response: " + r.data.toString())
                                 AuthService.saveJwtToken(r.data.toString());
-                                setSnackbarSeverity("success")
-                                setSnackbarMessage("Welcome back!")
+                                setSnackbarSeverity("success");
+                                setSnackbarMessage("Welcome back!");
                                 setSnackbarOpen(true);
 
                                 delay(1000).then(() => {
                                     history.push("/")
                                 })
                             }).catch(e => {
-                                console.log(e.toString())
-                                setSnackbarSeverity("error")
-                                setSnackbarMessage("Something is wrong!")
-                                setSnackbarOpen(true)
+                                setSnackbarSeverity("error");
+                                if (e.response.status === 401) {
+                                    setSnackbarMessage("Entered credentials are incorrect.");
+                                } else {
+                                    setSnackbarMessage("Something went wrong!");
+                                }
+                                setSnackbarOpen(true);
                             })
                         }}
                     >
