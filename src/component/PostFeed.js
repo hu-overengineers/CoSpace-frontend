@@ -36,7 +36,7 @@ class PostFeed extends Component {
             <div>
                 <List className="">
                     {this.props.posts.map((post, index) => (
-                        <Box key={post.uid} className={classes.feedItem}>
+                        <Box key={post.id} className={classes.feedItem}>
                             {<PostFeedItem props={post}/>}
                         </Box>
                     ))}

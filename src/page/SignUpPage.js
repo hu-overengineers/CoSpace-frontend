@@ -143,7 +143,7 @@ export default function SignUpPage() {
                                 if (e.response.status === 409) {
                                     setSnackbarMessage(e.response.data);
                                 } else {
-                                    setSnackbarMessage("Something went wrong: " + e.response.statusText);
+                                    setSnackbarMessage("Something went wrong: " + e.response.data.toString());
                                 }
                                 setSnackbarOpen(true);
                             })
