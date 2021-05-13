@@ -47,7 +47,7 @@ export default function SignUpPage() {
 
     const [open, setSnackbarOpen] = React.useState(false);
     const [severity, setSnackbarSeverity] = React.useState("success");
-    const [snackbarMessage, setSnackbarMessage] = React.useState("Welcome back!");
+    const [snackbarMessage, setSnackbarMessage] = React.useState("");
 
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
