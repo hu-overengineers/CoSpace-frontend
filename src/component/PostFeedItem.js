@@ -96,6 +96,7 @@ export function PostFeedItem({props}) {
 
     const handleReportDialogClose = () => {
         setReportDialogOpen(false);
+        setPostMenuAnchorElement(null);
     };
 
     const handleSendReport = () => {
@@ -106,6 +107,7 @@ export function PostFeedItem({props}) {
         }).then(r => {
             console.log(r);
             handleReportDialogClose();
+            // TODO: Maybe send a feedback that it was successfully reported.
         })}
 
     return (
