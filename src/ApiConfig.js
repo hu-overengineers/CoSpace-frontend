@@ -13,7 +13,7 @@ export const CLUB_INFO = "/club/info";
 // export const GET_POSTS = "/post/get";
 export const GET_POSTS = "/post";
 export const CREATE_POST = "/post/create";
-export const REPORT_POST = "/report";
+export const REPORT_POST = "/post/report";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 
