@@ -14,6 +14,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
 import parse from "html-react-parser"
+import {Menu, MenuItem} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 export function PostFeedItem({props}) {
     const classes = useStyles();
 
-    const [vote, setVote] = useState(12);
+    const [vote, setVote] = useState(0);
 
     const handleUpVote = () => {
         setVote(vote + 1);
@@ -60,12 +61,27 @@ export function PostFeedItem({props}) {
         setVote(vote - 1);
     }
 
+    const [postMenuAnchorElement, setPostMenuAnchorElement] = React.useState(null);
+    const open = Boolean(postMenuAnchorElement);
+
+    const handleMenuButtonClick = (event) => {
+        setPostMenuAnchorElement(event.currentTarget);
+    }
+
+    const handlePostMenuClose = () => {
+        setPostMenuAnchorElement(null);
+    };
+
+    const handleReport = () => {
+        console.log(props);
+    }
+
     return (
         <Card variant="outlined" className={classes.root}>
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe" className={classes.avatar}>
-                        P
+                        {props.postAuthor.charAt(0).toUpperCase()}
                     </Avatar>
                 }
                 action={
@@ -73,13 +89,23 @@ export function PostFeedItem({props}) {
                         <IconButton aria-label="share">
                             <ShareIcon/>
                         </IconButton>
-                        <IconButton aria-label="settings">
+                        <IconButton aria-label="settings" onClick={handleMenuButtonClick}>
                             <MoreVertIcon/>
                         </IconButton>
+                        <Menu
+                            id="post-menu"
+                            anchorEl={postMenuAnchorElement}
+                            keepMounted
+                            open={open}
+                            onClose={handlePostMenuClose}>
+                            <MenuItem key="report" onClick={handleReport}>
+                                Report
+                            </MenuItem>
+                        </Menu>
                     </CardActions>
                 }
                 title={props.postAuthor}
-                subheader={props.time}/>
+                subheader={new Date(props.created).toLocaleString()}/>
 
             <CardContent className={classes.postCardContent}>
                 <Grid container spacing={1}>

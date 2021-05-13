@@ -65,7 +65,7 @@ export default function HomePage() {
 
     // Clubs and sub-clubs
     const [clubs, setClubs] = useState([]);
-    const [selectedFeed, selectFeed] = useState({name: "All", details: "..."});
+    const [selectedFeed, selectFeed] = useState({name: "popular", details: "..."});
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
@@ -84,10 +84,6 @@ export default function HomePage() {
     // Get posts
     useEffect(() => {
         PostService.getPosts(selectedFeed.name).then(response => {
-            for (let i = 0; i < response.data.length; i++) {
-                response.data[i].time = "<Time>";
-                response.data[i].uid = i;
-            }
             console.log(`Fetched posts of ${selectedFeed.name}`);
             console.log(response.data)
             setPostsInFeed(response.data);

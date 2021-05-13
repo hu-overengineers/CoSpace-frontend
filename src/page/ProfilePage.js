@@ -64,7 +64,7 @@ export default function ProfilePage() {
                         </Typography>
                         <Divider className={classes.divider}/>
                         {posts.map((post, index) => (
-                            <Box className={classes.feedItem} key={post.uid}>
+                            <Box className={classes.feedItem} key={post.id}>
                                 {<PostFeedItem props={post}/>}
                             </Box>
                         ))}
