@@ -110,8 +110,8 @@ export default function SignInPage() {
                             event.preventDefault();
                             console.log("Sign in button clicked.");
                             AuthService.login(username, password).then(r => {
-                                console.log("Response: " + r.data.toString())
-                                AuthService.saveJwtToken(r.data.toString());
+                                console.log("Response: " + JSON.stringify(r.data));
+                                AuthService.saveJwtToken(r.data.token);
                                 setSnackbarSeverity("success");
                                 setSnackbarMessage("Welcome back!");
                                 setSnackbarOpen(true);
