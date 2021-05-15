@@ -65,9 +65,9 @@ export default function CreateClub() {
 
     // ------------------------------------------------
     const [chipData, setChipData] = React.useState([
-        { key: 0, label: '#game' },
-        { key: 1, label: '#gta5' },
-        { key: 2, label: '#video-game' },
+        { key: 0, label: 'game' },
+        { key: 1, label: 'gta5' },
+        { key: 2, label: 'video-game' },
     ]);
 
     const handleChipDelete = (chipToDelete) => () => {
@@ -82,7 +82,22 @@ export default function CreateClub() {
     };
 
     const addTagClick = () => {
-        // add tag to the chipData
+        const newChips = [];
+        var i;
+        var flag = false;
+        for (i = 0; i < chipData.length; i++) {
+            if (chipData[i].label === tag){
+                flag = true;
+            }
+            chipData[i].key = i;
+            newChips.push(chipData[i]);
+        }
+        if (flag) {
+
+        } else {
+            newChips[i] = { key: i, label: tag };
+        }
+        setChipData(newChips);
     };
 
     // ------------------------------------------------
@@ -209,7 +224,10 @@ export default function CreateClub() {
                             <DialogContentText>
                                 <Typography>Club Name: {clubName}</Typography>
                                 <Typography>Club Description: {clubDescription} </Typography>
-                                <Typography>Related Keywords: </Typography>
+                                <Typography>Related Keywords: {chipData.map((chip) => (
+                                        chip.label + " "
+                                ))}</Typography>
+                                 
                             </DialogContentText>
                         </DialogContent>
                     <DialogActions>
