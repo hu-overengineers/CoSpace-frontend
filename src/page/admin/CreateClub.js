@@ -1,6 +1,5 @@
 import React from "react";
 import {Container,  Typography} from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,16 +9,13 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import Chip from '@material-ui/core/Chip';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 500,
+      minWidth: 200,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -35,68 +31,58 @@ const useStyles = makeStyles((theme) => ({
       chip: {
         margin: theme.spacing(0.5),
       },
+      tagText: {
+        display: 'flex',
+        flexWrap: 'wrap',
+      },
   }));
 
 export default function CreateClub() {
     const classes = useStyles();
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const [tag, setTag] = React.useState({
-        tag: '',
-      });
-    
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    
-     const handleTagChange = (event) => {
-        setTag({
-          [tag]: event.target.value,
-        });
-      };
-
-
+    // ------------------------------------------------
     const [chipData, setChipData] = React.useState([
-        { key: 0, label: 'game' },
-        { key: 1, label: 'gta5' },
-        { key: 2, label: 'video-game' },
-        { key: 3, label: 'gta5-cospace' },
-      ]);
-    
-      const handleDelete = (chipToDelete) => () => {
+        { key: 0, label: '#game' },
+        { key: 1, label: '#gta5' },
+        { key: 2, label: '#video-game' },
+        { key: 3, label: '#gta5-cospace' },
+    ]);
+
+    const handleChipDelete = (chipToDelete) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-      };
+    };
+    // ------------------------------------------------
+
+    const [tag, setTag] = React.useState("");
+
+    const handleTagTextFieldChange = (event) => {
+        setTag(event.target.value);
+    };
+
+    const addTagClick = () => {
+        // add tag to the chipData
+    };
+
+    // ------------------------------------------------
+    const [selectedClubRequestName, setSelectedClubRequestName] = React.useState("");
+  
+    const handleClubRequestNameChange = (event) => {
+        setSelectedClubRequestName(event.target.value);
+    };
+    // ------------------------------------------------
     
-    const [state, setState] = React.useState({
-        age: '',
-        name: 'hai',
-      });
-    
-      const handleChange = (event) => {
-        const name = event.target.name;
-        setState({
-          ...state,
-          [name]: event.target.value,
-        });
-      };
-    
+
     return ( 
         <Container>
         
             <div> 
-                <FormControl fullwidth className={classes.formControl}>
+                <FormControl  className={classes.formControl}>
                     <InputLabel htmlFor="age-native-helper">Club Request</InputLabel>
                     <NativeSelect
-                        value={state.age}
-                        onChange={handleChange}
+                        value={selectedClubRequestName.name}
+                        onChange={handleClubRequestNameChange}
                         inputProps={{
-                            name: 'age',
-                            id: 'age-native-helper',
+                            name: '',
                         }}>
                         <option aria-label="None" value="" />
                         <option value={10}>Game</option>
@@ -109,11 +95,11 @@ export default function CreateClub() {
 
             <div>
                 <TextField
+                    fullWidth
                     id="standard-full-width"
                     label="Club Name"
                     style={{ margin: 8 }}
                     placeholder="Club name"
-                    fullWidth
                     margin="normal"
                     InputLabelProps={{shrink: true,}}
                 />
@@ -131,49 +117,38 @@ export default function CreateClub() {
                     InputLabelProps={{shrink: true,}}
                 />
             </div>
-
+            
+            <div className={classes.root}><Typography>Related Keywords</Typography></div>
             <div className={classes.root}>
                 {chipData.map((data) => {
                     return (
                     <li key={data.key}>
                         <Chip
-                        label={data.label}
-                        onDelete={handleDelete(data)}
-                        className={classes.chip}
+                            label={data.label}
+                            onDelete={handleChipDelete(data)}
+                            className={classes.chip}
                         />
                     </li>
                     );
                 })}
+
                 <div>
-                    <IconButton aria-label="delete" onClick={handleClickOpen}>
+                    <IconButton aria-label="add" onClick={addTagClick}>
                         <AddCircleOutlineIcon />
                     </IconButton>
-
-                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Related Keywords</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Add a related keywords.
-                            </DialogContentText>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                onChange={handleTagChange}
-                                id={tag}
-                                label="Keyword"
-                                fullWidth
-                            />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Cancel
-                            </Button>
-                            <Button onClick={handleClose} color="primary">
-                                Add
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
                 </div>
+                <div className={classes.tagText}>
+                    <TextField
+                        placeholder="some-tag"
+                        className={clsx(classes.margin, classes.textField)}
+                        InputProps={{
+                        startAdornment: <InputAdornment position="start">#</InputAdornment>,
+                        }}
+                        value={tag}
+                        onChange={handleTagTextFieldChange}
+                    />
+                </div>
+
             </div>
 
         </Container>);
