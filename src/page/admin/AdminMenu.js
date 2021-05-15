@@ -15,7 +15,7 @@ import { Route, MemoryRouter } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 
 const breadcrumbNameMap = {
-    '/clubs-subclubs': "Clubs/Sub-clubs",
+    '/clubs-subclubs': "Clubs & Sub-clubs",
     '/clubs-subclubs/manage-club': 'Manage club',
     '/clubs-subclubs/manage-sub-club': 'Manage sub-club',
     '/clubs-subclubs/create-club': 'Create club',
@@ -23,7 +23,7 @@ const breadcrumbNameMap = {
     '/reports': 'Reports',
     '/reports/reported-members': 'Reported members',
     '/reports/reported-content': 'Reported content',
-    '/reports/reported-clubs-sub-clubs': 'Reported clubs/sub-clubs',
+    '/reports/reported-clubs-sub-clubs': 'Reported clubs & sub-clubs',
 };
 
 function ListItemLink(props) {
@@ -100,7 +100,7 @@ export default function AdminMenu() {
             );
           }}
         </Route>
-        <nav className={classes.lists} aria-label="mailbox folders">
+        <nav className={classes.lists}>
           <List>
             <ListItemLink to="/clubs-subclubs" open={open} onClick={handleClick} />
             <Collapse component="li" in={open} timeout="auto" unmountOnExit>

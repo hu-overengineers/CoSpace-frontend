@@ -2,9 +2,8 @@ import React from "react";
 import {Container, Divider, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
-import { AuthService } from '../../service/AuthService';
-import {useHistory} from 'react-router-dom';
 import AdminMenu from './AdminMenu'
+import CreateClub from './CreateClub'
 
 const useStyles = makeStyles({
     root: {
@@ -43,6 +42,8 @@ function AdministrationPanel() {
         <Container>
             <Typography variant="h4">Administration Panel</Typography>
             <Divider className={classes.divider}/>
+            <CreateClub/>
+
         </Container>
     );
 }
@@ -61,7 +62,6 @@ function Overview() {
 export default function AdminPage() {
 
 
-    const history = useHistory()
     const classes = useStyles();
 
     const clubs = [];
