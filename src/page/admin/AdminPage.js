@@ -3,7 +3,7 @@ import {Container, Divider, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import AdminMenu from './AdminMenu'
-import CreateClub from './CreateClub'
+import TabForDebug from './TabForDebug'
 
 const useStyles = makeStyles({
     root: {
@@ -42,8 +42,6 @@ function AdministrationPanel() {
         <Container>
             <Typography variant="h4">Administration Panel</Typography>
             <Divider className={classes.divider}/>
-            <CreateClub/>
-
         </Container>
     );
 }
@@ -75,20 +73,25 @@ export default function AdminPage() {
     }
 
     return (
-        <Grid container className={classes.root}>
+        
+            <Grid container className={classes.root}>
 
-            <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <Menu clubs= {clubs}/>
-            </Grid>
-            
-            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <AdministrationPanel/>
-            </Grid>
-            
-            <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <Overview/>
-            </Grid>
+                <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
+                    <Menu clubs= {clubs}/>
+                </Grid>
 
-        </Grid>
+                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+
+                    <TabForDebug/>
+                    
+
+                </Grid>
+
+                <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                    <Overview/>
+                </Grid>
+
+            </Grid>
+        
     );
 }

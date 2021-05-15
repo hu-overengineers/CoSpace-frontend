@@ -79,7 +79,7 @@ export default function AdminMenu() {
 
             return (
               <Breadcrumbs aria-label="breadcrumb">
-                <LinkRouter color="inherit" to="/">
+                <LinkRouter color="inherit" to="/admin">
                   Menu
                 </LinkRouter>
                 {pathnames.map((value, index) => {
