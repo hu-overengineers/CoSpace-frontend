@@ -87,6 +87,9 @@ export default function HomePage() {
             console.log(`Fetched posts of ${selectedFeed.name}`);
             console.log(response.data)
             setPostsInFeed(response.data);
+        }).catch(response => {
+            console.log(`No posts in ${selectedFeed.name}`);
+            setPostsInFeed([]);
         });
     }, [selectedFeed, refreshFeed]);
 

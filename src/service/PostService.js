@@ -1,9 +1,12 @@
 import axios from 'axios';
-import {BASE_URL, CREATE_POST, GET_POSTS, REPORT_POST} from "../ApiConfig";
+import {BASE_URL, CREATE_POST, GET_POSTS, REPORT_POST, TRENDS, SUBCLUB_POSTS} from "../ApiConfig";
 import {headersWithToken} from "./headers";
 
 const getPosts = (subClub) => {
-    return axios.get(BASE_URL + GET_POSTS + `/${subClub}`)
+    if (subClub == "popular") {
+        return axios.get(BASE_URL + GET_POSTS + TRENDS);
+    }
+    return axios.get(BASE_URL + GET_POSTS + SUBCLUB_POSTS, {params: {subClubName: subClub}})
 }
 
 const createPost = (newPost) => {

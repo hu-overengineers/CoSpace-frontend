@@ -14,6 +14,8 @@ export const CLUB_INFO = "/club/info";
 export const GET_POSTS = "/post";
 export const CREATE_POST = "/post/create";
 export const REPORT_POST = "/post/report";
+export const TRENDS = "/trends";
+export const SUBCLUB_POSTS = "/subClubPosts";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 
