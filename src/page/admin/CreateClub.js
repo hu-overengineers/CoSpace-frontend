@@ -11,6 +11,14 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import clsx from 'clsx';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -33,19 +41,33 @@ const useStyles = makeStyles((theme) => ({
       },
       tagText: {
         display: 'flex',
+        width: 100,
         flexWrap: 'wrap',
       },
+
   }));
 
 export default function CreateClub() {
     const classes = useStyles();
+
+    // Dialog ----------------------------------
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     // ------------------------------------------------
     const [chipData, setChipData] = React.useState([
         { key: 0, label: '#game' },
         { key: 1, label: '#gta5' },
         { key: 2, label: '#video-game' },
-        { key: 3, label: '#gta5-cospace' },
     ]);
 
     const handleChipDelete = (chipToDelete) => () => {
@@ -71,6 +93,18 @@ export default function CreateClub() {
     };
     // ------------------------------------------------
     
+    const [clubName, setClubName] = React.useState("");
+  
+    const handleClubNameChange = (event) => {
+        setClubName(event.target.value);
+    };
+
+    // ------------------------------------------------
+    const [clubDescription, setClubDescription] = React.useState("");
+  
+    const handleClubDescriptionChange = (event) => {
+        setClubDescription(event.target.value);
+    };
 
     return ( 
         <Container>
@@ -87,7 +121,6 @@ export default function CreateClub() {
                         <option aria-label="None" value="" />
                         <option value={10}>Game</option>
                         <option value={20}>GTA5</option>
-                        <option value={30}>GTA5 acin lutfen</option>
                     </NativeSelect>
                     <FormHelperText>Select a club request</FormHelperText>
                 </FormControl>
@@ -102,6 +135,8 @@ export default function CreateClub() {
                     placeholder="Club name"
                     margin="normal"
                     InputLabelProps={{shrink: true,}}
+                    value={clubName}
+                    onChange={handleClubNameChange}
                 />
             </div>
                     
@@ -115,6 +150,8 @@ export default function CreateClub() {
                     fullWidth
                     margin="normal"
                     InputLabelProps={{shrink: true,}}
+                    value={clubDescription}
+                    onChange={handleClubDescriptionChange}
                 />
             </div>
             
@@ -149,6 +186,41 @@ export default function CreateClub() {
                     />
                 </div>
 
+
+            </div>
+
+            <div>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={handleClickOpen}
+                >
+                Create
+                </Button>
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                    >
+                    <DialogTitle id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                <Typography>Club Name: {clubName}</Typography>
+                                <Typography>Club Description: {clubDescription} </Typography>
+                                <Typography>Related Keywords: </Typography>
+                            </DialogContentText>
+                        </DialogContent>
+                    <DialogActions>
+                        <Button autoFocus onClick={handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleClose} color="primary" autoFocus>
+                            Create
+                        </Button>
+                        </DialogActions>
+                </Dialog>
             </div>
 
         </Container>);
