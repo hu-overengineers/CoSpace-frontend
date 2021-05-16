@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 0,
         padding: 0
     },
-    postContentBox: {
+    contentBox: {
         marginRight: theme.spacing(2),
     },
 }));
@@ -117,7 +117,7 @@ export function PostFeedItem({props}) {
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
-                            {props.postAuthor.charAt(0).toUpperCase()}
+                            {props.author.charAt(0).toUpperCase()}
                         </Avatar>
                     }
                     action={
@@ -140,7 +140,7 @@ export function PostFeedItem({props}) {
                             </Menu>
                         </CardActions>
                     }
-                    title={props.postAuthor}
+                    title={props.author}
                     subheader={new Date(props.created).toLocaleString()}/>
 
                 <CardContent className={classes.postCardContent}>
@@ -162,12 +162,12 @@ export function PostFeedItem({props}) {
                         </Grid>
 
                         <Grid item xs={11}>
-                            <Box className={classes.postContentBox}>
+                            <Box className={classes.contentBox}>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    {props.postTitle}
+                                    {props.title}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" component="span">
-                                    {parse(props.postContent)}
+                                    {parse(props.content)}
                                 </Typography>
                             </Box>
                         </Grid>
