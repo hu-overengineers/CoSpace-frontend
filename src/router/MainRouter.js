@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import HomePage from "../page/HomePage";
-import AdminPage from "../page/admin/AdminPage";
+import AdminPage from "../page/AdminPage";
 import ProfilePage from "../page/ProfilePage";
 import NotFoundPage from "../page/NotFoundPage";
 import SignUpPage from "../page/SignUpPage";

@@ -6,7 +6,7 @@ import MainRouter from "./router/MainRouter";
 
 function App() {
 
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const prefersDarkMode = false// useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = React.useMemo(
         () =>

@@ -64,7 +64,7 @@ export function PostFeedItem({props}) {
     const classes = useStyles();
 
     // Up-voting & down-voting
-    const [vote, setVote] = useState(0);
+    const [vote, setVote] = useState(props.voting);
 
     const handleUpVote = () => {
         setVote(vote + 1);
@@ -117,7 +117,7 @@ export function PostFeedItem({props}) {
                 <CardHeader
                     avatar={
                         <Avatar aria-label="recipe" className={classes.avatar}>
-                            {props.postAuthor.charAt(0).toUpperCase()}
+                            {props.author.charAt(0).toUpperCase()}
                         </Avatar>
                     }
                     action={
@@ -140,7 +140,7 @@ export function PostFeedItem({props}) {
                             </Menu>
                         </CardActions>
                     }
-                    title={props.postAuthor}
+                    title={props.author}
                     subheader={new Date(props.created).toLocaleString()}/>
 
                 <CardContent className={classes.postCardContent}>
@@ -164,10 +164,10 @@ export function PostFeedItem({props}) {
                         <Grid item xs={11}>
                             <Box className={classes.postContentBox}>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    {props.postTitle}
+                                    {props.title}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" component="span">
-                                    {parse(props.postContent)}
+                                    {parse(props.content)}
                                 </Typography>
                             </Box>
                         </Grid>

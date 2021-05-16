@@ -26,24 +26,25 @@ const parseSubClubs = (subClubs) => {
     for (let i = 0; i < subClubs.length; i++) {
         const element = subClubs[i];
         let rns = {
-            name: element.subClubName,
+            name: element.name,
             details: element.details,
+            rating: element.rating,
             uid: i + 20,
-            upperClubName: element.upperClubName
+            parentName: element.parentName
         };
         renamedSubClubs.push(rns);
     }
 
     subClubs = renamedSubClubs;
 
-    const clubNames = [...new Set(subClubs.map(subclub => subclub.upperClubName))]
+    const clubNames = [...new Set(subClubs.map(subclub => subclub.parentName))]
     const clubs = []
     for (let clb = 0; clb < clubNames.length; clb++) {
         let clubObj = {
             name: clubNames[clb],
             uid: clb,
             children: subClubs.filter(function (subc) {
-                return subc.upperClubName === clubNames[clb]
+                return subc.parentName === clubNames[clb]
             })
         }
         clubs.push(clubObj);
