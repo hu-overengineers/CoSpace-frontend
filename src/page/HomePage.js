@@ -13,8 +13,8 @@ import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
 import PostFeed from "../component/PostFeed";
 import {ClubService} from "../service/ClubService";
-import ModeratorNotesSection from "../component/ModeratorNotesSection"
 import {PostService} from "../service/PostService";
+import {subDays} from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -65,12 +65,18 @@ export default function HomePage() {
 
     // Clubs and sub-clubs
     const [clubs, setClubs] = useState([]);
-    const [selectedFeed, selectFeed] = useState({name: "popular", details: "..."});
+    const [selectedFeed, selectFeed] = useState({
+        name: "popular",
+        details: "...",
+        created: null,
+        numberOfMembers: null
+    });
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const [postsInFeed, setPostsInFeed] = useState([]);
+    const [stats, setStats] = useState({numberOfMembers: 0, numberOfPostsInLastWeek: 0});
 
     // Get club and sub-clubs
     useEffect(() => {
@@ -87,6 +93,17 @@ export default function HomePage() {
             console.log(`Fetched posts of ${selectedFeed.name}`);
             console.log(response.data)
             setPostsInFeed(response.data);
+
+            ClubService.getSubClubStatistics(selectedFeed.name, subDays(new Date(), 7), new Date()).then(response => {
+                console.log(`Fetched stats of ${selectedFeed.name}`);
+                console.log(response.data);
+                setStats({
+                    numberOfMembers: response.data.numberOfMembers,
+                    numberOfPostsInLastWeek: response.data.numberOfPostsInTimeFrame
+                })
+            }).catch(response => {
+                console.error(response);
+            });
         }).catch(response => {
             console.log(`No posts in ${selectedFeed.name}`);
             setPostsInFeed([]);
@@ -189,16 +206,22 @@ export default function HomePage() {
                         <Box>
                             <Box className={classes.sectionBox}>
                                 <AboutClub clubname={selectedFeed.name}
-                                           description={selectedFeed.details}/>
+                                           description={selectedFeed.details}
+                                           timeCreated={selectedFeed.created}
+                                           numberOfMembers={stats.numberOfMembers}
+                                           numberOfPostsInLastWeek={stats.numberOfPostsInLastWeek}
+                                />
                             </Box>
                             <Box className={classes.sectionBox}>
                                 <EventContainer
                                     events={"There are no events."}/>
                             </Box>
-                            <Box className={classes.sectionBox}>
+                            {/* TODO: Uncomment when available.
+                             <Box className={classes.sectionBox}>
                                 <ModeratorNotesSection
                                     notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                             </Box>
+                            */}
                         </Box>
                     </Container>
                 </Grid>

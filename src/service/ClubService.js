@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, CLUB_LIST, SUB_CLUB_INFO, SUB_CLUB_LIST} from "../ApiConfig";
+import {BASE_URL, CLUB_LIST, SUB_CLUB_LIST, SUB_CLUB_STATS} from "../ApiConfig";
 
 const getClubs = () => {
     return axios.get(BASE_URL + CLUB_LIST)
@@ -9,12 +9,14 @@ const getSubClubs = () => {
     return axios.get(BASE_URL + SUB_CLUB_LIST)
 }
 
-const getSubClubDetails = (subClubId) => {
-    return axios.get(BASE_URL + SUB_CLUB_INFO, {params: {sub_club_id: subClubId}})
-}
-
-const getClubDetails = (clubId) => {
-    return axios.get(BASE_URL + SUB_CLUB_INFO, {params: {club_id: clubId}})
+const getSubClubStatistics = (subClubName, startTime, endTime) => {
+    return axios.get(BASE_URL + SUB_CLUB_STATS, {
+        params: {
+            subClubName: subClubName,
+            timeStart: startTime.getTime(),
+            timeEnd: endTime.getTime()
+        }
+    });
 }
 
 // this func is a mess right now due to the different db field names
@@ -29,8 +31,10 @@ const parseSubClubs = (subClubs) => {
             name: element.name,
             details: element.details,
             rating: element.rating,
-            uid: i + 20,
-            parentName: element.parentName
+            key: element.id,
+            uid: element.id,
+            parentName: element.parentName,
+            created: element.created
         };
         renamedSubClubs.push(rns);
     }
@@ -42,6 +46,7 @@ const parseSubClubs = (subClubs) => {
     for (let clb = 0; clb < clubNames.length; clb++) {
         let clubObj = {
             name: clubNames[clb],
+            key: clb,
             uid: clb,
             children: subClubs.filter(function (subc) {
                 return subc.parentName === clubNames[clb]
@@ -52,4 +57,5 @@ const parseSubClubs = (subClubs) => {
     return clubs;
 }
 
-export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubDetails, getClubDetails}
+
+export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubStatistics}

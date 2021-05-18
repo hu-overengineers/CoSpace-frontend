@@ -2,10 +2,11 @@ import React from 'react';
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import MainRouter from "./router/MainRouter";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 function App() {
 
-    const prefersDarkMode = false// useMediaQuery('(prefers-color-scheme: dark)');
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = React.useMemo(
         () =>
