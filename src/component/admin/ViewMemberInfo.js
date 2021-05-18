@@ -153,42 +153,53 @@ export default function ViewMemberInfo() {
             </Grid>
         </Grid>
 
-        
+        <Grid container spacing={3}>
+            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto' } }>
+                <Container>
+                    <Typography variant="h6" className={classes.title}>Membership List</Typography>
 
-
-        <Typography variant="h6" className={classes.title}>Membership List of Clubs/Sub-Clubs</Typography>
-
-        <div >
-            <List className={classes.root} subheader={<li />}>
-                {clubNames.map((clubName) => (
-                    <li key={`section-${clubName}`} className={classes.listSection}>
-                        <ul className={classes.ul}>
-                            <ListSubheader>{clubName}</ListSubheader>
-                            {subClubNames.map((subClubName) => (
-                            <ListItem key={{subClubName}}>
-                                <ListItemText primary={subClubName} />
-                            </ListItem>
+                    <div >
+                        <List className={classes.root} subheader={<li />}>
+                            {clubNames.map((clubName) => (
+                                <li key={`section-${clubName}`} className={classes.listSection}>
+                                    <ul className={classes.ul}>
+                                        <ListSubheader>{clubName}</ListSubheader>
+                                        {subClubNames.map((subClubName) => (
+                                        <ListItem key={{subClubName}}>
+                                            <ListItemText primary={subClubName} />
+                                        </ListItem>
+                                        ))}
+                                    </ul>
+                                </li>
                             ))}
-                        </ul>
-                    </li>
-                ))}
-            </List>
-        </div>
+                        </List>
+                    </div>
+                </Container>
+            </Grid>
+            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                <Container>
+                    <Typography variant="h6" className={classes.title}>IP Login List</Typography>
+
+                    <div>
+                        <List>
+                            {ipAddr.map((ip) => (
+                                <ListItem key={{ip}}>
+                                        <ListItemText primary={ip} />
+                                </ListItem>
+                            ))}
+                        </List>
+
+                    </div>
+
+                </Container>
+            </Grid>
+        </Grid>
 
 
         
-        <Typography variant="h6" className={classes.title}>IP Login List</Typography>
 
-        <div>
-            <List>
-                {ipAddr.map((ip) => (
-                    <ListItem key={{ip}}>
-                            <ListItemText primary={ip} />
-                    </ListItem>
-                ))}
-            </List>
 
-        </div>
-
+        
+        
     </Container>)
 }
