@@ -36,8 +36,20 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '100vh',
         overflow: 'auto',
     },
-    gridColumnContainer: {
-        marginTop: theme.spacing(2)
+    gridLeftColumnBox: {
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
+    },
+    gridMiddleColumnBox: {
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(0),
+        marginRight: theme.spacing(0)
+    },
+    gridRightColumnBox: {
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
     },
     sectionBox: {
         marginBottom: theme.spacing(2)
@@ -134,7 +146,7 @@ export default function HomePage() {
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
                 <Grid item xs={3} className={classes.gridItem}>
-                    <Container className={classes.gridColumnContainer}>
+                    <Box className={classes.gridLeftColumnBox}>
                         <Box className={classes.sectionBox}>
                             <Section title={"Browse"} content={
                                 <List className={classes.list}>
@@ -162,68 +174,64 @@ export default function HomePage() {
                                 callbackOnTreeItemClick={(node) => handleClubTreeItemClick(node)}
                                 clubs={clubs}/>
                         </Box>
-                    </Container>
+                    </Box>
                 </Grid>
 
 
                 <Grid item xs={6} className={classes.gridItem}>
-                    <Container className={classes.gridColumnContainer}>
-                        <Box>
-                            <Box display="flex">
-                                <ToggleButtonGroup
-                                    className={classes.sortingFeedToggleGroup}
-                                    value={sortingOrder}
-                                    exclusive
-                                    onChange={handleSortingOrder}
-                                    aria-label="text alignment">
-                                    <ToggleButton value="hot" aria-label="left aligned">
-                                        <Whatshot/>
-                                    </ToggleButton>
-                                    <ToggleButton value="new" aria-label="centered">
-                                        <FiberNew/>
-                                    </ToggleButton>
-                                    <ToggleButton value="top" aria-label="right aligned">
-                                        <TrendingUp/>
-                                    </ToggleButton>
-                                </ToggleButtonGroup>
-                                <Button size="medium"
-                                        variant="contained"
-                                        color="primary"
-                                        startIcon={<Edit/>}
-                                        onClick={() => {
-                                            handleDialogOpen()
-                                        }}
-                                        disableElevation>CREATE POST</Button>
-                            </Box>
-                            <Divider className={classes.divider}/>
-
-                            <PostFeed posts={postsInFeed} subclub={selectedFeed.name}/>
+                    <Box className={classes.gridMiddleColumnBox}>
+                        <Box display="flex">
+                            <ToggleButtonGroup
+                                className={classes.sortingFeedToggleGroup}
+                                value={sortingOrder}
+                                exclusive
+                                onChange={handleSortingOrder}
+                                aria-label="text alignment">
+                                <ToggleButton value="hot" aria-label="left aligned">
+                                    <Whatshot/>
+                                </ToggleButton>
+                                <ToggleButton value="new" aria-label="centered">
+                                    <FiberNew/>
+                                </ToggleButton>
+                                <ToggleButton value="top" aria-label="right aligned">
+                                    <TrendingUp/>
+                                </ToggleButton>
+                            </ToggleButtonGroup>
+                            <Button size="medium"
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<Edit/>}
+                                    onClick={() => {
+                                        handleDialogOpen()
+                                    }}
+                                    disableElevation>CREATE POST</Button>
                         </Box>
-                    </Container>
+                        <Divider className={classes.divider}/>
+
+                        <PostFeed posts={postsInFeed} subclub={selectedFeed.name}/>
+                    </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
-                    <Container className={classes.gridColumnContainer}>
-                        <Box>
-                            <Box className={classes.sectionBox}>
-                                <AboutClub clubname={selectedFeed.name}
-                                           description={selectedFeed.details}
-                                           timeCreated={selectedFeed.created}
-                                           numberOfMembers={stats.numberOfMembers}
-                                           numberOfPostsInLastWeek={stats.numberOfPostsInLastWeek}
-                                />
-                            </Box>
-                            <Box className={classes.sectionBox}>
-                                <EventContainer
-                                    events={"There are no events."}/>
-                            </Box>
-                            {/* TODO: Uncomment when available.
+                    <Box className={classes.gridRightColumnBox}>
+                        <Box className={classes.sectionBox}>
+                            <AboutClub clubname={selectedFeed.name}
+                                       description={selectedFeed.details}
+                                       timeCreated={selectedFeed.created}
+                                       numberOfMembers={stats.numberOfMembers}
+                                       numberOfPostsInLastWeek={stats.numberOfPostsInLastWeek}
+                            />
+                        </Box>
+                        <Box className={classes.sectionBox}>
+                            <EventContainer
+                                events={"There are no events."}/>
+                        </Box>
+                        {/* TODO: Uncomment when available.
                              <Box className={classes.sectionBox}>
                                 <ModeratorNotesSection
                                     notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                             </Box>
                             */}
-                        </Box>
-                    </Container>
+                    </Box>
                 </Grid>
             </Grid>
             <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
