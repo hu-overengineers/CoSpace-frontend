@@ -1,7 +1,7 @@
 import React from "react";
 import {fade, makeStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import {InputBase, Container, Typography} from "@material-ui/core";
+import {InputBase, Container, Typography, Grid} from "@material-ui/core";
 import {List ,ListItem ,ListItemText ,ListSubheader } from "@material-ui/core";
 
 import TextField from '@material-ui/core/TextField';
@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme) => ({
         padding: 0,
     },
     search: {
+        margin: theme.spacing(4),
+        margin: theme.spacing(4),
         flexGrow: 1,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -74,7 +76,7 @@ export default function ViewMemberInfo() {
     return (
     <Container>
 
-        <div className={classes.search}>
+        <Container className={classes.search}>
             <div className={classes.searchIcon}>
                 <SearchIcon/>
             </div>
@@ -86,29 +88,73 @@ export default function ViewMemberInfo() {
                 }}
                 inputProps={{'aria-label': 'search'}}
             />
-        </div>
+        </Container>
+      
+
+        <Grid container spacing={3} >
+            <Grid item xs={6}  style={{maxHeight: '100vh', overflow: 'auto'}}>
+                <Container>
+                    <div>
+                        <TextField
+                            id="birthday"
+                            label="Birth Date"
+                            defaultValue="2017-05-24"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </div>
+                </Container>
+            </Grid>
+            <Grid item xs={6}  style={{maxHeight: '100vh', overflow: 'auto'}}>
+                <Container>
+                    <div>
+                        <TextField
+                            id="username"
+                            label="User Name"
+                            defaultValue="John Doe"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </div>
+                </Container>
+            </Grid>
+        </Grid>
         
-        <div>
-            <TextField
-                id="username"
-                label="User Name"
-                defaultValue="John Doe"
-                InputProps={{
-                    readOnly: true,
-                }}
-            />
-        </div>
+        <Grid container spacing={3}>
+            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto' } }>
+                <Container>
+                    <div>
+                        <TextField
+                            id="registration-date"
+                            label="Registration Date"
+                            defaultValue="2017-05-24 13:42"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </div>
+                </Container>
+            </Grid>
+            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                <Container>
+                    <div>
+                        <TextField
+                            id="last-login-date"
+                            label="Last Login Date"
+                            defaultValue="2017-05-24 13:42"
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </div>
+                </Container>
+            </Grid>
+        </Grid>
+
         
-        <div>
-            <TextField
-                id="birthday"
-                label="Birth Date"
-                defaultValue="2017-05-24"
-                InputProps={{
-                    readOnly: true,
-                }}
-            />
-        </div>
+
 
         <Typography variant="h6" className={classes.title}>Membership List of Clubs/Sub-Clubs</Typography>
 
@@ -128,28 +174,8 @@ export default function ViewMemberInfo() {
                 ))}
             </List>
         </div>
-        
-        <div>
-            <TextField
-                id="registration-date"
-                label="Registration Date"
-                defaultValue="2017-05-24 13:42"
-                InputProps={{
-                    readOnly: true,
-                }}
-            />
-        </div>
-        
-        <div>
-            <TextField
-                id="last-login-date"
-                label="Last Login Date"
-                defaultValue="2017-05-24 13:42"
-                InputProps={{
-                    readOnly: true,
-                }}
-            />
-        </div>
+
+
         
         <Typography variant="h6" className={classes.title}>IP Login List</Typography>
 
