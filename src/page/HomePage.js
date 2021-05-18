@@ -171,7 +171,7 @@ export default function HomePage() {
                         </Box>
                         <Box className={classes.sectionBox}>
                             <ClubTree
-                                callbackOnTreeItemClick={(node) => handleClubTreeItemClick(node)}
+                                callbackOnTreeItemClick={handleClubTreeItemClick}
                                 clubs={clubs}/>
                         </Box>
                     </Box>
