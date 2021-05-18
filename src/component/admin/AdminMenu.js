@@ -16,14 +16,15 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const breadcrumbNameMap = {
     '/clubs-subclubs': "Clubs & Sub-clubs",
-    '/clubs-subclubs/manage-club': 'Manage club',
-    '/clubs-subclubs/manage-sub-club': 'Manage sub-club',
-    '/clubs-subclubs/create-club': 'Create club',
+    '/clubs-subclubs/manage-subclub': 'Manage sub-club',
+    '/clubs-subclubs/create-subclub': 'Create sub-club',
+
     '/members': 'Members',
+    '/members/member-info': 'View member information',
+
     '/reports': 'Reports',
-    '/reports/reported-members': 'Reported members',
-    '/reports/reported-content': 'Reported content',
-    '/reports/reported-clubs-sub-clubs': 'Reported clubs & sub-clubs',
+    '/reports/reported-posts': 'Reported posts',
+
 };
 
 function ListItemLink(props) {
@@ -64,14 +65,23 @@ const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
 
 export default function AdminMenu() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [openClubs, setOpenClubs] = React.useState(true);
+  const [openMembers, setOpenMembers] = React.useState(true);
+  const [openReports, setOpenReports] = React.useState(true);
 
-  const handleClick = () => {
-    setOpen((prevOpen) => !prevOpen);
+  const handleClickClubs = () => {
+    setOpenClubs((prevOpen) => !prevOpen);
+  };
+  const handleClickMembers = () => {
+    setOpenMembers((prevOpen) => !prevOpen);
+  };
+  const handleClickReports = () => {
+    setOpenReports((prevOpen) => !prevOpen);
   };
 
+
   return (
-    <MemoryRouter initialEntries={['/clubs-subclubs']} initialIndex={0}>
+    <MemoryRouter initialEntries={['/']} initialIndex={0}>
       <div className={classes.root}>
         <Route>
           {({ location }) => {
@@ -79,7 +89,7 @@ export default function AdminMenu() {
 
             return (
               <Breadcrumbs aria-label="breadcrumb">
-                <LinkRouter color="inherit" to="/admin">
+                <LinkRouter color="inherit" to="/">
                   Menu
                 </LinkRouter>
                 {pathnames.map((value, index) => {
@@ -102,30 +112,29 @@ export default function AdminMenu() {
         </Route>
         <nav className={classes.lists}>
           <List>
-            <ListItemLink to="/clubs-subclubs" open={open} onClick={handleClick} />
-            <Collapse component="li" in={open} timeout="auto" unmountOnExit>
+           
+            <ListItemLink to="/clubs-subclubs" open={openClubs} onClick={handleClickClubs} />
+            <Collapse component="li" in={openClubs} timeout="auto" unmountOnExit>
               <List disablePadding>
-                <ListItemLink to="/clubs-subclubs/manage-club" className={classes.nested} />
+                <ListItemLink to="/clubs-subclubs/create-subclub" className={classes.nested} />
               </List>
               <List disablePadding>
-                <ListItemLink to="/clubs-subclubs/manage-sub-club" className={classes.nested} />
+                <ListItemLink to="/clubs-subclubs/manage-subclub" className={classes.nested} />
               </List>
+
+            </Collapse>
+            
+            <ListItemLink to="/members" open={openMembers} onClick={(handleClickMembers)} />
+            <Collapse component="li" in={openMembers} timeout="auto" unmountOnExit>
               <List disablePadding>
-                <ListItemLink to="/clubs-subclubs/create-club" className={classes.nested} />
+                <ListItemLink to="/members/member-info" className={classes.nested} />
               </List>
             </Collapse>
-            <ListItemLink to="/members" />
 
-            <ListItemLink to="/reports" />
-            <Collapse component="li" in={open} timeout="auto" unmountOnExit>
+            <ListItemLink to="/reports" open={openReports} onClick={(handleClickReports)}/>
+            <Collapse component="li" in={openReports} timeout="auto" unmountOnExit>
               <List disablePadding>
-                <ListItemLink to="/reports/reported-members" className={classes.nested} />
-              </List>
-              <List disablePadding>
-                <ListItemLink to="/reports/reported-content" className={classes.nested} />
-              </List>
-              <List disablePadding>
-                <ListItemLink to="/reports/reported-clubs-sub-clubs" className={classes.nested} />
+                <ListItemLink to="/reports/reported-posts" className={classes.nested} />
               </List>
             </Collapse>
           </List>
