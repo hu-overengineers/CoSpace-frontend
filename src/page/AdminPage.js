@@ -3,23 +3,16 @@ import {Container, Divider, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import AdminMenu from '../component/admin/AdminMenu'
-import TabForDebug from '../component/admin/TabForDebug'
+import CreateClub from '../component/admin/CreateClub'
 
 const useStyles = makeStyles({
     root: {
-        marginTop: "24px" // I suppose this should not be in pixels
+        marginTop: "24px" 
     },
     divider: {
         marginTop: "8px",
         marginBottom: "8px"
-    },
-    feedItem: {
-        marginBottom: "12px",
-        marginTop: "12px",
-    },
-    sectionTitle: {
-        marginLeft: "12px",
-    },
+    }
 });
 
 
@@ -43,8 +36,9 @@ export default function AdminPage() {
                 </Grid>
 
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-
-                    <TabForDebug/>
+                        <Typography  variant="h4">Administration Panel</Typography>
+                        <Divider className={classes.divider}/>
+                        <CreateClub/>
                     
                 </Grid>
 
