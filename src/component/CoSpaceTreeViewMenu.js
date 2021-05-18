@@ -1,9 +1,11 @@
 import {makeStyles} from "@material-ui/core/styles";
+import TreeItem from "@material-ui/lab/TreeItem";
 import Box from "@material-ui/core/Box";
+import {Divider, Paper, Typography} from "@material-ui/core";
+import TreeView from "@material-ui/lab/TreeView";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import React from "react";
-import TreeItem from '@material-ui/lab/TreeItem';
-import CoSpaceTreeViewMenu from "./CoSpaceTreeViewMenu";
-
 
 const useStyles = makeStyles((theme) => ({
     divider: {
@@ -90,12 +92,13 @@ const useTreeItemStyles = makeStyles((theme) => ({
 }));
 
 function renderTree(node, classes, callback) {
-    const onClubClick = () => {
+    const onTreeItemClick = () => {
         callback(node);
     }
     return (
-        <TreeItem className={classes.root} onClick={onClubClick}
-                  key={node.name} nodeId={node.name} label={<Box className={classes.treeItemText}>{node.name}</Box>}
+        <TreeItem className={classes.root} onClick={onTreeItemClick}
+                      onLabelClick={event => {event.preventDefault() }}
+                  key={node.text} nodeId={node.text} label={<Box className={classes.treeItemText}>{node.text}</Box>}
                   classes={{
                       root: classes.root,
                       content: classes.content,
@@ -109,37 +112,30 @@ function renderTree(node, classes, callback) {
     );
 }
 
-export default function ClubTree({clubs, callbackOnTreeItemClick}) {
+export default function CoSpaceTreeViewMenu({title, menuItems, callbackOnTreeItemClick}) {
     const classes = useStyles();
     const treeClasses = useTreeItemStyles();
 
-    const nameToClubObject = {}
-    const mapNameToToClubObject = (club) => {
-        nameToClubObject[club.name] = club;
-        if (Array.isArray(club.children)) {
-            club.children.forEach(mapNameToToClubObject)
-        }
-    }
-    clubs.forEach(mapNameToToClubObject)
-
-    console.log(nameToClubObject)
-
-    const mapToMenuItem = (club) => {
-        return {text: club.name, children: Array.isArray(club.children) ? club.children.map((inner) => mapToMenuItem(inner)) : null}
-    }
-
-    const handleMenuItemClick = (menuItem) => {
-        console.log(`Menu Item:` );
-        console.log(menuItem)
-        console.log(`Club Obj:`);
-        console.log(nameToClubObject[menuItem.text])
-        callbackOnTreeItemClick(nameToClubObject[menuItem.text])
-    }
-
     return (
-        <CoSpaceTreeViewMenu
-            title={"Clubs & Subs"}
-            menuItems={clubs.map((club) => mapToMenuItem(club))}
-            callbackOnTreeItemClick={handleMenuItemClick}/>
+        <Paper variant="outlined">
+            <Box className={classes.sectionRoot}>
+                <Typography variant="h6" className={classes.sectionTitle}>
+                    {title}
+                </Typography>
+                <Divider className={classes.divider}/>
+                <TreeView
+                    className={classes.root}
+                    defaultCollapseIcon={<Box><ExpandMoreIcon className={treeClasses.treeItemIcon}/></Box>}
+                    defaultExpanded={menuItems.map((menuItem) => menuItem.text)}
+                    defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon}/>}>
+                    {menuItems.map((menuItem, index) => (
+                        <Box key={menuItem.text}>
+                            {renderTree(menuItem, treeClasses, callbackOnTreeItemClick)}
+                        </Box>
+                    ))}
+
+                </TreeView>
+            </Box>
+        </Paper>
     );
 }
