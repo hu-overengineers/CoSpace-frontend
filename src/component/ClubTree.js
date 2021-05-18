@@ -107,7 +107,7 @@ function renderTree(node, classes, callback) {
                       group: classes.group,
                       label: classes.label,
                   }}>
-            {Array.isArray(node.children) ? node.children.map((node) => renderTree(node, classes, callback)) : null}
+            {Array.isArray(node.children) ? node.children.map((childNode) => renderTree(childNode, classes, callback)) : null}
         </TreeItem>
     );
 }
@@ -129,7 +129,7 @@ export default function ClubTree({clubs, callbackOnTreeItemClick}) {
                     defaultExpanded={["1"]}
                     defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon}/>}>
                     {clubs.map((club, index) => (
-                        <Box>
+                        <Box key={club.key}>
                             {renderTree(club, treeClasses, callbackOnTreeItemClick)}
                         </Box>
                     ))}
