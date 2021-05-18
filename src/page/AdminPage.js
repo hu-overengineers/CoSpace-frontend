@@ -42,15 +42,17 @@ export default function AdminPage() {
                         <Typography  variant="h4">Administration Panel</Typography>
                         <Divider className={classes.divider}/>
                         
-                         {/* Show one of them: CreateClub, ManageClub, ViewMemberInfo or ViewMemberInfo*/}
-                        <CreateClub/>
-                        <Divider className={classes.divider}/>
-                        <ManageClub/>
-                        <Divider className={classes.divider}/>
+                         {/* Show one of them: 
+                                <CreateClub/>, 
+                                <ManageClub/>, 
+                                <ViewMemberInfo/>,
+                                <ReportedPosts/>
+                         */}
+                        
                         <ViewMemberInfo/>
-                        <Divider className={classes.divider}/>
-                        <ReportedPosts/>
-                        <Divider className={classes.divider}/>
+                        
+                        
+
                 </Grid>
 
                 <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
