@@ -35,16 +35,7 @@ function Menu({clubs, callbackOnTreeItemClick}) {
     );
 }
 
-function AdministrationPanel() {
-    const classes = useStyles();
 
-    return (
-        <Container>
-            <Typography variant="h4">Administration Panel</Typography>
-            <Divider className={classes.divider}/>
-        </Container>
-    );
-}
 
 function Overview() {
     const classes = useStyles();
