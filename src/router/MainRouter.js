@@ -31,18 +31,6 @@ export default function MainRouter() {
                     <Route path="/sign-in">
                         <SignInPage/>
                     </Route>
-                    <Route path="/admin/create-club">
-                        <CreateClub/>
-                    </Route>
-                    <Route path="/admin/manage-club">
-                        <ManageClub/>
-                    </Route>
-                    <Route path="/admin/view-member-info">
-                        <ViewMemberInfo/>
-                    </Route>
-                    <Route path="/admin/reported-posts">
-                        <ReportedPosts/>
-                    </Route>
                     <Route path="*">
                         <NotFoundPage/>
                     </Route>
