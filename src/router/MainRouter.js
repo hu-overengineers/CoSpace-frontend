@@ -6,6 +6,10 @@ import ProfilePage from "../page/ProfilePage";
 import NotFoundPage from "../page/NotFoundPage";
 import SignUpPage from "../page/SignUpPage";
 import SignInPage from "../page/SignInPage";
+import CreateClub from "../component/admin/CreateClub";
+import ManageClub from "../component/admin/ManageClub";
+import ViewMemberInfo from "../component/admin/ViewMemberInfo";
+import ReportedPosts from "../component/admin/ReportedPosts";
 
 export default function MainRouter() {
     return (
@@ -26,6 +30,18 @@ export default function MainRouter() {
                     </Route>
                     <Route path="/sign-in">
                         <SignInPage/>
+                    </Route>
+                    <Route path="/admin/create-club">
+                        <CreateClub/>
+                    </Route>
+                    <Route path="/admin/manage-club">
+                        <ManageClub/>
+                    </Route>
+                    <Route path="/admin/view-member-info">
+                        <ViewMemberInfo/>
+                    </Route>
+                    <Route path="/admin/reported-posts">
+                        <ReportedPosts/>
                     </Route>
                     <Route path="*">
                         <NotFoundPage/>

@@ -97,7 +97,9 @@ function renderTree(node, classes, callback) {
     }
     return (
         <TreeItem className={classes.root} onClick={onTreeItemClick}
-                      onLabelClick={event => {event.preventDefault() }}
+                  onLabelClick={event => {
+                      event.preventDefault()
+                  }}
                   key={node.text} nodeId={node.text} label={<Box className={classes.treeItemText}>{node.text}</Box>}
                   classes={{
                       root: classes.root,

@@ -1,11 +1,15 @@
-import { Container } from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import React from "react";
+import {withRouter} from 'react-router-dom';
 
 
-export default function ManageClub() { 
+function ManageClub() {
 
     return (
-    <Container>
-        ManageClub
-    </Container>)
+        <Container>
+            ManageClub
+        </Container>)
 }
+
+
+export default withRouter(ManageClub);
