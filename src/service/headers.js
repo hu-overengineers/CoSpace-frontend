@@ -5,14 +5,15 @@
 
 import {AuthService} from "./AuthService";
 
-export const headersWithToken = () => {
+export const headersWithToken = (params) => {
     const token = AuthService.getJwtToken();
     return {
         headers: {
             "Authorization": `Bearer ${token}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-        }
+        },
+        params: params
     }
 }
 
