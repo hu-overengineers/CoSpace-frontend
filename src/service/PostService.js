@@ -8,7 +8,7 @@ import {
     SUBCLUB_POSTS,
     TRENDS,
     UPVOTE_POST
-} from "../ApiConfig";
+} from "../api_config";
 import {headersWithToken} from "./headers";
 
 const getPosts = (subClub) => {
