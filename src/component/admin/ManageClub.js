@@ -12,4 +12,4 @@ function ManageClub() {
 }
 
 
-export default withRouter(ManageClub);
+export default ManageClub;

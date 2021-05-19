@@ -198,4 +198,4 @@ function ViewMemberInfo() {
 }
 
 
-export default withRouter(ViewMemberInfo);
+export default ViewMemberInfo;

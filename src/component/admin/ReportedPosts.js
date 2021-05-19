@@ -12,4 +12,4 @@ function ReportedPosts() {
 }
 
 
-export default withRouter(ReportedPosts);
+export default ReportedPosts;

@@ -247,4 +247,4 @@ function CreateClub() {
 }
 
 
-export default withRouter(CreateClub);
+export default CreateClub;
