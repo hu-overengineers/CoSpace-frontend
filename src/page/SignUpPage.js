@@ -131,13 +131,13 @@ export default function SignUpPage() {
                                 "password": password
                             }).then(r => {
                                 console.log("Response: " + r.data.toString())
-                                    setSnackbarSeverity("success");
-                                    setSnackbarMessage("You've registered successfully!");
-                                    setSnackbarOpen(true);
-                                    delay(1000).then(() => {
-                                            history.push("/sign-in");
-                                        }
-                                    );
+                                setSnackbarSeverity("success");
+                                setSnackbarMessage("You've registered successfully!");
+                                setSnackbarOpen(true);
+                                delay(1000).then(() => {
+                                        history.push("/sign-in");
+                                    }
+                                );
                             }).catch(e => {
                                 setSnackbarSeverity("error");
                                 if (e.response.status === 409) {

@@ -88,7 +88,11 @@ export default function AboutClub({clubname, description, timeCreated, numberOfM
                     </Grid>
                     <Grid key={2} item>
                         <Typography variant="body1">
-                            {`Created, ${new Date(timeCreated).toLocaleString( navigator.language,{year: 'numeric', month: 'long', day: 'numeric' })}`}
+                            {`Created, ${new Date(timeCreated).toLocaleString(navigator.language, {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}`}
                         </Typography>
                     </Grid>
                 </Grid>

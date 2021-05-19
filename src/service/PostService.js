@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, CREATE_POST, GET_POSTS, REPORT_POST, TRENDS, SUBCLUB_POSTS} from "../ApiConfig";
+import {BASE_URL, CREATE_POST, GET_POSTS, REPORT_POST, SUBCLUB_POSTS, TRENDS} from "../ApiConfig";
 import {headersWithToken} from "./headers";
 
 const getPosts = (subClub) => {

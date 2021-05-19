@@ -108,7 +108,8 @@ export function PostFeedItem({props}) {
             console.log(r);
             handleReportDialogClose();
             // TODO: Maybe send a feedback that it was successfully reported.
-        })}
+        })
+    }
 
     return (
         <Box>

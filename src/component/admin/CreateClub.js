@@ -1,7 +1,7 @@
 import React from "react";
-import {Container,  Typography} from '@material-ui/core';
+import {Container, Typography} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
@@ -18,15 +18,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
+import {withRouter} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-      margin: theme.spacing(1),
-      minWidth: 200,
+        margin: theme.spacing(1),
+        minWidth: 200,
     },
     selectEmpty: {
-      marginTop: theme.spacing(2),
+        marginTop: theme.spacing(2),
     },
     root: {
         display: 'flex',
@@ -35,19 +35,19 @@ const useStyles = makeStyles((theme) => ({
         listStyle: 'none',
         padding: theme.spacing(0.5),
         margin: 0,
-      },
-      chip: {
+    },
+    chip: {
         margin: theme.spacing(0.5),
-      },
-      tagText: {
+    },
+    tagText: {
         display: 'flex',
         width: 100,
         flexWrap: 'wrap',
-      },
+    },
 
-  }));
+}));
 
-export default function CreateClub() {
+function CreateClub() {
     const classes = useStyles();
 
     // Dialog ----------------------------------
@@ -58,16 +58,16 @@ export default function CreateClub() {
     const handleClickOpen = () => {
         setOpen(true);
     };
-    
+
     const handleClose = () => {
         setOpen(false);
     };
 
     // ------------------------------------------------
     const [chipData, setChipData] = React.useState([
-        { key: 0, label: 'game' },
-        { key: 1, label: 'gta5' },
-        { key: 2, label: 'video-game' },
+        {key: 0, label: 'game'},
+        {key: 1, label: 'gta5'},
+        {key: 2, label: 'video-game'},
     ]);
 
     const handleChipDelete = (chipToDelete) => () => {
@@ -86,7 +86,7 @@ export default function CreateClub() {
         var i;
         var flag = false;
         for (i = 0; i < chipData.length; i++) {
-            if (chipData[i].label === tag){
+            if (chipData[i].label === tag) {
                 flag = true;
             }
             chipData[i].key = i;
@@ -95,37 +95,37 @@ export default function CreateClub() {
         if (flag) {
 
         } else {
-            newChips[i] = { key: i, label: tag };
+            newChips[i] = {key: i, label: tag};
         }
         setChipData(newChips);
     };
 
     // ------------------------------------------------
     const [selectedClubRequestName, setSelectedClubRequestName] = React.useState("");
-  
+
     const handleClubRequestNameChange = (event) => {
         setSelectedClubRequestName(event.target.value);
     };
     // ------------------------------------------------
-    
+
     const [clubName, setClubName] = React.useState("");
-  
+
     const handleClubNameChange = (event) => {
         setClubName(event.target.value);
     };
 
     // ------------------------------------------------
     const [clubDescription, setClubDescription] = React.useState("");
-  
+
     const handleClubDescriptionChange = (event) => {
         setClubDescription(event.target.value);
     };
 
-    return ( 
+    return (
         <Container>
-        
-            <div> 
-                <FormControl  className={classes.formControl}>
+
+            <div>
+                <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-native-helper">Club Request</InputLabel>
                     <NativeSelect
                         value={selectedClubRequestName.name}
@@ -133,7 +133,7 @@ export default function CreateClub() {
                         inputProps={{
                             name: '',
                         }}>
-                        <option aria-label="None" value="" />
+                        <option aria-label="None" value=""/>
                         <option value={10}>Game</option>
                         <option value={20}>GTA5</option>
                     </NativeSelect>
@@ -146,7 +146,7 @@ export default function CreateClub() {
                     fullWidth
                     id="standard-full-width"
                     label="Club Name"
-                    style={{ margin: 8 }}
+                    style={{margin: 8}}
                     placeholder="Club name"
                     margin="normal"
                     InputLabelProps={{shrink: true,}}
@@ -154,12 +154,12 @@ export default function CreateClub() {
                     onChange={handleClubNameChange}
                 />
             </div>
-                    
+
             <div>
                 <TextField
                     id="standard-full-width"
                     label="Club Description"
-                    style={{ margin: 8 }}
+                    style={{margin: 8}}
                     placeholder="Club description"
                     helperText="Description should include bla bla"
                     fullWidth
@@ -169,24 +169,24 @@ export default function CreateClub() {
                     onChange={handleClubDescriptionChange}
                 />
             </div>
-            
+
             <div className={classes.root}><Typography>Related Keywords</Typography></div>
             <div className={classes.root}>
                 {chipData.map((data) => {
                     return (
-                    <li key={data.key}>
-                        <Chip
-                            label={data.label}
-                            onDelete={handleChipDelete(data)}
-                            className={classes.chip}
-                        />
-                    </li>
+                        <li key={data.key}>
+                            <Chip
+                                label={data.label}
+                                onDelete={handleChipDelete(data)}
+                                className={classes.chip}
+                            />
+                        </li>
                     );
                 })}
 
                 <div>
                     <IconButton aria-label="add" onClick={addTagClick}>
-                        <AddCircleOutlineIcon />
+                        <AddCircleOutlineIcon/>
                     </IconButton>
                 </div>
                 <div className={classes.tagText}>
@@ -194,7 +194,7 @@ export default function CreateClub() {
                         placeholder="some-tag"
                         className={clsx(classes.margin, classes.textField)}
                         InputProps={{
-                        startAdornment: <InputAdornment position="start">#</InputAdornment>,
+                            startAdornment: <InputAdornment position="start">#</InputAdornment>,
                         }}
                         value={tag}
                         onChange={handleTagTextFieldChange}
@@ -211,25 +211,26 @@ export default function CreateClub() {
                     className={classes.submit}
                     onClick={handleClickOpen}
                 >
-                Create
+                    Create
                 </Button>
-                    <Dialog
-                        fullScreen={fullScreen}
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="responsive-dialog-title"
-                    >
-                    <DialogTitle id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <Typography>Club Name: {clubName}</Typography>
-                                <Typography>Club Description: {clubDescription} </Typography>
-                                <Typography>Related Keywords: {chipData.map((chip) => (
-                                        chip.label + " "
-                                ))}</Typography>
-                                 
-                            </DialogContentText>
-                        </DialogContent>
+                <Dialog
+                    fullScreen={fullScreen}
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="responsive-dialog-title"
+                >
+                    <DialogTitle
+                        id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            <Typography>Club Name: {clubName}</Typography>
+                            <Typography>Club Description: {clubDescription} </Typography>
+                            <Typography>Related Keywords: {chipData.map((chip) => (
+                                chip.label + " "
+                            ))}</Typography>
+
+                        </DialogContentText>
+                    </DialogContent>
                     <DialogActions>
                         <Button autoFocus onClick={handleClose} color="primary">
                             Cancel
@@ -237,10 +238,13 @@ export default function CreateClub() {
                         <Button onClick={handleClose} color="primary" autoFocus>
                             Create
                         </Button>
-                        </DialogActions>
+                    </DialogActions>
                 </Dialog>
             </div>
 
         </Container>);
 
 }
+
+
+export default CreateClub;

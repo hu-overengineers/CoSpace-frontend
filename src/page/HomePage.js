@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import {Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -226,11 +226,11 @@ export default function HomePage() {
                                 events={"There are no events."}/>
                         </Box>
                         {/* TODO: Uncomment when available.
-                             <Box className={classes.sectionBox}>
+                            <Box className={classes.sectionBox}>
                                 <ModeratorNotesSection
                                     notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                             </Box>
-                            */}
+                         */}
                     </Box>
                 </Grid>
             </Grid>

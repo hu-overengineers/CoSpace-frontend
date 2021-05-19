@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import ClubTree from '../component/ClubTree';
 import UserInfoContainer from '../component/UserInfoContainer';
-import { AuthService } from '../service/AuthService';
+import {AuthService} from '../service/AuthService';
 import {useHistory} from 'react-router-dom';
 
 export default function ProfilePage() {
@@ -41,14 +41,14 @@ export default function ProfilePage() {
     }
 
 
-
     return (
         <Grid container className={classes.root}>
 
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <ClubTree clubs={clubs} callbackOnTreeItemClick={(id) => {}}/>
+                <ClubTree clubs={clubs} callbackOnTreeItemClick={(id) => {
+                }}/>
             </Grid>
-            
+
             <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Container>
                     <List>
@@ -59,30 +59,30 @@ export default function ProfilePage() {
                     </List>
                 </Container>
             </Grid>
-            
+
             <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <UserInfoContainer/>
                 <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        onClick={(event) => {
-                            AuthService.logout()
-                            history.push("/sign-in")
-                        }}
-                    >
-                       Logout
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={(event) => {
+                        AuthService.logout()
+                        history.push("/sign-in")
+                    }}
+                >
+                    Logout
                 </Button>
-                
+
                 <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.submit}
-                        onClick={(event) => {
-                            history.push("/admin")
-                        }}
-                    >
-                       Admin Panel
+                    variant="contained"
+                    color="secondary"
+                    className={classes.submit}
+                    onClick={(event) => {
+                        history.push("/admin")
+                    }}
+                >
+                    Admin Panel
                 </Button>
             </Grid>
 
