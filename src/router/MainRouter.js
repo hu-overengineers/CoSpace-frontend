@@ -6,10 +6,7 @@ import ProfilePage from "../page/ProfilePage";
 import NotFoundPage from "../page/NotFoundPage";
 import SignUpPage from "../page/SignUpPage";
 import SignInPage from "../page/SignInPage";
-import CreateClub from "../component/admin/CreateClub";
-import ManageClub from "../component/admin/ManageClub";
-import ViewMemberInfo from "../component/admin/ViewMemberInfo";
-import ReportedPosts from "../component/admin/ReportedPosts";
+
 
 export default function MainRouter() {
     return (
