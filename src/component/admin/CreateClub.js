@@ -353,6 +353,36 @@ function CreateClub() {
                             </Button>
                        </Container>
                 </Grid>
+                    <Container>
+
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                    >
+                        <DialogTitle
+                            id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                <Typography>Club Name: {clubName}</Typography>
+                                <Typography>Club Description: {clubDescription} </Typography>
+                                <Typography>Related Keywords: {chipData.map((chip) => (
+                                    chip.label + " "
+                                ))}</Typography>
+
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button autoFocus onClick={handleClose} color="primary">
+                                Cancel
+                            </Button>
+                            <Button onClick={handleClose} color="primary" autoFocus>
+                                Create
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+            </Container>
 
             </Grid>
 
