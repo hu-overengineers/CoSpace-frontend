@@ -21,7 +21,8 @@ import {
     DialogContentText,
     DialogTitle,
     Menu,
-    MenuItem, Snackbar,
+    MenuItem,
+    Snackbar,
     TextField
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -69,7 +70,14 @@ export function PostFeedItem({props}) {
 
     const handleUpVote = () => {
         PostService.upvotePost(props.id).then(response => {
-            setVote(response.data.voting);
+            console.log(response);
+            if (response.data === "") {
+                setSnackbarSeverity("error");
+                setSnackbarMessage("You are not authorized to vote on this post!");
+                setSnackbarOpen(true);
+            } else {
+                setVote(response.data.voting);
+            }
         }).catch(e => {
             console.error(e);
             setSnackbarSeverity("error");
@@ -84,7 +92,13 @@ export function PostFeedItem({props}) {
 
     const handleDownVote = () => {
         PostService.downvotePost(props.id).then(response => {
-            setVote(response.data.voting);
+            if (response.data === "") {
+                setSnackbarSeverity("error");
+                setSnackbarMessage("You are not authorized to vote on this post!");
+                setSnackbarOpen(true);
+            } else {
+                setVote(response.data.voting);
+            }
         }).catch(e => {
             console.error(e);
             setSnackbarSeverity("error");
