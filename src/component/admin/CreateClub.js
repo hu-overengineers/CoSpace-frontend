@@ -64,6 +64,21 @@ function CreateClub() {
     const handleCloseCreateClub = () => {
         setCreateClub(false);
     };
+    // ------------------------------------------------
+
+    const [openQuestionary, setQuestionary] = React.useState(false);
+
+    const handleClickOpenQuestionary = () => {
+        setQuestionary(true);
+    };
+
+    const handleClickCloseQuestionary = () => {
+        setQuestionary(false);
+    };
+
+
+    
+
 
     // ------------------------------------------------
     const [chipData, setChipData] = React.useState([
@@ -289,48 +304,62 @@ function CreateClub() {
                     </Container>
 
                 </Grid>
+                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                    <Container>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            onClick={handleClickOpenQuestionary}
+                        >
+                            Add a questionary
+                        </Button>
+                        <Dialog open={openQuestionary} onClose={handleClickCloseQuestionary} aria-labelledby="form-dialog-title">
+                            <DialogTitle id="form-dialog-title">Create a questionary</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    To add a new sub-club to this website, please create a questionary;
+                                </DialogContentText>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="some label"
+                                    type="email"
+                                    fullWidth
+                                />
+
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClickCloseQuestionary} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleClickCloseQuestionary} color="primary">
+                                    Add
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Container>
+                </Grid>
+                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                       <Container>
+                        <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={handleClickOpen}
+                            >
+                                Create
+                            </Button>
+                       </Container>
+                </Grid>
+
             </Grid>
 
             
 
 
-            <Container>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    onClick={handleClickOpen}
-                >
-                    Create
-                </Button>
-                <Dialog
-                    fullScreen={fullScreen}
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="responsive-dialog-title"
-                >
-                    <DialogTitle
-                        id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            <Typography>Club Name: {clubName}</Typography>
-                            <Typography>Club Description: {clubDescription} </Typography>
-                            <Typography>Related Keywords: {chipData.map((chip) => (
-                                chip.label + " "
-                            ))}</Typography>
 
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button autoFocus onClick={handleClose} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClick={handleClose} color="primary" autoFocus>
-                            Create
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </Container>
 
         </Container>);
 
