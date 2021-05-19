@@ -100,11 +100,7 @@ export function PostFeedItem({props}) {
     };
 
     const handleSendReport = () => {
-        PostService.reportPost({
-            reportAuthor: AuthService.getUsername(),
-            reportMessage: reportMessage,
-            reportedPostId: props.id.toString(),
-        }).then(r => {
+        PostService.reportPost(AuthService.getUsername(), reportMessage, props.id).then(r => {
             console.log(r);
             handleReportDialogClose();
             // TODO: Maybe send a feedback that it was successfully reported.

@@ -13,8 +13,8 @@ const createPost = (newPost) => {
     return axios.post(BASE_URL + CREATE_POST, newPost, headersWithToken());
 }
 
-const reportPost = (report) => {
-    return axios.post(BASE_URL + REPORT_POST, report, headersWithToken());
+const reportPost = (author, message, postId) => {
+    return axios.post(BASE_URL + REPORT_POST, {author: author, content: message, postId: postId}, headersWithToken());
 }
 
 export const PostService = {getPosts, createPost, reportPost};
