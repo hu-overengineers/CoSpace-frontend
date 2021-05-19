@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, CLUB_LIST, SUB_CLUB_LIST, SUB_CLUB_STATS} from "../ApiConfig";
+import {BASE_URL, CLUB_LIST, SUB_CLUB_LIST, SUB_CLUB_STATS} from "../api_config";
 
 const getClubs = () => {
     return axios.get(BASE_URL + CLUB_LIST)
