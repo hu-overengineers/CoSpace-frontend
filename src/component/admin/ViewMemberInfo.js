@@ -2,8 +2,6 @@ import React from "react";
 import {fade, makeStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography} from "@material-ui/core";
-import {withRouter} from 'react-router-dom';
-
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
