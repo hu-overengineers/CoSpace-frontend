@@ -9,11 +9,12 @@ import Questionnaire from '../component/Questionnaire';
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {
-        padding: theme.spacing(3)
+        margin: theme.spacing(5),
+
+        
     },
     gridItem: {
-      padding: theme.spacing(3),
-      marginTop:theme.spacing(3),
+        padding: theme.spacing(2)
     },
     panel: {
     }
@@ -23,16 +24,19 @@ export default function EnrollPage() {
     const classes = useStyles();
 
 
+    const handleClubClick = (club) => {
+        console.log("clicked club", club);
+    }
+
+
     return (
         <div>
-            <Grid container  spacing={3} className={classes.gridContainer} style={{ backgroundColor: '#cfe8fc'}}>
-                <Grid item xs={6} className={classes.gridItem}>
-                    <Paper className={classes.panel}>
-                        <AllClubs></AllClubs>
-                    </Paper>
+            <Grid container  spacing={1} className={classes.gridContainer}>
+                <Grid item xs={4} className={classes.gridItem}>
+                        <AllClubs className={classes.panel} callbackOnClubClick={(club) => {handleClubClick(club)}}></AllClubs>
                 </Grid>
 
-                <Grid item xs={6} className={classes.gridItem}>
+                <Grid item xs={8} className={classes.gridItem}>
                     <Paper className={classes.panel}>
                         <Questionnaire></Questionnaire>
                     </Paper>
