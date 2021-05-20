@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container, Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import {Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -13,8 +13,8 @@ import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
 import PostFeed from "../component/PostFeed";
 import {ClubService} from "../service/ClubService";
-import ModeratorNotesSection from "../component/ModeratorNotesSection"
 import {PostService} from "../service/PostService";
+import {subDays} from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -36,8 +36,20 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '100vh',
         overflow: 'auto',
     },
-    gridColumnContainer: {
-        marginTop: theme.spacing(2)
+    gridLeftColumnBox: {
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
+    },
+    gridMiddleColumnBox: {
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(0),
+        marginRight: theme.spacing(0)
+    },
+    gridRightColumnBox: {
+        marginTop: theme.spacing(2),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
     },
     sectionBox: {
         marginBottom: theme.spacing(2)
@@ -65,12 +77,18 @@ export default function HomePage() {
 
     // Clubs and sub-clubs
     const [clubs, setClubs] = useState([]);
-    const [selectedFeed, selectFeed] = useState({name: "popular", details: "..."});
+    const [selectedFeed, selectFeed] = useState({
+        name: "popular",
+        details: "...",
+        created: null,
+        numberOfMembers: null
+    });
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const [postsInFeed, setPostsInFeed] = useState([]);
+    const [stats, setStats] = useState({numberOfMembers: 0, numberOfPostsInLastWeek: 0});
 
     // Get club and sub-clubs
     useEffect(() => {
@@ -87,6 +105,17 @@ export default function HomePage() {
             console.log(`Fetched posts of ${selectedFeed.name}`);
             console.log(response.data)
             setPostsInFeed(response.data);
+
+            ClubService.getSubClubStatistics(selectedFeed.name, subDays(new Date(), 7), new Date()).then(response => {
+                console.log(`Fetched stats of ${selectedFeed.name}`);
+                console.log(response.data);
+                setStats({
+                    numberOfMembers: response.data.numberOfMembers,
+                    numberOfPostsInLastWeek: response.data.numberOfPostsInTimeFrame
+                })
+            }).catch(response => {
+                console.error(response);
+            });
         }).catch(response => {
             console.log(`No posts in ${selectedFeed.name}`);
             setPostsInFeed([]);
@@ -117,7 +146,7 @@ export default function HomePage() {
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
                 <Grid item xs={3} className={classes.gridItem}>
-                    <Container className={classes.gridColumnContainer}>
+                    <Box className={classes.gridLeftColumnBox}>
                         <Box className={classes.sectionBox}>
                             <Section title={"Browse"} content={
                                 <List className={classes.list}>
@@ -142,65 +171,67 @@ export default function HomePage() {
                         </Box>
                         <Box className={classes.sectionBox}>
                             <ClubTree
-                                callbackOnTreeItemClick={(node) => handleClubTreeItemClick(node)}
+                                callbackOnTreeItemClick={handleClubTreeItemClick}
                                 clubs={clubs}/>
                         </Box>
-                    </Container>
+                    </Box>
                 </Grid>
 
 
                 <Grid item xs={6} className={classes.gridItem}>
-                    <Container className={classes.gridColumnContainer}>
-                        <Box>
-                            <Box display="flex">
-                                <ToggleButtonGroup
-                                    className={classes.sortingFeedToggleGroup}
-                                    value={sortingOrder}
-                                    exclusive
-                                    onChange={handleSortingOrder}
-                                    aria-label="text alignment">
-                                    <ToggleButton value="hot" aria-label="left aligned">
-                                        <Whatshot/>
-                                    </ToggleButton>
-                                    <ToggleButton value="new" aria-label="centered">
-                                        <FiberNew/>
-                                    </ToggleButton>
-                                    <ToggleButton value="top" aria-label="right aligned">
-                                        <TrendingUp/>
-                                    </ToggleButton>
-                                </ToggleButtonGroup>
-                                <Button size="medium"
-                                        variant="contained"
-                                        color="primary"
-                                        startIcon={<Edit/>}
-                                        onClick={() => {
-                                            handleDialogOpen()
-                                        }}
-                                        disableElevation>CREATE POST</Button>
-                            </Box>
-                            <Divider className={classes.divider}/>
-
-                            <PostFeed posts={postsInFeed} subclub={selectedFeed.name}/>
+                    <Box className={classes.gridMiddleColumnBox}>
+                        <Box display="flex">
+                            <ToggleButtonGroup
+                                className={classes.sortingFeedToggleGroup}
+                                value={sortingOrder}
+                                exclusive
+                                onChange={handleSortingOrder}
+                                aria-label="text alignment">
+                                <ToggleButton value="hot" aria-label="left aligned">
+                                    <Whatshot/>
+                                </ToggleButton>
+                                <ToggleButton value="new" aria-label="centered">
+                                    <FiberNew/>
+                                </ToggleButton>
+                                <ToggleButton value="top" aria-label="right aligned">
+                                    <TrendingUp/>
+                                </ToggleButton>
+                            </ToggleButtonGroup>
+                            <Button size="medium"
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<Edit/>}
+                                    onClick={() => {
+                                        handleDialogOpen()
+                                    }}
+                                    disableElevation>CREATE POST</Button>
                         </Box>
-                    </Container>
+                        <Divider className={classes.divider}/>
+
+                        <PostFeed posts={postsInFeed} subclub={selectedFeed.name}/>
+                    </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
-                    <Container className={classes.gridColumnContainer}>
-                        <Box>
-                            <Box className={classes.sectionBox}>
-                                <AboutClub clubname={selectedFeed.name}
-                                           description={selectedFeed.details}/>
-                            </Box>
-                            <Box className={classes.sectionBox}>
-                                <EventContainer
-                                    events={"There are no events."}/>
-                            </Box>
+                    <Box className={classes.gridRightColumnBox}>
+                        <Box className={classes.sectionBox}>
+                            <AboutClub clubname={selectedFeed.name}
+                                       description={selectedFeed.details}
+                                       timeCreated={selectedFeed.created}
+                                       numberOfMembers={stats.numberOfMembers}
+                                       numberOfPostsInLastWeek={stats.numberOfPostsInLastWeek}
+                            />
+                        </Box>
+                        <Box className={classes.sectionBox}>
+                            <EventContainer
+                                events={"There are no events."}/>
+                        </Box>
+                        {/* TODO: Uncomment when available.
                             <Box className={classes.sectionBox}>
                                 <ModeratorNotesSection
                                     notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
                             </Box>
-                        </Box>
-                    </Container>
+                         */}
+                    </Box>
                 </Grid>
             </Grid>
             <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}

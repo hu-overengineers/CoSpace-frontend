@@ -71,17 +71,18 @@ export default function PrimaryAppBar() {
         <div className={classes.grow}>
             <AppBar position="fixed" variant="outlined" className={classes.appBar}>
                 <Toolbar>
-                    <img src={logo} alt="CoSpace" className={classes.logo} color={'#00e3aa'}
+                    <img src={logo} style={{"cursor": "pointer"}} alt="CoSpace" className={classes.logo}
+                         color={'#00e3aa'}
                          onClick={() => history.push("/")}/>
                     <Typography
                         variant="h6"
-                        style={{color: '#00e3aa', fontWeight: 'bold'}}
+                        style={{color: '#00e3aa', fontWeight: 'bold', "cursor": "pointer"}}
                         className={classes.title}
                         onClick={() => history.push("/")}
                     >
                         CoSpace
                     </Typography>
-
+                    
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon/>

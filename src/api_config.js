@@ -6,14 +6,13 @@ export const REGISTER = "/auth/register";
 
 export const CLUB_LIST = "/club/all";
 export const SUB_CLUB_LIST = "/subclub/all";
+export const SUB_CLUB_STATS = "/subclub/statistics";
 
-export const SUB_CLUB_INFO = "/subclub/info";
-export const CLUB_INFO = "/club/info";
-
-// export const GET_POSTS = "/post/get";
 export const GET_POSTS = "/post";
 export const CREATE_POST = "/post/create";
 export const REPORT_POST = "/post/report";
+export const UPVOTE_POST = "/post/upvote";
+export const DOWNVOTE_POST = "/post/downvote";
 export const TRENDS = "/trends";
 export const SUBCLUB_POSTS = "/subClubPosts";
 

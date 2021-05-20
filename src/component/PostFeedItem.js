@@ -22,11 +22,13 @@ import {
     DialogTitle,
     Menu,
     MenuItem,
+    Snackbar,
     TextField
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {PostService} from "../service/PostService";
 import {AuthService} from "../service/AuthService";
+import {Alert} from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -64,15 +66,63 @@ export function PostFeedItem({props}) {
     const classes = useStyles();
 
     // Up-voting & down-voting
-    const [vote, setVote] = useState(0);
+    const [vote, setVote] = useState(props.voting);
 
     const handleUpVote = () => {
-        setVote(vote + 1);
+        PostService.upvotePost(props.id).then(response => {
+            console.log(response);
+            if (response.data === "") {
+                setSnackbarSeverity("error");
+                setSnackbarMessage("You are not authorized to vote on this post!");
+                setSnackbarOpen(true);
+            } else {
+                setVote(response.data.voting);
+            }
+        }).catch(e => {
+            console.error(e);
+            setSnackbarSeverity("error");
+            if (e.response.status === 403) {
+                setSnackbarMessage("You are not authorized to vote on this post!");
+            } else {
+                setSnackbarMessage("Something went wrong!");
+            }
+            setSnackbarOpen(true);
+        });
     }
 
     const handleDownVote = () => {
-        setVote(vote - 1);
+        PostService.downvotePost(props.id).then(response => {
+            if (response.data === "") {
+                setSnackbarSeverity("error");
+                setSnackbarMessage("You are not authorized to vote on this post!");
+                setSnackbarOpen(true);
+            } else {
+                setVote(response.data.voting);
+            }
+        }).catch(e => {
+            console.error(e);
+            setSnackbarSeverity("error");
+            if (e.response.status === 403) {
+                setSnackbarMessage("You are not authorized to vote on this post!");
+            } else {
+                setSnackbarMessage("Something went wrong!");
+            }
+            setSnackbarOpen(true);
+        });
     }
+
+    // Snackbar
+    const [openSnackbar, setSnackbarOpen] = React.useState(false);
+    const [severity, setSnackbarSeverity] = React.useState("success");
+    const [snackbarMessage, setSnackbarMessage] = React.useState("Welcome back!");
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackbarOpen(false);
+    };
 
     // Post menu
     const [postMenuAnchorElement, setPostMenuAnchorElement] = React.useState(null);
@@ -100,19 +150,22 @@ export function PostFeedItem({props}) {
     };
 
     const handleSendReport = () => {
-        PostService.reportPost({
-            reportAuthor: AuthService.getUsername(),
-            reportMessage: reportMessage,
-            reportedPostId: props.id.toString(),
-        }).then(r => {
+        PostService.reportPost(AuthService.getUsername(), reportMessage, props.id).then(r => {
             console.log(r);
             handleReportDialogClose();
-            // TODO: Maybe send a feedback that it was successfully reported.
-        })}
+            setSnackbarSeverity("success");
+            setSnackbarMessage("Thanks for trying to make CoSpace a better place!");
+            setSnackbarOpen(true);
+        }).catch(e => {
+            console.error(e);
+            setSnackbarSeverity("error");
+            setSnackbarMessage("Something went wrong while reporting the post! Try again later.");
+            setSnackbarOpen(true);
+        });
+    }
 
     return (
         <Box>
-
             <Card variant="outlined" className={classes.root}>
                 <CardHeader
                     avatar={
@@ -202,6 +255,11 @@ export function PostFeedItem({props}) {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <Snackbar open={openSnackbar} autoHideDuration={5000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity={severity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 }

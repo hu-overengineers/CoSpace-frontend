@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, CLUB_LIST, SUB_CLUB_INFO, SUB_CLUB_LIST} from "../ApiConfig";
+import {BASE_URL, CLUB_LIST, SUB_CLUB_LIST, SUB_CLUB_STATS} from "../api_config";
 
 const getClubs = () => {
     return axios.get(BASE_URL + CLUB_LIST)
@@ -9,21 +9,42 @@ const getSubClubs = () => {
     return axios.get(BASE_URL + SUB_CLUB_LIST)
 }
 
-const getSubClubDetails = (subClubId) => {
-    return axios.get(BASE_URL + SUB_CLUB_INFO, {params: {sub_club_id: subClubId}})
-}
-
-const getClubDetails = (clubId) => {
-    return axios.get(BASE_URL + SUB_CLUB_INFO, {params: {club_id: clubId}})
+const getSubClubStatistics = (subClubName, startTime, endTime) => {
+    return axios.get(BASE_URL + SUB_CLUB_STATS, {
+        params: {
+            subClubName: subClubName,
+            timeStart: startTime.getTime(),
+            timeEnd: endTime.getTime()
+        }
+    });
 }
 
 const parseSubClubs = (subClubs) => {
+
+    const renamedSubClubs = []
+
+    for (let i = 0; i < subClubs.length; i++) {
+        const element = subClubs[i];
+        let rns = {
+            name: element.name,
+            details: element.details,
+            rating: element.rating,
+            key: element.id,
+            uid: element.id,
+            parentName: element.parentName,
+            created: element.created
+        };
+        renamedSubClubs.push(rns);
+    }
+
+    subClubs = renamedSubClubs;
 
     const clubNames = [...new Set(subClubs.map(subclub => subclub.parentName))]
     const clubs = []
     for (let clb = 0; clb < clubNames.length; clb++) {
         let clubObj = {
             name: clubNames[clb],
+            key: clb,
             uid: clb,
             children: subClubs.filter(function (subc) {
                 return subc.parentName === clubNames[clb]
@@ -34,4 +55,5 @@ const parseSubClubs = (subClubs) => {
     return clubs;
 }
 
-export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubDetails, getClubDetails}
+
+export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubStatistics}

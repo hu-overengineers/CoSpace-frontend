@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AboutClub({clubname, description}) {
+export default function AboutClub({clubname, description, timeCreated, numberOfMembers, numberOfPostsInLastWeek}) {
     const classes = useStyles();
 
     return (
@@ -60,7 +60,7 @@ export default function AboutClub({clubname, description}) {
 
                         <Container>
                             <Typography variant="h6">
-                                {"1.2m"}
+                                {numberOfMembers}
                             </Typography>
                             <Typography variant="body1">
                                 {"members"}
@@ -69,17 +69,16 @@ export default function AboutClub({clubname, description}) {
 
 
                     </Grid>
-                    <Grid key={2} item>
+                    {<Grid key={2} item>
                         <Container>
                             <Typography variant="h6">
-                                {"2.5k"}
+                                {numberOfPostsInLastWeek}
                             </Typography>
                             <Typography variant="body1">
-                                {"currently viewing"}
+                                {"posts last week"}
                             </Typography>
                         </Container>
-
-                    </Grid>
+                    </Grid>}
                 </Grid>
 
                 <Divider className={classes.divider}/>
@@ -89,7 +88,11 @@ export default function AboutClub({clubname, description}) {
                     </Grid>
                     <Grid key={2} item>
                         <Typography variant="body1">
-                            {"Created Jan 1, 1970 "}
+                            {`Created, ${new Date(timeCreated).toLocaleString(navigator.language, {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}`}
                         </Typography>
                     </Grid>
                 </Grid>
