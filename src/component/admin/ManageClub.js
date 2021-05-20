@@ -41,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
 function ManageClub() {
     const classes = useStyles();
 
+    const [isVisible, setIsVisible] = React.useState(false);
+
     // Dialog ----------------------------------
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -122,6 +124,11 @@ function ManageClub() {
 
     const handleClubRequestNameChange = (event) => {
         setSelectedClubRequestName(event.target.value);
+        if (event.target.value === "") {
+            setIsVisible(false);
+        }else {
+            setIsVisible(true);
+        }
     };
     // ------------------------------------------------
 
@@ -140,8 +147,10 @@ function ManageClub() {
 
 
     return (
-        <Container>
 
+        
+        <Container>
+            
             <Dialog open={openCreateClub} onClose={handleCloseCreateClub} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add a new parent club</DialogTitle>
                 <DialogContent>
@@ -175,10 +184,7 @@ function ManageClub() {
                 </DialogActions>
             </Dialog>
 
-            
-            <Grid container spacing={3}>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                        <Container>
+            <Container>
                         <div>
                             <FormControl   className={classes.formControl}>
                                 <InputLabel htmlFor="age-native-helper">Sub-Club</InputLabel>
@@ -196,7 +202,13 @@ function ManageClub() {
                             </FormControl>
                         </div>
                     </Container>
+            
+
+            {isVisible ?  <Grid container spacing={3}>
+                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+
                 </Grid>
+                
                 <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
                     <Container>
                             <FormControl   className={classes.formControl}>
@@ -353,8 +365,8 @@ function ManageClub() {
                             </Button>
                        </Container>
                 </Grid>
-                    <Container>
-
+            
+            <Container>
                     <Dialog
                         fullScreen={fullScreen}
                         open={open}
@@ -385,7 +397,8 @@ function ManageClub() {
             </Container>
 
             </Grid>
-
+: null }
+            
             
 
 

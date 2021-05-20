@@ -39,11 +39,10 @@ class CreatePost extends Component {
     share = () => {
         //const current = new Date();
         const post = {
-            postTitle: this.state.title,
-            postContent: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
+            title: this.state.title,
+            content: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
             // time: current.toLocaleString(),
-            postAuthor: AuthService.getUsername(),
-            postSubClubName: this.props.subclub.name,
+            parentName: this.props.subclub.name,
         }
         PostService.createPost(post).then(result => {
             this.props.newPostEvent();

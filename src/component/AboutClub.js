@@ -38,13 +38,12 @@ export default function AboutClub({clubname, description, timeCreated, numberOfM
 
                 <Grid container>
                     <Grid key={1} item>
-                        <Container><Avatar className={classes.large}>LI</Avatar> </Container>
+                        <Container><Avatar className={classes.large}> {clubname[0].toUpperCase()} </Avatar> </Container>
                     </Grid>
                     <Grid key={2} item>
                         <Typography variant="h6">
                             {clubname}
                         </Typography>
-
                     </Grid>
                 </Grid>
 
