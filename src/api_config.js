@@ -17,7 +17,7 @@ export const TRENDS = "/trends";
 export const SUBCLUB_POSTS = "/subClubPosts";
 
 export const MEMBER = "/member";
-export const ENROLLED_CLUBS = "/enrolled-clubs";
+export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 

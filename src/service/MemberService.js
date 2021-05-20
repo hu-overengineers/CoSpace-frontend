@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {BASE_URL, MEMBER, ENROLLED_CLUBS} from "../ApiConfig";
+import {BASE_URL, MEMBER, ENROLLED_SUBCLUBS} from "../api_config.js";
 import {headersWithToken} from "./headers";
 
-const getEnrolledClubs = () => {
-    return axios.get(BASE_URL + MEMBER + ENROLLED_CLUBS, {}, headersWithToken());
+const getEnrolledSubClubs = () => {
+    return axios.get(BASE_URL + "/member/enrolled-subclubs", headersWithToken());
 }
 
-export const MemberService = {getEnrolledClubs};
+export const MemberService = {getEnrolledSubClubs};
 

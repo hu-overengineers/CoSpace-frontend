@@ -7,13 +7,14 @@ import ClubTree from '../component/ClubTree';
 import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
 import Button from "@material-ui/core/Button";
-import {Casino, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
+import {Casino, Edit, FiberNew, TrendingUp, Whatshot, Add} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
 import PostFeed from "../component/PostFeed";
 import {ClubService} from "../service/ClubService";
 import {PostService} from "../service/PostService";
+import {useHistory} from "react-router-dom";
 import {subDays} from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 export default function HomePage() {
 
     const classes = useStyles();
+    const history = useHistory()
     const [sortingOrder, setSortingOrder] = React.useState('hot');
 
     const handleSortingOrder = (event) => {
@@ -197,6 +199,17 @@ export default function HomePage() {
                                     <TrendingUp/>
                                 </ToggleButton>
                             </ToggleButtonGroup>
+
+                            <Button size="medium" style={{marginRight:"5px"}}
+                                variant="contained"
+                                color="primary"
+                                startIcon={<Add/>}
+                                onClick={() => {
+                                    history.push("/enroll");
+                                }}
+                                disableElevation>ENROLL TO NEW CLUB
+                            </Button>
+
                             <Button size="medium"
                                     variant="contained"
                                     color="primary"
