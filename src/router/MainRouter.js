@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, useRouteMatch} from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import HomePage from "../page/HomePage";
 import AdminPage from "../page/AdminPage";
@@ -7,7 +7,6 @@ import NotFoundPage from "../page/NotFoundPage";
 import SignUpPage from "../page/SignUpPage";
 import SignInPage from "../page/SignInPage";
 import EnrollPage from "../page/EnrollPage";
-
 
 
 export default function MainRouter() {
@@ -21,8 +20,8 @@ export default function MainRouter() {
                     <Route path="/admin">
                         <AdminPage/>
                     </Route>
-                    <Route path="/profile">
-                        <ProfilePage/>
+                    <Route path="/profile/:username">
+                        <ProfilePage />
                     </Route>
                     <Route path="/sign-up">
                         <SignUpPage/>

@@ -1,7 +1,7 @@
 import React from "react";
 import CoSpaceTreeViewMenu from "./CoSpaceTreeViewMenu";
 
-export default function ClubTree({clubs, callbackOnTreeItemClick}) {
+export default function ClubTree({clubs, callbackOnTreeItemClick, title = "Clubs & Sub-Clubs"}) {
 
     const nameToClubObject = {}
     const mapNameToToClubObject = (club) => {
@@ -31,7 +31,7 @@ export default function ClubTree({clubs, callbackOnTreeItemClick}) {
 
     return (
         <CoSpaceTreeViewMenu
-            title={"Clubs & Sub-Clubs"}
+            title={title}
             menuItems={clubs.map((club) => mapToMenuItem(club))}
             callbackOnTreeItemClick={handleMenuItemClick}/>
     );
