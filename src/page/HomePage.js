@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import ClubTree from '../component/ClubTree';
-import AboutClub from '../component/AboutClub';
+import AboutFeed from '../component/AboutFeed';
 import EventContainer from '../component/EventContainer';
 import Button from "@material-ui/core/Button";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
@@ -65,6 +65,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+const customFeeds = [
+    {isCustom: true, name: "Popular", details: "Popular posts in all clubs and sub-clubs right now.", children: []},
+    {isCustom: true, name: "Random", details: "Random gems that you may find interesting.", children: []}
+];
+
+
 export default function HomePage() {
 
     const classes = useStyles();
@@ -77,53 +83,54 @@ export default function HomePage() {
     };
 
     // Clubs and sub-clubs
-    const [clubs, setClubs] = useState([{name: "Popular", children: []}, {name: "Random", children: []}]);
-    const [selectedFeed, selectFeed] = useState({
-        name: "popular",
-        details: "...",
-        created: null,
-        numberOfMembers: null
-    });
+    const [clubs, setClubs] = useState(customFeeds);
+    const [feed, setFeed] = useState(customFeeds[0]);
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const [postsInFeed, setPostsInFeed] = useState([]);
-    const [stats, setStats] = useState({numberOfMembers: 0, numberOfPostsInLastWeek: 0});
 
     // Get club and sub-clubs
     useEffect(() => {
         ClubService.getSubClubs().then(response => {
             console.log("Parsing sub-clubs");
             console.log(response.data);
-            let clubList = ClubService.parseSubClubs(response.data);
-            clubList.splice(0, 0, {name: "Popular", children: []}, {name: "Random", children: []});
-            setClubs(clubList);
+            ClubService.parseSubClubs(response.data).then(tree => {
+                console.log("Parsed club tree:", tree)
+                customFeeds.reverse().forEach(customFeed => {
+                    tree.splice(0, 0, customFeed);
+                });
+                setClubs(tree);
+            })
         })
     }, [refreshFeed]);
 
     // Get posts
     useEffect(() => {
-        PostService.getPosts(selectedFeed.name).then(response => {
-            console.log(`Fetched posts of ${selectedFeed.name}`);
+        PostService.getPosts(feed.name).then(response => {
+            console.log(`Fetched posts of ${feed.name}`);
             console.log(response.data)
-            setPostsInFeed(response.data);
 
-            ClubService.getSubClubStatistics(selectedFeed.name, subDays(new Date(), 7), new Date()).then(response => {
-                console.log(`Fetched stats of ${selectedFeed.name}`);
-                console.log(response.data);
-                setStats({
-                    numberOfMembers: response.data.numberOfMembers,
-                    numberOfPostsInLastWeek: response.data.numberOfPostsInTimeFrame
-                })
-            }).catch(response => {
-                console.error(response);
-            });
-        }).catch(response => {
-            console.log(`No posts in ${selectedFeed.name}`);
+            if (feed.isCustom) {
+                ClubService.getSubClubStatistics(feed.name, subDays(new Date(), 7), new Date()).then(response => {
+                    console.log(`Fetched stats of ${feed.name}`);
+                    console.log(response.data);
+                    feed.numberOfMembers = response.data.numberOfMembers;
+                    feed.numberOfPostsInLastWeek = response.data.numberOfPostsInTimeFrame;
+                    setFeed(feed);
+                }).catch(response => {
+                    console.error(response);
+                });
+            } else {
+                setPostsInFeed(response.data);
+            }
+        }).catch(e => {
+            console.error(e);
+            console.log(`No posts in ${feed.name}`);
             setPostsInFeed([]);
         });
-    }, [selectedFeed, refreshFeed]);
+    }, [feed, refreshFeed]);
 
     useEffect(() => {
         console.log(clubs);
@@ -142,7 +149,7 @@ export default function HomePage() {
     }
 
     const handleClubTreeItemClick = (node) => {
-        selectFeed(node);
+        setFeed(node);
     }
 
     return (
@@ -201,23 +208,18 @@ export default function HomePage() {
                         </Box>
                         <Divider className={classes.divider}/>
 
-                        <PostFeed posts={postsInFeed} subclub={selectedFeed.name}/>
+                        <PostFeed posts={postsInFeed} subclub={feed.name}/>
                     </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
-                            <AboutClub clubname={selectedFeed.name}
-                                       description={selectedFeed.details}
-                                       timeCreated={selectedFeed.created}
-                                       numberOfMembers={stats.numberOfMembers}
-                                       numberOfPostsInLastWeek={stats.numberOfPostsInLastWeek}
-                            />
+                            <AboutFeed feedInfo={feed}/>
                         </Box>
-                        <Box className={classes.sectionBox}>
+                        {feed.parentName && <Box className={classes.sectionBox}>
                             <EventContainer
                                 events={"There are no events."}/>
-                        </Box>
+                        </Box>}
                         {/* TODO: Uncomment when available.
                             <Box className={classes.sectionBox}>
                                 <ModeratorNotesSection
@@ -228,7 +230,7 @@ export default function HomePage() {
                 </Grid>
             </Grid>
             <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
-                        subclub={selectedFeed}/>
+                        subclub={feed}/>
         </div>
     )
 }

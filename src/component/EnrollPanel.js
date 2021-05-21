@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Snackbar} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
 import {delay} from "../util/async";
-import AboutClub from './AboutClub';
+import AboutFeed from './AboutFeed';
 import Box from '@material-ui/core/Box';
 import Questionnaire from './Questionnaire';
 import { Button } from '@material-ui/core';
@@ -58,7 +58,7 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}){
     }
 
 
-    if (clickedSubClub == undefined) {
+    if (clickedSubClub === undefined) {
         return <p>Click to a club</p>
     }
     else {
@@ -69,12 +69,8 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}){
                     display="flex" flexDirection="column"
                     justifyContent="space-between" height="75vh">
                     
-                    <AboutClub
-                    clubname={clickedSubClub.name}
-                    description={clickedSubClub.details}
-                    timeCreated={clickedSubClub.created}
-                    numberOfMembers={0}
-                    numberOfPostsInLastWeek={0}/>
+                    <AboutFeed
+                        feedInfo={clickedSubClub}/>
                     {"parentName" in clickedSubClub && (
                         <Button 
                             size="medium" style={{margin:"5px"}}
