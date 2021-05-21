@@ -160,10 +160,6 @@ export default function ProfilePage() {
                                          numberOfPostsInLastWeek={0}
                             />
                         </Box>
-                        <Box className={classes.sectionBox}>
-                            <EventContainer
-                                events={"There are no events."}/>
-                        </Box>
                     </Box>
                 </Grid>
             </Grid>
