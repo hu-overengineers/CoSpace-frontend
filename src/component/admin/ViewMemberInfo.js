@@ -1,16 +1,14 @@
 import {React, useEffect, useState} from "react";
 import {fade, makeStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography, Button} from "@material-ui/core";
-import TextField from '@material-ui/core/TextField';
+import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography} from "@material-ui/core";
 import {AdminService} from '../../service/AdminService'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
-        position: 'relative',
+        position: 'absolute',
         overflow: 'auto',
         maxHeight: 300,
     },
@@ -26,24 +24,23 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.text.primary, 0.05),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.text.primary, 0.20),
-        },
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             width: 'auto',
         },
     },
     searchResult: {
-        margin: theme.spacing(4),
+        marginLeft: theme.spacing(3),
         flexGrow: 1,
         marginLeft: 65,
         position: 'relative',
         overflow: 'auto',
         borderRadius: theme.shape.borderRadius,
-
-        width: '50%',
+        backgroundColor: fade(theme.palette.text.primary, 0.01),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.text.primary, 0.10),
+        },
+        width: '100%',
         maxWidth: 200,
         maxHeight: 200,
         [theme.breakpoints.up('sm')]: {
@@ -51,12 +48,11 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     searchIcon: {
-        padding: theme.spacing(0, 2),
+        marginTop: theme.spacing(1),
         height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
     },
     searchInputRoot: {
@@ -74,7 +70,15 @@ const useStyles = makeStyles((theme) => ({
     title: {
         margin: theme.spacing(4, 0, 2),
     },
+    divider: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
 
+    email: {
+        marginLeft: theme.spacing(18),
+        marginRight: theme.spacing(2),
+    },
 }));
 
 
@@ -83,8 +87,14 @@ const useStyles = makeStyles((theme) => ({
 function ViewMemberInfo() {
     const classes = useStyles();
     
+
     const [members, setMembers] = useState([]);
-    const [selectedMember, setSelectedMember] = useState({});
+    const [selectedMember, setSelectedMember] = useState({
+        username: "username",
+        email: "username@gmail.com",
+        created: null,
+        lastLogin: null
+    });
 
     const onSearchKeyChange = (e) => {
         
@@ -98,15 +108,9 @@ function ViewMemberInfo() {
             }
         })
 
+
+
     }
-
-
-
-    // Get searched users
-    useEffect(() => {
-            
-    }, []);
-
 
     const clubNames = ["Club Name 1", "Club Name 2", "Club Name 3"];
     const subClubNames = ["Sub-Club 1", "Sub-Club 2", "Sub-Club 3"];
@@ -129,100 +133,83 @@ function ViewMemberInfo() {
                     inputProps={{'aria-label': 'search'}}
                 />
                 
+                <div>
+                    <List component="nav" className={classes.searchResult}>
+                        {members.map((member) => (
+                        <ListItem button key={member.gmail+ member.created} onClick={(e) => {
+                            setMembers([]);
+                            setSelectedMember(member);
+                        }}>
+                            <ListItemText primary={`${member.username}`} />
+                        </ListItem>
+                        ))}
+                    </List>
+                </div>
+
             </Container>
 
 
-            <div className={classes.searchResult} >
-                <List component="nav">
-                    {members.map((member) => (
-                    <ListItem button key={member.gmail+ member.created} onClick={(e) => {
-                        setMembers([]);
-                        setSelectedMember(member);
-                    }}>
-                        <ListItemText primary={`${member.username}`} />
-                    </ListItem>
-                    ))}
-                </List>
-            </div>
-            
-   
-            <Grid container spacing={3}>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <div>
-                            <TextField
-                                id="email"
-                                label="E-Mail"
-                                defaultValue="2017-05-24"
-                                value={selectedMember.email}
-                                onChange={() => {
-                                   
-                                }}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                            />
-                        </div>
-                    </Container>
-                </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <div>
-                            <TextField
-                                id="username"
-                                label="User Name"
-                                value={selectedMember.username}
-                                onChange={() => {
-                                   
-                                }}
-                                defaultValue="John"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                            />
-                        </div>
-                    </Container>
-                </Grid>
-            </Grid>
 
-            <Grid container spacing={3}>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <div>
-                            <TextField
-                                id="registration-date"
-                                label="Registration Date"
-                                defaultValue="2017-05-24 13:42"
-                                value={selectedMember.created}
-                                onChange={() => {
-                                   
-                                }}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                            />
-                        </div>
-                    </Container>
+            
+            <Container>
+                <Grid container className={classes.divider}>
+                        <Grid key={1} item>
+                        <Container   >
+                                <Typography variant="h6" >
+                                    {"Username"}
+                                </Typography>
+                                <Typography variant="body1" >
+                                    {selectedMember.username}
+                                </Typography>
+
+                            </Container>
+
+
+
+                        </Grid>
+                        <Grid key={2} item>
+                        <Container  >
+                                <Typography variant="h6" className={classes.email}>
+                                    {"E-mail"}
+                                </Typography>
+                                <Typography variant="body1" className={classes.email}>
+                                    {selectedMember.email}
+                                </Typography>
+                                
+                            </Container>
+                        </Grid>
                 </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <div>
-                            <TextField
-                                id="last-login-date"
-                                label="Last Login Date"
-                                defaultValue="2017-05-24 13:42"
-                                value={selectedMember.lastLogin ? selectedMember.lastLogin : "abc"}
-                                onChange={() => {
-                                   
-                                }}
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                            />
-                        </div>
-                    </Container>
-                </Grid>
-            </Grid>
+            </Container>
+
+            <Container>
+            <Grid container className={classes.divider} >
+                    <Grid key={1} item>
+                        <Container>
+                        <Typography variant="h6" >
+                                {"Registiration Date"}
+                            </Typography>
+                            <Typography variant="body1" >
+                                {selectedMember.created ? new Date(selectedMember.created).toString() : "Unknown"}
+                            </Typography>
+
+                        </Container>
+
+
+                    </Grid>
+                    <Grid key={2} item>
+                        <Container>
+                        
+                        <Typography variant="h6" >
+                                {"Last Login Date"}
+                            </Typography>
+                            <Typography variant="body1" >
+                                {selectedMember.lastLogin ? new Date(selectedMember.lastLogin).toString() : "Unknown" }
+                            </Typography>
+
+                        </Container>
+                    </Grid>
+             </Grid>
+             </Container>
 
             <Grid container spacing={3}>
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
