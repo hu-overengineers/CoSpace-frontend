@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {fade, makeStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography, Button} from "@material-ui/core";
+import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {AdminService} from '../../service/AdminService'
 
@@ -63,18 +63,31 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 function ViewMemberInfo() {
     const classes = useStyles();
     
     const [members, setMembers] = useState([]);
 
+
+    const onSearchKeyChange = (e) => {
+        
+        AdminService.searchMembersByName(e.target.value,0, 5).then(response => {
+            if ( e.target.value.length > 1) {
+                console.log(response.data);
+                setMembers(response.data);
+                console.log(e.target.value.length);
+            }
+        })
+
+    }
+
+
+
     // Get searched users
     useEffect(() => {
-            AdminService.searchMembersByName("mem",0, 5).then(response => {
-                console.log("Parsing users");
-                console.log(response.data);
-                // setMembers(AdminService.parseSubClubs(response.data));
-            })
+            
     }, []);
 
 
@@ -85,16 +98,13 @@ function ViewMemberInfo() {
     return (
         <Container>
 
-            <Button onClick={(event) => {
-
-            }} >deneme</Button>
-
             <Container className={classes.search}>
                 <div className={classes.searchIcon}>
                     <SearchIcon/>
                 </div>
                 <InputBase
                     placeholder="Search a member"
+                    onChange={onSearchKeyChange}
                     classes={{
                         root: classes.searchInputRoot,
                         input: classes.searchInput,
