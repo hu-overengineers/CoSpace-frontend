@@ -40,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(1),
         marginLeft: theme.spacing(1),
     },
+    dateRegisteredContainer: {
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    }
 }));
 
 
@@ -85,7 +91,7 @@ export default function AboutMember({username, bio, timeRegistered, numberOfPost
                 </Grid>
 
                 <Divider className={classes.divider}/>
-                <Grid container>
+                <Grid container className={classes.dateRegisteredContainer}>
                     <Grid key={1} item>
                         <Container><CakeIcon/> </Container>
                     </Grid>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import {Divider} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -7,11 +7,10 @@ import ClubTree from '../component/ClubTree';
 import AboutClub from '../component/AboutClub';
 import EventContainer from '../component/EventContainer';
 import Button from "@material-ui/core/Button";
-import {Casino, Edit, FiberNew, TrendingUp, Whatshot, Add} from "@material-ui/icons";
+import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
-import Section from "../component/Section";
 import CreatePost from "../component/CreatePost";
-import PostFeed from "../component/PostFeed";
+import PostFeed from "../component/post/PostFeed";
 import {ClubService} from "../service/ClubService";
 import {PostService} from "../service/PostService";
 import {useHistory} from "react-router-dom";
@@ -78,7 +77,7 @@ export default function HomePage() {
     };
 
     // Clubs and sub-clubs
-    const [clubs, setClubs] = useState([]);
+    const [clubs, setClubs] = useState([{name: "Popular", children: []}, {name: "Random", children: []}]);
     const [selectedFeed, selectFeed] = useState({
         name: "popular",
         details: "...",
@@ -97,7 +96,9 @@ export default function HomePage() {
         ClubService.getSubClubs().then(response => {
             console.log("Parsing sub-clubs");
             console.log(response.data);
-            setClubs(ClubService.parseSubClubs(response.data));
+            let clubList = ClubService.parseSubClubs(response.data);
+            clubList.splice(0, 0, {name: "Popular", children: []}, {name: "Random", children: []});
+            setClubs(clubList);
         })
     }, [refreshFeed]);
 
@@ -150,28 +151,6 @@ export default function HomePage() {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridLeftColumnBox}>
                         <Box className={classes.sectionBox}>
-                            <Section title={"Browse"} content={
-                                <List className={classes.list}>
-                                    <ListItem>
-                                        <ListItemIcon>
-                                            <TrendingUp/>
-                                        </ListItemIcon>
-                                        <ListItemText>
-                                            Popular
-                                        </ListItemText>
-                                    </ListItem>
-                                    <ListItem>
-                                        <ListItemIcon>
-                                            <Casino/>
-                                        </ListItemIcon>
-                                        <ListItemText>
-                                            Random
-                                        </ListItemText>
-                                    </ListItem>
-                                </List>
-                            }/>
-                        </Box>
-                        <Box className={classes.sectionBox}>
                             <ClubTree
                                 title={"Browse"}
                                 callbackOnTreeItemClick={handleClubTreeItemClick}
@@ -201,14 +180,14 @@ export default function HomePage() {
                                 </ToggleButton>
                             </ToggleButtonGroup>
 
-                            <Button size="medium" style={{marginRight:"5px"}}
-                                variant="contained"
-                                color="primary"
-                                startIcon={<Add/>}
-                                onClick={() => {
-                                    history.push("/enroll");
-                                }}
-                                disableElevation>ENROLL TO NEW CLUB
+                            <Button size="medium" style={{marginRight: "5px"}}
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<Add/>}
+                                    onClick={() => {
+                                        history.push("/enroll");
+                                    }}
+                                    disableElevation>ENROLL TO NEW CLUB
                             </Button>
 
                             <Button size="medium"

@@ -6,7 +6,7 @@ import ClubTree from '../component/ClubTree';
 import Box from "@material-ui/core/Box";
 import {FiberNew, TrendingUp} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
-import PostFeed from "../component/PostFeed";
+import PostFeed from "../component/post/PostFeed";
 import EventContainer from "../component/EventContainer";
 import {MemberService} from "../service/MemberService";
 import AboutMember from "../component/profile/AboutMember";
@@ -159,10 +159,6 @@ export default function ProfilePage() {
                                          timeRegistered={null}
                                          numberOfPostsInLastWeek={0}
                             />
-                        </Box>
-                        <Box className={classes.sectionBox}>
-                            <EventContainer
-                                events={"There are no events."}/>
                         </Box>
                     </Box>
                 </Grid>

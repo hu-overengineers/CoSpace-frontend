@@ -26,9 +26,10 @@ import {
     TextField
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {PostService} from "../service/PostService";
-import {AuthService} from "../service/AuthService";
+import {PostService} from "../../service/PostService";
+import {AuthService} from "../../service/AuthService";
 import {Alert} from "@material-ui/lab";
+import {formatDistance, parseISO} from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -194,7 +195,7 @@ export function PostFeedItem({props}) {
                         </CardActions>
                     }
                     title={props.author}
-                    subheader={new Date(props.created).toLocaleString()}/>
+                    subheader={`${formatDistance(parseISO(props.created), new Date(), { addSuffix: true })} on ${props.parentName}`}/>
 
                 <CardContent className={classes.postCardContent}>
                     <Grid container spacing={1}>
