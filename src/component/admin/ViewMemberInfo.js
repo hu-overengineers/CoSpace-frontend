@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {fade, makeStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography} from "@material-ui/core";
+import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography, Button} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {AdminService} from '../../service/AdminService'
 
@@ -31,6 +31,21 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.text.primary, 0.20),
         },
         width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: 'auto',
+        },
+    },
+    searchResult: {
+        margin: theme.spacing(4),
+        flexGrow: 1,
+        marginLeft: 65,
+        position: 'relative',
+        overflow: 'auto',
+        borderRadius: theme.shape.borderRadius,
+
+        width: '50%',
+        maxWidth: 200,
+        maxHeight: 200,
         [theme.breakpoints.up('sm')]: {
             width: 'auto',
         },
@@ -74,10 +89,12 @@ function ViewMemberInfo() {
     const onSearchKeyChange = (e) => {
         
         AdminService.searchMembersByName(e.target.value,0, 5).then(response => {
-            if ( e.target.value.length > 1) {
+            if (e.target.value.length > 1) {
                 console.log(response.data);
                 setMembers(response.data);
-                console.log(e.target.value.length);
+            }
+            if (e.target.value === ""){
+                setMembers([]);
             }
         })
 
@@ -111,7 +128,36 @@ function ViewMemberInfo() {
                     }}
                     inputProps={{'aria-label': 'search'}}
                 />
+                
             </Container>
+
+                <div className={classes.searchResult} >
+                    
+                
+                    {members.map((member) => (
+                        <li>
+                            <Button textPrimary={member.username}>
+                                {member.username}
+                            </Button>
+                        </li>
+                    
+                    ))}
+
+                </div>
+
+
+            {/*
+                        <div className={classes.searchResult} >
+                <List component="nav">
+                    {members.map((member) => (
+                    <ListItem button key={member.gmail}>
+                        <ListItemText primary={`${member.username}`} />
+                    </ListItem>
+                    ))}
+                </List>
+            </div>
+            
+            */}
 
 
             <Grid container spacing={3}>
