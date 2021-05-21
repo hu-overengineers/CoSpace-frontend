@@ -75,17 +75,19 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}){
                     timeCreated={clickedSubClub.created}
                     numberOfMembers={0}
                     numberOfPostsInLastWeek={0}/>
-                    
-                    <Button 
-                        size="medium" style={{margin:"5px"}}
-                        variant="contained"
-                        color="primary"
-                        startIcon={<Assignment/>}
-                        onClick={(event) => {onEnrollButtonClick(event)}}
-                        disabled={alreadyEnrolled}
-                        disableElevation>
-                        {buttonText}
-                    </Button>
+                    {"parentName" in clickedSubClub && (
+                        <Button 
+                            size="medium" style={{margin:"5px"}}
+                            variant="contained"
+                            color="primary"
+                            startIcon={<Assignment/>}
+                            onClick={(event) => {onEnrollButtonClick(event)}}
+                            disabled={alreadyEnrolled}
+                            disableElevation>
+                            {buttonText}
+                        </Button>
+
+                    )}
                 
                 </Box>
             )
