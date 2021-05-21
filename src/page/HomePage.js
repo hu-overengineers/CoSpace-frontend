@@ -173,6 +173,7 @@ export default function HomePage() {
                         </Box>
                         <Box className={classes.sectionBox}>
                             <ClubTree
+                                title={"Browse"}
                                 callbackOnTreeItemClick={handleClubTreeItemClick}
                                 clubs={clubs}/>
                         </Box>

@@ -118,7 +118,7 @@ export default function PrimaryAppBar() {
                         onClick={() => {
                             if (AuthService.hasJwtToken()) {
                                 // history.push("/sign-in")
-                                history.push("/profile")
+                                history.push("/profile/" + AuthService.getUsername())
                             } else {
                                 history.push("/sign-up")
                             }
