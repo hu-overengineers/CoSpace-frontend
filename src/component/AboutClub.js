@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
         width: theme.spacing(7),
         height: theme.spacing(7),
     },
+    dateCreatedContainer: {
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    }
 }));
 
 
@@ -81,7 +87,7 @@ export default function AboutClub({clubname, description, timeCreated, numberOfM
                 </Grid>
 
                 <Divider className={classes.divider}/>
-                <Grid container>
+                <Grid container className={classes.dateCreatedContainer}>
                     <Grid key={1} item>
                         <Container><CakeIcon/> </Container>
                     </Grid>

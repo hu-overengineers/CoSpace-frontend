@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import CreatePost from "../component/CreatePost";
-import PostFeed from "../component/PostFeed";
+import PostFeed from "../component/post/PostFeed";
 import {ClubService} from "../service/ClubService";
 import {PostService} from "../service/PostService";
 import {useHistory} from "react-router-dom";
