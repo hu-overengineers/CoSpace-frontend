@@ -84,7 +84,7 @@ function ViewMemberInfo() {
     const classes = useStyles();
     
     const [members, setMembers] = useState([]);
-
+    const [selectedMember, setSelectedMember] = useState({});
 
     const onSearchKeyChange = (e) => {
         
@@ -131,43 +131,33 @@ function ViewMemberInfo() {
                 
             </Container>
 
-                <div className={classes.searchResult} >
-                    
-                
-                    {members.map((member) => (
-                        <li>
-                            <Button textPrimary={member.username}>
-                                {member.username}
-                            </Button>
-                        </li>
-                    
-                    ))}
 
-                </div>
-
-
-            {/*
-                        <div className={classes.searchResult} >
+            <div className={classes.searchResult} >
                 <List component="nav">
                     {members.map((member) => (
-                    <ListItem button key={member.gmail}>
+                    <ListItem button key={member.gmail+ member.created} onClick={(e) => {
+                        setMembers([]);
+                        setSelectedMember(member);
+                    }}>
                         <ListItemText primary={`${member.username}`} />
                     </ListItem>
                     ))}
                 </List>
             </div>
             
-            */}
-
-
+   
             <Grid container spacing={3}>
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                     <Container>
                         <div>
                             <TextField
-                                id="birthday"
-                                label="Birth Date"
+                                id="email"
+                                label="E-Mail"
                                 defaultValue="2017-05-24"
+                                value={selectedMember.email}
+                                onChange={() => {
+                                   
+                                }}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -181,7 +171,11 @@ function ViewMemberInfo() {
                             <TextField
                                 id="username"
                                 label="User Name"
-                                defaultValue="John Doe"
+                                value={selectedMember.username}
+                                onChange={() => {
+                                   
+                                }}
+                                defaultValue="John"
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -199,6 +193,10 @@ function ViewMemberInfo() {
                                 id="registration-date"
                                 label="Registration Date"
                                 defaultValue="2017-05-24 13:42"
+                                value={selectedMember.created}
+                                onChange={() => {
+                                   
+                                }}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -213,6 +211,10 @@ function ViewMemberInfo() {
                                 id="last-login-date"
                                 label="Last Login Date"
                                 defaultValue="2017-05-24 13:42"
+                                value={selectedMember.lastLogin ? selectedMember.lastLogin : "abc"}
+                                onChange={() => {
+                                   
+                                }}
                                 InputProps={{
                                     readOnly: true,
                                 }}
