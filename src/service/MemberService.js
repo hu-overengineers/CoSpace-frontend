@@ -1,10 +1,14 @@
 import axios from 'axios';
-import {BASE_URL, MEMBER, ENROLLED_SUBCLUBS} from "../api_config.js";
+import {BASE_URL, MEMBER, ENROLLED_SUBCLUBS, ENROLL, SUB_CLUB} from "../api_config.js";
 import {headersWithToken} from "./headers";
 
 const getEnrolledSubClubs = () => {
-    return axios.get(BASE_URL + "/member/enrolled-subclubs", headersWithToken());
+    return axios.get(BASE_URL + MEMBER + ENROLLED_SUBCLUBS, headersWithToken());
 }
 
-export const MemberService = {getEnrolledSubClubs};
+const enrollToSubClub = (subclub) => {
+    return axios.post(BASE_URL + SUB_CLUB + ENROLL, {}, headersWithToken({subClubName:subclub}));
+}
+
+export const MemberService = {getEnrolledSubClubs, enrollToSubClub};
 

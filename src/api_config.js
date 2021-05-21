@@ -5,6 +5,7 @@ export const LOGIN = "/auth/login";
 export const REGISTER = "/auth/register";
 
 export const CLUB_LIST = "/club/all";
+export const SUB_CLUB= "/subclub";
 export const SUB_CLUB_LIST = "/subclub/all";
 export const SUB_CLUB_STATS = "/subclub/statistics";
 
@@ -17,6 +18,7 @@ export const TRENDS = "/trends";
 export const SUBCLUB_POSTS = "/subClubPosts";
 
 export const MEMBER = "/member";
+export const ENROLL = "/enroll";
 export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
