@@ -34,6 +34,7 @@ const loginWithToken = () => {
 
 const logout = () => {
     localStorage.removeItem('login_token');
+    localStorage.removeItem("auth_roles")
 };
 
 const saveJwtToken = (token) => {
@@ -49,8 +50,21 @@ const hasJwtToken = () => {
     return jwt != null;
 }
 
+const saveAuthRoles = (roles) => {
+    localStorage.setItem("auth_roles", roles);
+}
+
+const getAuthRoles = () => {
+    return localStorage.getItem("auth_roles");
+}
+
+const isAdmin = () => {
+    return "ADMIN" in getAuthRoles();
+}
+
 export const AuthService = {
     login, register, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken,
     getUsername,
     removeUsername,
+    isAdmin, saveAuthRoles, getAuthRoles
 };
