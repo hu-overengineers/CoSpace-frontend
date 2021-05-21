@@ -19,8 +19,6 @@ const getSubClubStatistics = (subClubName, startTime, endTime) => {
     });
 }
 
-// this func is a mess right now due to the different db field names
-// TODO
 const parseSubClubs = (subClubs) => {
 
     const renamedSubClubs = []

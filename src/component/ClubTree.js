@@ -1,7 +1,6 @@
 import React from "react";
 import CoSpaceTreeViewMenu from "./CoSpaceTreeViewMenu";
 
-
 export default function ClubTree({clubs, callbackOnTreeItemClick}) {
 
     const nameToClubObject = {}

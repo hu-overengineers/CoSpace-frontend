@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
         margin: 0,
         padding: 0
     },
-    postContentBox: {
+    contentBox: {
         marginRight: theme.spacing(2),
     },
 }));
@@ -215,7 +215,7 @@ export function PostFeedItem({props}) {
                         </Grid>
 
                         <Grid item xs={11}>
-                            <Box className={classes.postContentBox}>
+                            <Box className={classes.contentBox}>
                                 <Typography gutterBottom variant="h5" component="h2">
                                     {props.title}
                                 </Typography>
