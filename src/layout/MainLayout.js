@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
 }));
 
-export default function MainLayout({children}) {
+export default function MainLayout(props) {
     const classes = useStyles();
 
     return (
@@ -22,7 +22,7 @@ export default function MainLayout({children}) {
             <Box>
                 {/* Shift content by appbar width */}
                 <div className={classes.toolbar}/>
-                {children}
+                {props.children}
             </Box>
         </Box>
     )

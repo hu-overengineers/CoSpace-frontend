@@ -7,6 +7,7 @@ import NotFoundPage from "../page/NotFoundPage";
 import SignUpPage from "../page/SignUpPage";
 import SignInPage from "../page/SignInPage";
 import EnrollPage from "../page/EnrollPage";
+import PrivateMessagePage from "../page/PrivateMessagePage";
 
 
 
@@ -32,6 +33,9 @@ export default function MainRouter() {
                     </Route>
                     <Route path="/enroll">
                         <EnrollPage/>
+                    </Route>
+                    <Route path="/pm">
+                        <PrivateMessagePage/>
                     </Route>
                     <Route path="*">
                         <NotFoundPage/>

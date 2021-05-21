@@ -107,7 +107,7 @@ export default function PrimaryAppBar() {
 
                     <IconButton
                         onClick={() => {
-
+                            history.push("/pm");
                         }}
                     >
                         <Message/>
