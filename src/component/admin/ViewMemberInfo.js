@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
 function ViewMemberInfo() {
     const classes = useStyles();
     
-
+    const [enrolledSubClubs, setEnrolledSubClubs] = useState([]);
     const [members, setMembers] = useState([]);
     const [selectedMember, setSelectedMember] = useState({
         username: "username",
@@ -108,9 +108,16 @@ function ViewMemberInfo() {
             }
         })
 
-
-
     }
+
+    useEffect(() => {
+        AdminService.getEnrolledSubClubs(selectedMember.username).then(response => {
+            setEnrolledSubClubs(response.data);
+            console.log(response.data);
+        });
+    }, [selectedMember])
+
+    
 
     const clubNames = ["Club Name 1", "Club Name 2", "Club Name 3"];
     const subClubNames = ["Sub-Club 1", "Sub-Club 2", "Sub-Club 3"];
@@ -218,18 +225,31 @@ function ViewMemberInfo() {
 
                         <div>
                             <List className={classes.root} subheader={<li/>}>
-                                {clubNames.map((clubName) => (
+                            {enrolledSubClubs.map((subClub) => (
+                                                <ListItem key={subClub.id}>
+                                                    <ListItemText primary={subClub.name}/>
+                                                </ListItem>
+                                            ))}
+                                            
+
+                                            {/**
+                                             * 
+                                             *                                 {clubNames.map((clubName) => (
                                     <li key={`section-${clubName}`} className={classes.listSection}>
                                         <ul className={classes.ul}>
                                             <ListSubheader>{clubName}</ListSubheader>
-                                            {subClubNames.map((subClubName) => (
-                                                <ListItem key={subClubName}>
-                                                    <ListItemText primary={subClubName}/>
+                                            {enrolledSubClubs.map((subClub) => (
+                                                <ListItem key={subClub.id}>
+                                                    <ListItemText primary={subClub.name}/>
                                                 </ListItem>
                                             ))}
                                         </ul>
                                     </li>
                                 ))}
+
+                                             */}
+
+
                             </List>
                         </div>
                     </Container>
