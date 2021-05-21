@@ -44,7 +44,7 @@ export default function EnrollPage() {
 
     // Get enrolled sub-clubs
     useEffect(() => {
-        MemberService.getEnrolledSubClubs().then(response => {
+        MemberService.getEnrolledSubClubsOfCurrentlySignedInUser().then(response => {
             console.log("enrolled subclubs: ");
             console.log(response.data);
             setEnrolledSubs(response.data.map(sub => sub.name));
