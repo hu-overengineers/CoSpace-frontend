@@ -3,6 +3,7 @@ import {BASE_URL, MEMBER, ENROLLED_SUBCLUBS, ENROLL, SUB_CLUB} from "../api_conf
 import {headersWithToken} from "./headers";
 
 const getEnrolledSubClubs = () => {
+    console.log("aslfjkas" ,headersWithToken());
     return axios.get(BASE_URL + MEMBER + ENROLLED_SUBCLUBS, headersWithToken());
 }
 

@@ -23,5 +23,6 @@ export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 
+export const SEARCH_MEMBER_BY_NAME = "/admin/search-member"
 
 
