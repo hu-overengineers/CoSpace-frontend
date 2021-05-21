@@ -4,13 +4,13 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import ClubTree from '../component/ClubTree';
 import Box from "@material-ui/core/Box";
-import {FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
+import {FiberNew, TrendingUp} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import PostFeed from "../component/PostFeed";
 import EventContainer from "../component/EventContainer";
 import {MemberService} from "../service/MemberService";
 import AboutMember from "../component/profile/AboutMember";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {AuthService} from "../service/AuthService";
 
 const useStyles = makeStyles((theme) => ({
@@ -87,13 +87,13 @@ export default function ProfilePage() {
             console.log(`Common sub-clubs of ${username} and ${AuthService.getUsername()}`, response.data);
             const clubsToSubClubs = {};
             response.data.forEach(aSubClub => {
-                if (!(aSubClub.parentName in clubsToSubClubs )) {
+                if (!(aSubClub.parentName in clubsToSubClubs)) {
                     clubsToSubClubs[aSubClub.parentName] = []
                 }
                 clubsToSubClubs[aSubClub.parentName].push(aSubClub);
             });
             const clubsAsList = [];
-            for (let k in  clubsToSubClubs ) {
+            for (let k in clubsToSubClubs) {
                 clubsAsList.push({name: k, children: clubsToSubClubs[k]})
             }
             setCommonClubsAndSubClubs(clubsAsList);
@@ -116,7 +116,6 @@ export default function ProfilePage() {
     }, [username, subClub]);
 
     return (
-
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
                 <Grid item xs={3} className={classes.gridItem}>
@@ -130,8 +129,6 @@ export default function ProfilePage() {
                         </Box>
                     </Box>
                 </Grid>
-
-
                 <Grid item xs={6} className={classes.gridItem}>
                     <Box className={classes.gridMiddleColumnBox}>
                         <Box display="flex">
@@ -172,51 +169,4 @@ export default function ProfilePage() {
             </Grid>
         </div>
     );
-    // return (
-    //     <Grid container className={classes.root}>
-    //
-    //         <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-    //             <ClubTree clubs={clubs} callbackOnTreeItemClick={(id) => {
-    //             }}/>
-    //         </Grid>
-    //
-    //         <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-    //             <Container>
-    //                 <List>
-    //                     <Typography variant="h4" className={classes.feedTitle}>
-    //                         Posts
-    //                     </Typography>
-    //                     <Divider className={classes.divider}/>
-    //                 </List>
-    //             </Container>
-    //         </Grid>
-    //
-    //         <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
-    //             <UserInfoContainer/>
-    //             <Button
-    //                 variant="contained"
-    //                 color="primary"
-    //                 className={classes.submit}
-    //                 onClick={(event) => {
-    //                     AuthService.logout()
-    //                     history.push("/sign-in")
-    //                 }}
-    //             >
-    //                 Logout
-    //             </Button>
-    //
-    //             <Button
-    //                 variant="contained"
-    //                 color="secondary"
-    //                 className={classes.submit}
-    //                 onClick={(event) => {
-    //                     history.push("/admin")
-    //                 }}
-    //             >
-    //                 Admin Panel
-    //             </Button>
-    //         </Grid>
-    //
-    //     </Grid>
-    // );
 }
