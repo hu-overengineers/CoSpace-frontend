@@ -15,6 +15,8 @@ import {ClubService} from "../service/ClubService";
 import {PostService} from "../service/PostService";
 import {useHistory} from "react-router-dom";
 import {subDays} from 'date-fns';
+import {MemberService} from "../service/MemberService";
+import {AuthService} from "../service/AuthService";
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -84,6 +86,7 @@ export default function HomePage() {
 
     // Clubs and sub-clubs
     const [clubs, setClubs] = useState(customFeeds);
+    const [enrolledSubClubs, setEnrolledSubClubs] = useState([]);
     const [feed, setFeed] = useState(customFeeds[0]);
 
     // Refresh event for posts
@@ -103,7 +106,7 @@ export default function HomePage() {
                 });
                 setClubs(tree);
             })
-        })
+        });
     }, [refreshFeed]);
 
     // Get posts
@@ -112,9 +115,9 @@ export default function HomePage() {
             console.log(`Fetched posts of ${feed.name}`);
             console.log(response.data)
 
-            if (feed.isCustom) {
+            if (!(feed.isCustom) || feed.parentName) {
                 ClubService.getSubClubStatistics(feed.name, subDays(new Date(), 7), new Date()).then(response => {
-                    console.log(`Fetched stats of ${feed.name}`);
+                    console.log(`Fetched stats of ${feed.name}`, response.data);
                     console.log(response.data);
                     feed.numberOfMembers = response.data.numberOfMembers;
                     feed.numberOfPostsInLastWeek = response.data.numberOfPostsInTimeFrame;
@@ -134,8 +137,14 @@ export default function HomePage() {
 
     useEffect(() => {
         console.log(clubs);
-    }, [clubs])
+    }, [clubs]);
 
+    if (AuthService.hasJwtToken()) {
+        MemberService.getEnrolledSubClubsOfCurrentlySignedInUser().then(response => {
+            console.log("Enrolled sub-clubs:", response.data);
+            setEnrolledSubClubs(response.data);
+        });
+    }
 
     // create post pop-up
     const handleDialogOpen = () => {
@@ -197,14 +206,16 @@ export default function HomePage() {
                                     disableElevation>ENROLL TO NEW CLUB
                             </Button>
 
+                            {(!(feed.isCustom || (!feed.parentName))) &&
                             <Button size="medium"
                                     variant="contained"
                                     color="primary"
+                                    disabled={enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0}
                                     startIcon={<Edit/>}
                                     onClick={() => {
                                         handleDialogOpen()
                                     }}
-                                    disableElevation>CREATE POST</Button>
+                                    disableElevation>CREATE POST</Button>}
                         </Box>
                         <Divider className={classes.divider}/>
 

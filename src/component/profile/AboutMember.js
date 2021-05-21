@@ -25,9 +25,21 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
-    large: {
-        width: theme.spacing(7),
-        height: theme.spacing(7),
+    avatarContainer: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+    },
+    usernameContainer: {
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    avatar: {
+        color: theme.palette.getContrastText('#00e3aa'),
+        backgroundColor: '#00e3aa',
     },
     buttonContainer: {
         display: 'flex',
@@ -59,12 +71,12 @@ export default function AboutMember({username, bio, timeRegistered, numberOfPost
         <Paper variant="outlined">
             <Box className={classes.sectionRoot}>
 
-                <Grid container>
-                    <Grid key={1} item>
-                        <Container><Avatar className={classes.large}> {username[0].toUpperCase()} </Avatar> </Container>
+                <Grid container className={classes.usernameContainer}>
+                    <Grid key={1} item className={classes.avatarContainer}>
+                        <Avatar className={classes.avatar}> {username[0].toUpperCase()} </Avatar> 
                     </Grid>
                     <Grid key={2} item>
-                        <Typography variant="h6">
+                        <Typography variant="h5">
                             {username}
                         </Typography>
                     </Grid>

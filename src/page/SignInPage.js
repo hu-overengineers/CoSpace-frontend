@@ -122,7 +122,7 @@ export default function SignInPage() {
                                 })
                             }).catch(e => {
                                 setSnackbarSeverity("error");
-                                if (e.response.status === 401) {
+                                if (e.response !== undefined && e.response.status === 401) {
                                     setSnackbarMessage("Entered credentials are incorrect.");
                                 } else {
                                     setSnackbarMessage("Something went wrong!");

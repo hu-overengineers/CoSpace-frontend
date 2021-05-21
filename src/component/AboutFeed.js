@@ -10,6 +10,22 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
+    feedNameContainer: {
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    avatarContainer: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+    },
+    avatar: {
+        color: theme.palette.getContrastText('#00e3aa'),
+        backgroundColor: '#00e3aa',
+    },
     sectionTitle: {
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
@@ -21,10 +37,6 @@ const useStyles = makeStyles((theme) => ({
     sectionRoot: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
-    },
-    large: {
-        width: theme.spacing(7),
-        height: theme.spacing(7),
     },
     dateCreatedContainer: {
         display: 'flex',
@@ -43,12 +55,11 @@ export default function AboutFeed({feedInfo}) {
             <Box className={classes.sectionRoot}>
 
                 <Grid container>
-                    <Grid key={1} item>
-                        <Container><Avatar className={classes.large}> {feedInfo.name[0].toUpperCase()} </Avatar>
-                        </Container>
+                    <Grid key={1} item className={classes.avatarContainer}>
+                        <Avatar className={classes.avatar}> {feedInfo.name[0].toUpperCase()} </Avatar>
                     </Grid>
-                    <Grid key={2} item>
-                        <Typography variant="h6">
+                    <Grid key={2} item className={classes.feedNameContainer}>
+                        <Typography variant="h5">
                             {feedInfo.name}
                         </Typography>
                     </Grid>
@@ -60,7 +71,7 @@ export default function AboutFeed({feedInfo}) {
                     {feedInfo.details}
                 </Typography>
 
-                {(!feedInfo.isCustom) &&  // If it's a custom feed like popular or random
+                {(!feedInfo.isCustom) &&  // If it's not a custom feed like popular or random
                 <Box>
 
                     {feedInfo.parentName &&  // If it's a sub-club
