@@ -37,7 +37,9 @@ export default function EnrollPage() {
         ClubService.getSubClubs().then(response => {
             console.log("Parsing sub-clubs");
             console.log(response.data);
-            setSubClubs(ClubService.parseSubClubs(response.data));
+            ClubService.parseSubClubs(response.data).then(tree => {
+                setSubClubs(tree);
+            })
         })
     }, []);
 
