@@ -39,6 +39,7 @@ export default function MainRouter() {
                     </Route>
                     <Route path="/password-reset/:token?">
                         <PasswordResetPage/>
+                    </Route>    
                     <Route path="/pm">
                         <PrivateMessagePage/>
                     </Route>
