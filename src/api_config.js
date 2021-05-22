@@ -10,6 +10,8 @@ export const SUB_CLUB = "/subclub";
 export const COMMON_SUB_CLUBS = "/common-subclubs";
 export const SUB_CLUB_LIST = "/subclub/all";
 export const SUB_CLUB_STATS = "/subclub/statistics";
+export const SUB_CLUB_EVENTS = "/subclub/events";
+export const ATTEND_SUB_CLUB_EVENT = "/subclub/attend-event";
 
 // TODO: Fix some inconsistencies in naming.
 export const GET_POSTS = "/post";
@@ -26,6 +28,7 @@ export const ENROLL = "/enroll";
 export const ADMIN = "/admin";
 export const REPORTS = "/reports";
 export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
+export const ATTENDED_EVENTS = "/attended-events";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 

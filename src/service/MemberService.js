@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    ATTENDED_EVENTS,
     BASE_URL,
     COMMON_SUB_CLUBS,
     ENROLL,
@@ -13,6 +14,10 @@ import {headersWithToken} from "./headers";
 
 const getEnrolledSubClubsOfCurrentlySignedInUser = () => {
     return axios.get(BASE_URL + MEMBER + ENROLLED_SUBCLUBS, headersWithToken());
+}
+
+const getAttendedEventsOfCurrentlySignedInUser = () => {
+    return axios.get(BASE_URL + MEMBER + ATTENDED_EVENTS, headersWithToken());
 }
 
 const getCommonSubClubs = (username) => {
@@ -31,6 +36,7 @@ export const MemberService = {
     getEnrolledSubClubsOfCurrentlySignedInUser,
     enrollToSubClub,
     getPostsByAuthorAndSubClub,
-    getCommonSubClubs
+    getCommonSubClubs,
+    getAttendedEventsOfCurrentlySignedInUser
 };
 
