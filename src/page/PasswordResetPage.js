@@ -19,6 +19,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import DoneOutlineOutlinedIcon from '@material-ui/icons/DoneOutlineOutlined';
+import { HistorySharp } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -287,15 +288,14 @@ function TypeNewPasswordPage(probs) {
                     onClick={(event) => {
                         event.preventDefault();
 
-
-                        {/**                     AuthService.resetPassword(email).then(r => {
+                        AuthService.changePasswordWithToken(newPassword, token).then(r => {
                             console.log(r.data.message);
                             setSnackbarSeverity("success");
                             setSnackbarMessage(r.data.message);
                             setSnackbarOpen(true);
 
-                            delay(200).then(() => {
-                                setIsSend(true);
+                            delay(1000).then(() => {
+                                history.push("/sign-in");
                             })
                         }).catch(e => {
                             setSnackbarSeverity("error");
@@ -304,11 +304,7 @@ function TypeNewPasswordPage(probs) {
                             } else {
                                 setSnackbarMessage("Something went wrong!");
                             }
-                            setSnackbarOpen(true);}) */}
-    
-
-
-
+                            setSnackbarOpen(true);}) 
                     }}
                 >
                     Reset Password
