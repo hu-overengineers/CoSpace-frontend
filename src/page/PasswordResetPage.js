@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -19,6 +19,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import DoneOutlineOutlinedIcon from '@material-ui/icons/DoneOutlineOutlined';
+import { HistorySharp } from "@material-ui/icons";
+import { set } from "date-fns/esm";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -116,8 +118,7 @@ function TypeEmailPage() {
                 </Grid>
             </Container>
         </div>
-        :
-        
+        :       
         <div className={classes.paper}>
 
             <Avatar className={classes.avatar}> <VpnKeyOutlinedIcon/> </Avatar>
@@ -186,7 +187,6 @@ function TypeEmailPage() {
         </div>
 
         }
-
         <Box mt={8}>
             <Copyright/>
         </Box>
@@ -202,10 +202,136 @@ function TypeEmailPage() {
 function TypeNewPasswordPage(probs) {
     const token = probs.passwordResetToken;
 
+    console.log(token);
+    const classes = useStyles();
+    const history = useHistory()
+
+
+
+    const [newPassword, setNewPassword] = React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [passwordsIsMatch, setPasswordsIsMatch] = React.useState(false);
+
+    useEffect(() => {
+
+        if (newPassword === confirmPassword) {
+            setPasswordsIsMatch(true);
+        }else{
+            setPasswordsIsMatch(false);
+        }
+
+
+    }, [newPassword, confirmPassword])
+
+    const [open, setSnackbarOpen] = React.useState(false);
+    const [severity, setSnackbarSeverity] = React.useState("success");
+    const [snackbarMessage, setSnackbarMessage] = React.useState("Welcome back!");
+
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
+    };
+
+
     return (
-        <div>
-            Type new password with token {token}
+
+        <Container component="main" maxWidth="xs">
+        <CssBaseline/>
+        <div className={classes.paper}>
+
+            <Avatar className={classes.avatar}> <VpnKeyOutlinedIcon/> </Avatar>
+            <Typography component="h1" variant="h5"> Reset Password </Typography>
+
+
+            <form className={classes.form} noValidate>
+
+                <TextField
+                    error = {!passwordsIsMatch}
+                    helperText= {passwordsIsMatch ?  null :"Passwords does not match!"}
+
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Create new password"
+                    type="password"
+                    id="password"
+
+                    onChange={(event) => {
+                        setNewPassword(event.target.value);
+
+                    }}
+                />
+
+                <TextField
+
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Confirm your password"
+                    type="password"
+                    id="password"
+
+                    error = {!passwordsIsMatch}
+                    helperText= {passwordsIsMatch ?  null :"Passwords does not match!"}
+
+                    onChange={(event) => {
+                        setConfirmPassword(event.target.value);
+
+                    }}
+                />
+
+                <Button
+                    disabled={!passwordsIsMatch}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={(event) => {
+                        event.preventDefault();
+
+                        AuthService.changePasswordWithToken(newPassword, token).then(r => {
+                            console.log(r.data.message);
+                            setSnackbarSeverity("success");
+                            setSnackbarMessage(r.data.message);
+                            setSnackbarOpen(true);
+
+                            delay(1000).then(() => {
+                                history.push("/sign-in");
+                            })
+                        }).catch(e => {
+                            setSnackbarSeverity("error");
+                            if (e.response !== undefined && e.response.status === 401) {
+                                setSnackbarMessage("Entered credentials are incorrect.");
+                            } else {
+                                setSnackbarMessage("Something went wrong!");
+                            }
+                            setSnackbarOpen(true);}) 
+                    }}
+                >
+                    Reset Password
+                </Button>
+            </form>
         </div>
+
+        
+        <Box mt={8}>
+            <Copyright/>
+        </Box>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
+            <Alert onClose={handleSnackbarClose} severity={severity}>
+                {snackbarMessage}
+            </Alert>
+        </Snackbar>
+
+        </Container>
     )
 }
 

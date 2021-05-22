@@ -4,7 +4,7 @@ import {Alert} from "@material-ui/lab";
 import {delay} from "../util/async";
 import AboutFeed from './AboutFeed';
 import Box from '@material-ui/core/Box';
-import Questionnaire from './Questionnaire';
+import Questionnaire from './questionnaire/Questionnaire';
 import {Assignment} from "@material-ui/icons";
 import {useHistory} from "react-router-dom";
 import {MemberService} from '../service/MemberService';
@@ -33,27 +33,27 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}) {
         event.preventDefault();
         console.log("Enroll in button clicked.");
         // skip the Questionnaire for now
-        MemberService.enrollToSubClub(clickedSubClub.name).then((response) => {
-            console.log("Response: " + response.data);
-            setSnackbarSeverity("success");
-            setSnackbarMessage(response.data);
-            setSnackbarOpen(true);
+        // MemberService.enrollToSubClub(clickedSubClub.name).then((response) => {
+        //     console.log("Response: " + response.data);
+        //     setSnackbarSeverity("success");
+        //     setSnackbarMessage(response.data);
+        //     setSnackbarOpen(true);
 
-            delay(1000).then(() => {
-                history.push("/")
-            })
-        }).catch(e => {
-            setSnackbarSeverity("error");
-            if (e.response.status === 401) {
-                setSnackbarMessage("Entered credentials are incorrect.");
-            } else {
-                setSnackbarMessage("Something went wrong!");
-            }
-            setSnackbarOpen(true);
-            delay(1000).then(() => {
-                history.push("/")
-            })
-        })
+        //     delay(1000).then(() => {
+        //         history.push("/")
+        //     })
+        // }).catch(e => {
+        //     setSnackbarSeverity("error");
+        //     if (e.response.status === 401) {
+        //         setSnackbarMessage("Entered credentials are incorrect.");
+        //     } else {
+        //         setSnackbarMessage("Something went wrong!");
+        //     }
+        //     setSnackbarOpen(true);
+        //     delay(1000).then(() => {
+        //         history.push("/")
+        //     })
+        // })
     }
 
 
@@ -92,7 +92,7 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}) {
         } else {
             return (
                 <Box>
-                    <Questionnaire></Questionnaire>
+                    <Questionnaire/>
                     <Snackbar open={open} autoHideDuration={6000} onClose={handleSnackbarClose}>
                         <Alert onClose={handleSnackbarClose} severity={severity}>
                             {snackbarMessage}

@@ -30,5 +30,5 @@ export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 
 export const SEARCH_MEMBER_BY_NAME = "/admin/search-member"
 export const RESET_PASSWORD = "/reset-password";
-
+export const CHANGE_PASSWORD_WITH_TOKEN = "/change-password-token";
 
