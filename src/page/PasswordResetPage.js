@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -20,6 +20,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import DoneOutlineOutlinedIcon from '@material-ui/icons/DoneOutlineOutlined';
 import { HistorySharp } from "@material-ui/icons";
+import { set } from "date-fns/esm";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -200,13 +201,27 @@ function TypeEmailPage() {
 
 function TypeNewPasswordPage(probs) {
     const token = probs.passwordResetToken;
+
+    console.log(token);
     const classes = useStyles();
     const history = useHistory()
+
+
 
     const [newPassword, setNewPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
     const [passwordsIsMatch, setPasswordsIsMatch] = React.useState(false);
 
+    useEffect(() => {
+
+        if (newPassword === confirmPassword) {
+            setPasswordsIsMatch(true);
+        }else{
+            setPasswordsIsMatch(false);
+        }
+
+
+    }, [newPassword, confirmPassword])
 
     const [open, setSnackbarOpen] = React.useState(false);
     const [severity, setSnackbarSeverity] = React.useState("success");
@@ -234,6 +249,8 @@ function TypeNewPasswordPage(probs) {
             <form className={classes.form} noValidate>
 
                 <TextField
+                    error = {!passwordsIsMatch}
+                    helperText= {passwordsIsMatch ?  null :"Passwords does not match!"}
 
                     variant="outlined"
                     margin="normal"
@@ -246,11 +263,7 @@ function TypeNewPasswordPage(probs) {
 
                     onChange={(event) => {
                         setNewPassword(event.target.value);
-                        if (newPassword === confirmPassword) {
-                            setPasswordsIsMatch(true);
-                        }else {
-                            setPasswordsIsMatch(false);
-                        }
+
                     }}
                 />
 
@@ -265,21 +278,17 @@ function TypeNewPasswordPage(probs) {
                     type="password"
                     id="password"
 
-                    error = {passwordsIsMatch}
-                    helperText= {passwordsIsMatch ? "Passwords does not match!" : null}
+                    error = {!passwordsIsMatch}
+                    helperText= {passwordsIsMatch ?  null :"Passwords does not match!"}
 
                     onChange={(event) => {
                         setConfirmPassword(event.target.value);
-                        if (newPassword === confirmPassword) {
-                            setPasswordsIsMatch(true);
-                        }else {
-                            setPasswordsIsMatch(false);
-                        }
+
                     }}
                 />
 
                 <Button
-                    disabled={passwordsIsMatch}
+                    disabled={!passwordsIsMatch}
                     type="submit"
                     fullWidth
                     variant="contained"

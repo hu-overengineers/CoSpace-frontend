@@ -4,7 +4,7 @@
  */
 
 import axios from "axios";
-import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER, RESET_PASSWORD, AUTH} from "../api_config";
+import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER, RESET_PASSWORD, AUTH,CHANGE_PASSWORD_WITH_TOKEN} from "../api_config";
 import {headersWithToken} from "./headers";
 
 const login = (username, pass) => {
@@ -67,7 +67,7 @@ const resetPassword = (email) => {
 }
 
 const changePasswordWithToken = (newPassword, token) => {
-    return axios.post(BASE_URL + RESET_PASSWORD, null, {params: {token: token, newPassword: newPassword}});
+    return axios.post(BASE_URL +  AUTH + CHANGE_PASSWORD_WITH_TOKEN, null, {params: {token: token, newPassword: newPassword}});
 }
 
 
