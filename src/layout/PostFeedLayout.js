@@ -251,11 +251,7 @@ function PostFeedLayout({children}) {
                                         {events && events.length !== 0 ? events.map(event =>
                                             <EventItem
                                                 key={event.id}
-                                                id={event.id}
-                                                title={event.title}
-                                                details={event.details}
-                                                date={new Date(event.date)}
-                                                hasAttended={event.hasAttended}
+                                                event={event}
                                                 attendCallback={(id) => {
                                                     ClubService.attendEvent(id).then(response => {
                                                         console.log("Successfully attended event:", response.data);
