@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 400,
     },
     root: {
-        marginLeft: theme.spacing(0.5)
     },
     treeViewTitleContainer: {
         display: 'flex',
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    treeViewIconContainer: {
+    treeViewTitleIconContainer: {
         marginTop: theme.spacing(0.5),
         marginBottom: theme.spacing(0),
         marginLeft: theme.spacing(2),
@@ -78,7 +77,6 @@ const useTreeItemStyles = makeStyles((theme) => ({
         marginLeft: 0,
         '& $content': {
             paddingLeft: theme.spacing(2),
-
         },
     },
     expanded: {},
@@ -86,25 +84,11 @@ const useTreeItemStyles = makeStyles((theme) => ({
     label: {
         fontWeight: 'inherit',
         color: 'inherit',
-    },
-    labelRoot: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0.5, 0),
-    },
-    labelIcon: {
-        marginRight: theme.spacing(1),
-    },
-    labelText: {
-        fontWeight: 'inherit',
-        flexGrow: 1,
-    },
-    treeItemIcon: {
         marginLeft: theme.spacing(2)
     },
-    treeItemText: {
-        marginLeft: theme.spacing(1)
-    }
+    iconContainer: {
+        marginLeft:  theme.spacing(1),
+    },
 }));
 
 function renderTree(node, classes, callback) {
@@ -124,6 +108,7 @@ function renderTree(node, classes, callback) {
                       selected: classes.selected,
                       group: classes.group,
                       label: classes.label,
+                      iconContainer: classes.iconContainer
                   }}>
             {Array.isArray(node.children) ? node.children.map((childNode) => renderTree(childNode, classes, callback)) : null}
         </TreeItem>
@@ -152,7 +137,7 @@ export default function CoSpaceTreeViewMenu(
         <Paper variant="outlined">
             <Box className={classes.sectionRoot}>
                 <Grid container>
-                    <Box key={1} item className={classes.treeViewIconContainer}>
+                    <Box key={1} item className={classes.treeViewTitleIconContainer}>
                         {titleIcon}
                     </Box>
                     <Grid key={2} item className={classes.treeViewTitleContainer}>
@@ -163,7 +148,6 @@ export default function CoSpaceTreeViewMenu(
                 </Grid>
                 <Divider className={classes.divider}/>
                 <TreeView
-                    className={classes.root}
                     defaultCollapseIcon={collapseIcon}
                     defaultExpanded={defaultExpanded}
                     expanded={expanded}
