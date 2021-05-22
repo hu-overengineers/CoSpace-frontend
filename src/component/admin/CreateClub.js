@@ -81,7 +81,6 @@ function CreateClub() {
     };
 
     useEffect(() => {
-        console.log("create cluuuuuuuub", questions);
     }, [questions])
 
     const handleClickOpenQuestionaryDialog = () => {
@@ -93,9 +92,6 @@ function CreateClub() {
     };
 
 
-    useEffect(() => {
-        console.log(questions);
-    },[questions])
     
 
 
