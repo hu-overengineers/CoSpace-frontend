@@ -73,7 +73,7 @@ export default function AboutMember({username, bio, timeRegistered, numberOfPost
 
                 <Grid container className={classes.usernameContainer}>
                     <Grid key={1} item className={classes.avatarContainer}>
-                        <Avatar className={classes.avatar}> {username[0].toUpperCase()} </Avatar> 
+                        <Avatar className={classes.avatar}> {username[0].toUpperCase()} </Avatar>
                     </Grid>
                     <Grid key={2} item>
                         <Typography variant="h5">

@@ -129,7 +129,7 @@ export default function CoSpaceTreeViewMenu({title, menuItems, callbackOnTreeIte
                 <TreeView
                     className={classes.root}
                     defaultCollapseIcon={<Box><ExpandMoreIcon className={treeClasses.treeItemIcon}/></Box>}
-                    //defaultExpanded={menuItems.map((menuItem) => menuItem.text)}
+                    // defaultExpanded={menuItems.map((menuItem) => menuItem.text)}
                     defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon}/>}>
                     {menuItems.map((menuItem, index) => (
                         <Box key={menuItem.text}>
