@@ -12,6 +12,7 @@ export const headersWithToken = (params) => {
             "Authorization": `Bearer ${token}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            
         },
         params: params
     }
