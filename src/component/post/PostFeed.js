@@ -1,50 +1,54 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import {PostFeedItem} from "./PostFeedItem";
-import {List} from '@material-ui/core';
+import {List, makeStyles} from '@material-ui/core';
 import Box from "@material-ui/core/Box";
-import {withStyles} from "@material-ui/core/styles";
+import {PostService} from "../../service/PostService";
+import {useParams} from "react-router-dom";
 
 
-const useStyles = theme => ({
+const useStyles = makeStyles((theme) => ({
+    root: {
+        margin: theme.spacing(0),
+    },
     feedItem: {
         marginBottom: theme.spacing(2),
     },
-})
+}));
 
 
-class PostFeed extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
+export default function PostFeed({posts}) {
+    const {feedName = "Popular"} = useParams();
 
-    }
+    const classes = useStyles();
 
+    const [postsInFeed, setPostsInFeed] = useState(posts ?? []);
 
-    componentDidMount() {
+    // Get posts
+    useEffect(() => {
+        if (posts === undefined) {
+            PostService.getPosts(feedName).then(response => {
+                console.log(`Fetched posts of ${feedName}`);
+                console.log(response.data)
+                setPostsInFeed(response.data);
+            }).catch(e => {
+                console.error(e);
+                console.log(`No posts in ${feedName}`);
+                setPostsInFeed([]);
+            });
+        } else {
+            setPostsInFeed(posts);
+        }
+    }, [feedName, posts]);
 
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-    }
-
-
-    render() {
-        const {classes} = this.props;
-
-        return (
-            <div>
-                <List className="">
-                    {this.props.posts.map((post, index) => (
-                        <Box key={post.id} className={classes.feedItem}>
-                            {<PostFeedItem props={post}/>}
-                        </Box>
-                    ))}
-                </List>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <List className={classes.root}>
+                {postsInFeed.map((post, index) => (
+                    <Box key={post.id} className={classes.feedItem}>
+                        {<PostFeedItem props={post}/>}
+                    </Box>
+                ))}
+            </List>
+        </div>
+    );
 }
-
-
-export default withStyles(useStyles)(PostFeed);

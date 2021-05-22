@@ -17,6 +17,9 @@ export default function MainRouter() {
                     <Route exact path="/">
                         <HomePage/>
                     </Route>
+                    <Route path="/feed">
+                        <HomePage/>
+                    </Route>
                     <Route path="/admin">
                         <AdminPage/>
                     </Route>

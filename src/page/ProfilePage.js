@@ -34,19 +34,19 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
     },
     gridLeftColumnBox: {
-        marginTop: theme.spacing(2),
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
+        marginTop: theme.spacing(3),
+        marginLeft: theme.spacing(3),
+        marginRight: theme.spacing(0),
     },
     gridMiddleColumnBox: {
-        marginTop: theme.spacing(2),
-        marginLeft: theme.spacing(0),
-        marginRight: theme.spacing(0)
+        marginTop: theme.spacing(3),
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     },
     gridRightColumnBox: {
-        marginTop: theme.spacing(2),
-        marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2)
+        marginTop: theme.spacing(3),
+        marginLeft: theme.spacing(0),
+        marginRight: theme.spacing(3),
     },
     sectionBox: {
         marginBottom: theme.spacing(2)
