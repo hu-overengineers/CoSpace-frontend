@@ -1,17 +1,16 @@
-import React, { useState} from 'react';
-import {Snackbar} from "@material-ui/core";
+import React, {useState} from 'react';
+import {Button, Snackbar} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
 import {delay} from "../util/async";
 import AboutFeed from './AboutFeed';
 import Box from '@material-ui/core/Box';
 import Questionnaire from './Questionnaire';
-import { Button } from '@material-ui/core';
 import {Assignment} from "@material-ui/icons";
 import {useHistory} from "react-router-dom";
-import { MemberService } from '../service/MemberService';
+import {MemberService} from '../service/MemberService';
 
 
-export default function EnrollPanel({clickedSubClub, alreadyEnrolled}){
+export default function EnrollPanel({clickedSubClub, alreadyEnrolled}) {
     const [isQuest, setQuest] = useState(false);
     const [open, setSnackbarOpen] = useState(false);
     const [severity, setSnackbarSeverity] = useState("success");
@@ -60,35 +59,37 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}){
 
     if (clickedSubClub === undefined) {
         return <p>Click to a club</p>
-    }
-    else {
+    } else {
         if (!isQuest) {
-            if(alreadyEnrolled){buttonText = "ALREADY ENROLLED";}
+            if (alreadyEnrolled) {
+                buttonText = "ALREADY ENROLLED";
+            }
             return (
-                <Box 
+                <Box
                     display="flex" flexDirection="column"
                     justifyContent="space-between" height="75vh">
-                    
+
                     <AboutFeed
                         feedInfo={clickedSubClub}/>
                     {"parentName" in clickedSubClub && (
-                        <Button 
-                            size="medium" style={{margin:"5px"}}
+                        <Button
+                            size="medium" style={{margin: "5px"}}
                             variant="contained"
                             color="primary"
                             startIcon={<Assignment/>}
-                            onClick={(event) => {onEnrollButtonClick(event)}}
+                            onClick={(event) => {
+                                onEnrollButtonClick(event)
+                            }}
                             disabled={alreadyEnrolled}
                             disableElevation>
                             {buttonText}
                         </Button>
 
                     )}
-                
+
                 </Box>
             )
-        }
-        else {
+        } else {
             return (
                 <Box>
                     <Questionnaire></Questionnaire>
@@ -98,7 +99,7 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}){
                         </Alert>
                     </Snackbar>
                 </Box>)
-        }    
+        }
     }
 
 }

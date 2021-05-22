@@ -82,7 +82,7 @@ export default function PrimaryAppBar() {
                     >
                         CoSpace
                     </Typography>
-                    
+
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon/>

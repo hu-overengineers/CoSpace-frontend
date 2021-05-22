@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Switch, useRouteMatch} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import HomePage from "../page/HomePage";
 import AdminPage from "../page/AdminPage";
@@ -24,7 +24,7 @@ export default function MainRouter() {
                         <AdminPage/>
                     </Route>
                     <Route path="/profile/:username">
-                        <ProfilePage />
+                        <ProfilePage/>
                     </Route>
                     <Route path="/sign-up">
                         <SignUpPage/>

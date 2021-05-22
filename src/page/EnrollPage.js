@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import {ClubService} from "../service/ClubService";
 import ClubTree from '../component/ClubTree';
-import { MemberService } from '../service/MemberService';
+import {MemberService} from '../service/MemberService';
 import EnrollPanel from '../component/EnrollPanel';
 
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight: "75vh",
         maxHeight: "75vh",
     }
-  }));
+}));
 
 export default function EnrollPage() {
     const classes = useStyles();
@@ -29,7 +29,6 @@ export default function EnrollPage() {
     const [enrolledSubs, setEnrolledSubs] = useState([]);
     const [clicked, setClicked] = useState();
     const [isAlreadyEnrolled, setAlreadyEnrolled] = useState(false);
-
 
 
     // Get all sub-clubs
@@ -57,7 +56,7 @@ export default function EnrollPage() {
     const handleSubClubClick = (subclub) => {
         console.log("clicked club", subclub);
         setClicked(subclub)
-        let alreadyEnrolled =  enrolledSubs.includes(subclub.name);
+        let alreadyEnrolled = enrolledSubs.includes(subclub.name);
         console.log(enrolledSubs, alreadyEnrolled, subclub.name);
         setAlreadyEnrolled(alreadyEnrolled)
 
@@ -66,12 +65,12 @@ export default function EnrollPage() {
 
     return (
         <div>
-            <Grid container  spacing={1} className={classes.gridContainer}>
+            <Grid container spacing={1} className={classes.gridContainer}>
                 <Grid item xs={3} className={classes.gridItem}>
-                        <ClubTree
-                            callbackOnTreeItemClick={handleSubClubClick}
-                            clubs={subclubs}>
-                        </ClubTree>
+                    <ClubTree
+                        callbackOnTreeItemClick={handleSubClubClick}
+                        clubs={subclubs}>
+                    </ClubTree>
                 </Grid>
 
                 <Grid item xs={8} className={classes.gridItem}>

@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import {fade, makeStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import {Container, Grid, InputBase, List, ListItem, ListItemText, ListSubheader, Typography} from "@material-ui/core";
+import {Container, Grid, InputBase, List, ListItem, ListItemText, Typography} from "@material-ui/core";
 import {AdminService} from '../../service/AdminService'
 
 const useStyles = makeStyles((theme) => ({
@@ -82,11 +82,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
 function ViewMemberInfo() {
     const classes = useStyles();
-    
+
     const [enrolledSubClubs, setEnrolledSubClubs] = useState([]);
     const [members, setMembers] = useState([]);
     const [selectedMember, setSelectedMember] = useState({
@@ -97,13 +95,13 @@ function ViewMemberInfo() {
     });
 
     const onSearchKeyChange = (e) => {
-        
-        AdminService.searchMembersByName(e.target.value,0, 5).then(response => {
+
+        AdminService.searchMembersByName(e.target.value, 0, 5).then(response => {
             if (e.target.value.length > 1) {
                 console.log(response.data);
                 setMembers(response.data);
             }
-            if (e.target.value === ""){
+            if (e.target.value === "") {
                 setMembers([]);
             }
         })
@@ -117,7 +115,6 @@ function ViewMemberInfo() {
         });
     }, [selectedMember])
 
-    
 
     const clubNames = ["Club Name 1", "Club Name 2", "Club Name 3"];
     const subClubNames = ["Sub-Club 1", "Sub-Club 2", "Sub-Club 3"];
@@ -139,16 +136,16 @@ function ViewMemberInfo() {
                     }}
                     inputProps={{'aria-label': 'search'}}
                 />
-                
+
                 <div>
                     <List component="nav" className={classes.searchResult}>
                         {members.map((member) => (
-                        <ListItem button key={member.gmail+ member.created} onClick={(e) => {
-                            setMembers([]);
-                            setSelectedMember(member);
-                        }}>
-                            <ListItemText primary={`${member.username}`} />
-                        </ListItem>
+                            <ListItem button key={member.gmail + member.created} onClick={(e) => {
+                                setMembers([]);
+                                setSelectedMember(member);
+                            }}>
+                                <ListItemText primary={`${member.username}`}/>
+                            </ListItem>
                         ))}
                     </List>
                 </div>
@@ -156,46 +153,43 @@ function ViewMemberInfo() {
             </Container>
 
 
-
-            
             <Container>
                 <Grid container className={classes.divider}>
-                        <Grid key={1} item>
-                        <Container   >
-                                <Typography variant="h6" >
-                                    {"Username"}
-                                </Typography>
-                                <Typography variant="body1" >
-                                    {selectedMember.username}
-                                </Typography>
+                    <Grid key={1} item>
+                        <Container>
+                            <Typography variant="h6">
+                                {"Username"}
+                            </Typography>
+                            <Typography variant="body1">
+                                {selectedMember.username}
+                            </Typography>
 
-                            </Container>
+                        </Container>
 
 
+                    </Grid>
+                    <Grid key={2} item>
+                        <Container>
+                            <Typography variant="h6" className={classes.email}>
+                                {"E-mail"}
+                            </Typography>
+                            <Typography variant="body1" className={classes.email}>
+                                {selectedMember.email}
+                            </Typography>
 
-                        </Grid>
-                        <Grid key={2} item>
-                        <Container  >
-                                <Typography variant="h6" className={classes.email}>
-                                    {"E-mail"}
-                                </Typography>
-                                <Typography variant="body1" className={classes.email}>
-                                    {selectedMember.email}
-                                </Typography>
-                                
-                            </Container>
-                        </Grid>
+                        </Container>
+                    </Grid>
                 </Grid>
             </Container>
 
             <Container>
-            <Grid container className={classes.divider} >
+                <Grid container className={classes.divider}>
                     <Grid key={1} item>
                         <Container>
-                        <Typography variant="h6" >
+                            <Typography variant="h6">
                                 {"Registiration Date"}
                             </Typography>
-                            <Typography variant="body1" >
+                            <Typography variant="body1">
                                 {selectedMember.created ? new Date(selectedMember.created).toString() : "Unknown"}
                             </Typography>
 
@@ -205,18 +199,18 @@ function ViewMemberInfo() {
                     </Grid>
                     <Grid key={2} item>
                         <Container>
-                        
-                        <Typography variant="h6" >
+
+                            <Typography variant="h6">
                                 {"Last Login Date"}
                             </Typography>
-                            <Typography variant="body1" >
-                                {selectedMember.lastLogin ? new Date(selectedMember.lastLogin).toString() : "Unknown" }
+                            <Typography variant="body1">
+                                {selectedMember.lastLogin ? new Date(selectedMember.lastLogin).toString() : "Unknown"}
                             </Typography>
 
                         </Container>
                     </Grid>
-             </Grid>
-             </Container>
+                </Grid>
+            </Container>
 
             <Grid container spacing={3}>
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
@@ -225,16 +219,16 @@ function ViewMemberInfo() {
 
                         <div>
                             <List className={classes.root} subheader={<li/>}>
-                            {enrolledSubClubs.map((subClub) => (
-                                                <ListItem key={subClub.id}>
-                                                    <ListItemText primary={subClub.name}/>
-                                                </ListItem>
-                                            ))}
-                                            
+                                {enrolledSubClubs.map((subClub) => (
+                                    <ListItem key={subClub.id}>
+                                        <ListItemText primary={subClub.name}/>
+                                    </ListItem>
+                                ))}
 
-                                            {/**
-                                             * 
-                                             *                                 {clubNames.map((clubName) => (
+
+                                {/**
+                                 *
+                                 *                                 {clubNames.map((clubName) => (
                                     <li key={`section-${clubName}`} className={classes.listSection}>
                                         <ul className={classes.ul}>
                                             <ListSubheader>{clubName}</ListSubheader>
@@ -247,7 +241,7 @@ function ViewMemberInfo() {
                                     </li>
                                 ))}
 
-                                             */}
+                                 */}
 
 
                             </List>
