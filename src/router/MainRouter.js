@@ -7,6 +7,7 @@ import NotFoundPage from "../page/NotFoundPage";
 import SignUpPage from "../page/SignUpPage";
 import SignInPage from "../page/SignInPage";
 import EnrollPage from "../page/EnrollPage";
+import PasswordResetPage from '../page/PasswordResetPage';
 import PrivateMessagePage from "../page/PrivateMessagePage";
 
 
@@ -36,6 +37,8 @@ export default function MainRouter() {
                     <Route path="/enroll">
                         <EnrollPage/>
                     </Route>
+                    <Route path="/password-reset/:token?">
+                        <PasswordResetPage/>
                     <Route path="/pm">
                         <PrivateMessagePage/>
                     </Route>

@@ -4,7 +4,7 @@
  */
 
 import axios from "axios";
-import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER} from "../api_config";
+import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER, RESET_PASSWORD, AUTH} from "../api_config";
 import {headersWithToken} from "./headers";
 
 const login = (username, pass) => {
@@ -62,9 +62,14 @@ const isAdmin = () => {
     return "ADMIN" in getAuthRoles();
 }
 
+const resetPassword = (email) => {
+    return axios.post(BASE_URL + AUTH + RESET_PASSWORD, null,{params: {email: email}});
+}
+
 export const AuthService = {
     login, register, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken,
     getUsername,
     removeUsername,
+    resetPassword,
     isAdmin, saveAuthRoles, getAuthRoles
 };
