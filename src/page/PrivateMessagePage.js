@@ -17,51 +17,8 @@ import PrivateMessageUserItem from "../component/pm/PrivateMessageUserItem";
 import PrivateMessageUserItemList from "../component/pm/PrivateMessageUserItemList";
 import PrivateMessageFeed from "../component/pm/PrivateMessageFeed";
 import {AuthService} from "../service/AuthService";
-
-const messages = [
-    {
-        id: "1",
-        timestamp: 111111,
-        source: "mert",
-        target: "selim",
-        content: "Selim nasılsın?",
-    },
-    {
-        id: "2",
-        timestamp: 122222,
-        source: "selim",
-        target: "mert",
-        content: "İyiyim sen nasılsın?",
-    },
-    {
-        id: "3",
-        timestamp: 133333,
-        source: "mert",
-        target: "selim",
-        content: "İyiyim. Sorduğun için teşekkür ederim.",
-    },
-    {
-        id: "4",
-        timestamp: 144444,
-        source: "mert",
-        target: "samil",
-        content: "Karnım acıktı, bir şeyler mi yesek?",
-    },
-    {
-        id: "5",
-        timestamp: 155555,
-        source: "yusuf",
-        target: "mert",
-        content: "Bu kıyafetin rengi nasıl?",
-    },
-    {
-        id: "6",
-        timestamp: 166666,
-        source: "mert",
-        target: "cagatay",
-        content: "Kapıyı açar mısın?",
-    },
-];
+import {PrivateMessagingService} from "../service/PrivateMessagingService";
+import {unstable_batchedUpdates} from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -93,30 +50,40 @@ function PrivateMessagePage() {
     const [userList, setUserList] = useState([]);
     const [selectedUser, setUser] = useState(null);
     const [filteredMessages, setFilteredMessages] = useState([]);
+    const [messages, setMessages] = useState([]);
+    const [messageContent, setMessageContent] = useState(null);
+    
+    useEffect(() => {
+        PrivateMessagingService.getPrivateMessages().then(response => {
+            console.log("PM:", response.data);
+            
+            setMessages(response.data)
+        })
+    }, []);
 
     useEffect(() => {
         const username = AuthService.getUsername();
 
         const usersSet = new Set();
         messages.forEach((message) => {
-            if (message.source === username) {
-                usersSet.add(message.target);
-            } else if (message.target === username) {
-                usersSet.add(message.source);
+            if (message.senderUsername === username) {
+                usersSet.add(message.receiverUsername);
+            } else if (message.receiverUsername === username) {
+                usersSet.add(message.senderUsername);
             }
         });
         const sortedUserList = [...usersSet];
         sortedUserList.sort((user1, user2) => {
             let common1 = messages.filter(
-                (message) => message.source === user1 || message.target === user1
+                (message) => message.senderUsername === user1 || message.receiverUsername === user1
             );
             let common2 = messages.filter(
-                (message) => message.source === user2 || message.target === user2
+                (message) => message.senderUsername === user2 || message.receiverUsername === user2
             );
             //console.log(common1);
             //console.log(common2);
-            return Math.max.apply(Math, common2.map(message => message.timestamp)) -
-                Math.max.apply(Math, common1.map(message => message.timestamp));
+            return Math.max.apply(Math, common2.map(message => message.created)) -
+                Math.max.apply(Math, common1.map(message => message.created));
         });
 
         setUserList(sortedUserList);
@@ -127,10 +94,21 @@ function PrivateMessagePage() {
     }, [userList])
 
     useEffect(() => {
-        const sortedFilteredMessages = messages.filter(message => message.source === selectedUser || message.target === selectedUser);
+        const sortedFilteredMessages = messages.filter(message => message.senderUsername === selectedUser || message.receiverUsername === selectedUser);
         sortedFilteredMessages.sort((message1, message2) => message1.timestamp <= message2.timestamp);
         setFilteredMessages(sortedFilteredMessages);
-    }, [selectedUser]);
+    }, [messages, selectedUser]);
+
+    const handleSendMessage = () => {
+        PrivateMessagingService.send(selectedUser, messageContent).then(response => {
+            const aux = messages.slice();
+            aux.push(response.data);
+            unstable_batchedUpdates(() => {
+                setMessages(aux);
+                setMessageContent("");
+            })
+        })
+    }
 
     return (
         <div className={classes.marginAll}>
@@ -159,13 +137,15 @@ function PrivateMessagePage() {
                     <Grid container style={{padding: "20px"}}>
                         <Grid item xs={11}>
                             <TextField
+                                value={messageContent}
                                 id="outlined-basic-email"
                                 label="Type something..."
+                                onChange={(event) => setMessageContent(event.target.value)}
                                 fullWidth
                             />
                         </Grid>
                         <Grid xs={1} align="right">
-                            <Fab color="primary" aria-label="add">
+                            <Fab onClick={() => handleSendMessage()} color="primary" aria-label="add">
                                 <SendIcon/>
                             </Fab>
                         </Grid>
