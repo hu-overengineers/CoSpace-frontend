@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
     searchResult: {
         marginLeft: theme.spacing(3),
         flexGrow: 1,
-        marginLeft: 65,
         position: 'relative',
         overflow: 'auto',
         borderRadius: theme.shape.borderRadius,
@@ -116,8 +115,8 @@ function ViewMemberInfo() {
     }, [selectedMember])
 
 
-    const clubNames = ["Club Name 1", "Club Name 2", "Club Name 3"];
-    const subClubNames = ["Sub-Club 1", "Sub-Club 2", "Sub-Club 3"];
+   // const clubNames = ["Club Name 1", "Club Name 2", "Club Name 3"];
+    //const subClubNames = ["Sub-Club 1", "Sub-Club 2", "Sub-Club 3"];
     const ipAddr = ["192.168.1.1 - 5.06", "192.168.1.2 - 2.23", "192.168.1.3 - 22.33"]
 
     return (
