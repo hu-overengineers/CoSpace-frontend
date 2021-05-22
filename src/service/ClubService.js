@@ -19,40 +19,17 @@ const getSubClubStatistics = (subClubName, startTime, endTime) => {
     });
 }
 
-const parseSubClubs = (subClubs) => {
+const parseSubClubs = async (subClubs) => {
 
-    const renamedSubClubs = []
+    const clubs = await getClubs();
 
-    for (let i = 0; i < subClubs.length; i++) {
-        const element = subClubs[i];
-        let rns = {
-            name: element.name,
-            details: element.details,
-            rating: element.rating,
-            key: element.id,
-            uid: element.id,
-            parentName: element.parentName,
-            created: element.created
-        };
-        renamedSubClubs.push(rns);
-    }
+    const tree = [];
+    clubs.data.forEach(club => {
+        club.children = subClubs.filter(subClub => subClub.parentName === club.name);
+        tree.push(club)
+    })
 
-    subClubs = renamedSubClubs;
-
-    const clubNames = [...new Set(subClubs.map(subclub => subclub.parentName))]
-    const clubs = []
-    for (let clb = 0; clb < clubNames.length; clb++) {
-        let clubObj = {
-            name: clubNames[clb],
-            key: clb,
-            uid: clb,
-            children: subClubs.filter(function (subc) {
-                return subc.parentName === clubNames[clb]
-            })
-        }
-        clubs.push(clubObj);
-    }
-    return clubs;
+    return tree;
 }
 
 

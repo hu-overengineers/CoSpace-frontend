@@ -10,7 +10,6 @@ import EnrollPage from "../page/EnrollPage";
 import PrivateMessagePage from "../page/PrivateMessagePage";
 
 
-
 export default function MainRouter() {
     return (
         <Router>
@@ -19,10 +18,13 @@ export default function MainRouter() {
                     <Route exact path="/">
                         <HomePage/>
                     </Route>
+                    <Route path="/feed">
+                        <HomePage/>
+                    </Route>
                     <Route path="/admin">
                         <AdminPage/>
                     </Route>
-                    <Route path="/profile">
+                    <Route path="/profile/:username">
                         <ProfilePage/>
                     </Route>
                     <Route path="/sign-up">

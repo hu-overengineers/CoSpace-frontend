@@ -1,11 +1,12 @@
 import {makeStyles} from "@material-ui/core/styles";
 import TreeItem from "@material-ui/lab/TreeItem";
 import Box from "@material-ui/core/Box";
-import {Divider, Paper, Typography} from "@material-ui/core";
+import {Divider, Grid, Paper, Typography} from "@material-ui/core";
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import React from "react";
+import {PublicOutlined} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     divider: {
@@ -28,6 +29,20 @@ const useStyles = makeStyles((theme) => ({
         height: 216,
         flexGrow: 1,
         maxWidth: 400,
+    },
+    root: {
+    },
+    treeViewTitleContainer: {
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    treeViewTitleIconContainer: {
+        marginTop: theme.spacing(0.5),
+        marginBottom: theme.spacing(0),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(0),
     },
 }));
 
@@ -62,7 +77,6 @@ const useTreeItemStyles = makeStyles((theme) => ({
         marginLeft: 0,
         '& $content': {
             paddingLeft: theme.spacing(2),
-
         },
     },
     expanded: {},
@@ -70,25 +84,11 @@ const useTreeItemStyles = makeStyles((theme) => ({
     label: {
         fontWeight: 'inherit',
         color: 'inherit',
-    },
-    labelRoot: {
-        //display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0.5, 0),
-    },
-    labelIcon: {
-        marginRight: theme.spacing(1),
-    },
-    labelText: {
-        fontWeight: 'inherit',
-        flexGrow: 1,
-    },
-    treeItemIcon: {
         marginLeft: theme.spacing(2)
     },
-    treeItemText: {
-        marginLeft: theme.spacing(1)
-    }
+    iconContainer: {
+        marginLeft:  theme.spacing(1),
+    },
 }));
 
 function renderTree(node, classes, callback) {
@@ -108,28 +108,50 @@ function renderTree(node, classes, callback) {
                       selected: classes.selected,
                       group: classes.group,
                       label: classes.label,
+                      iconContainer: classes.iconContainer
                   }}>
             {Array.isArray(node.children) ? node.children.map((childNode) => renderTree(childNode, classes, callback)) : null}
         </TreeItem>
     );
 }
 
-export default function CoSpaceTreeViewMenu({title, menuItems, callbackOnTreeItemClick}) {
+export default function CoSpaceTreeViewMenu(
+    {
+        title,
+        titleIcon,
+        menuItems,
+        callbackOnTreeItemClick,
+        expandIcon,
+        collapseIcon,
+        defaultExpanded,
+        expanded
+    }) {
     const classes = useStyles();
     const treeClasses = useTreeItemStyles();
+
+    if (expandIcon === undefined) expandIcon = <ChevronRightIcon className={treeClasses.treeItemIcon}/>;
+    if (collapseIcon === undefined) collapseIcon = <Box><ExpandMoreIcon className={treeClasses.treeItemIcon}/></Box>;
+    if (titleIcon === undefined) titleIcon = <PublicOutlined/>;
 
     return (
         <Paper variant="outlined">
             <Box className={classes.sectionRoot}>
-                <Typography variant="h6" className={classes.sectionTitle}>
-                    {title}
-                </Typography>
+                <Grid container>
+                    <Box key={1} item className={classes.treeViewTitleIconContainer}>
+                        {titleIcon}
+                    </Box>
+                    <Grid key={2} item className={classes.treeViewTitleContainer}>
+                        <Typography variant="h6" className={classes.sectionTitle}>
+                            {title}
+                        </Typography>
+                    </Grid>
+                </Grid>
                 <Divider className={classes.divider}/>
                 <TreeView
-                    className={classes.root}
-                    defaultCollapseIcon={<Box><ExpandMoreIcon className={treeClasses.treeItemIcon}/></Box>}
-                    defaultExpanded={menuItems.map((menuItem) => menuItem.text)}
-                    defaultExpandIcon={<ChevronRightIcon className={treeClasses.treeItemIcon}/>}>
+                    defaultCollapseIcon={collapseIcon}
+                    defaultExpanded={defaultExpanded}
+                    expanded={expanded}
+                    defaultExpandIcon={expandIcon}>
                     {menuItems.map((menuItem, index) => (
                         <Box key={menuItem.text}>
                             {renderTree(menuItem, treeClasses, callbackOnTreeItemClick)}
