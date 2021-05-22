@@ -87,16 +87,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PrivateMessageLayout() {
+function PrivateMessagePage() {
   const classes = useStyles();
   const [userList, setUserList] = useState([]);
+
   useEffect(() => {
-    
+    const username = AuthService.getUsername();
 
-  });
+    const usersSet = new Set();
+    DUMMY_DATA.forEach((message) => {
+      if (message.source === username) {
+        usersSet.add(message.target);
+      } else if (message.target === username) {
+        usersSet.add(message.source);
+      }
+    });
+    const sortedUserList = [...usersSet];
+    sortedUserList.sort((user1, user2) => {
+      let common1 = DUMMY_DATA.filter(
+        (message) => message.source === user1 || message.target === user1
+      );
+      let common2 = DUMMY_DATA.filter(
+        (message) => message.source === user2 || message.target === user2
+      );
+      //console.log(common1);
+      //console.log(common2);
+      return Math.max.apply(Math, common2.map(message => message.timestamp)) -
+            Math.max.apply(Math, common1.map(message => message.timestamp));
+    });
+
+    setUserList(sortedUserList);
+  }, [DUMMY_DATA]);
+
+  useEffect(() => {
 
 
-  
+    console.log(userList);
+  }, [userList])
+
   return (
     <div className={classes.marginAll}>
       <Grid container>
@@ -108,9 +136,10 @@ function PrivateMessageLayout() {
       </Grid>
       <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={3} className={classes.borderRight500}>
-
-        <PrivateMessageUserItemList messages={DUMMY_DATA} username={AuthService.getUsername()}/>
-
+          <PrivateMessageUserItemList
+            users={userList}
+            username={AuthService.getUsername()}
+          />
         </Grid>
         <Grid item xs={9}>
           <List className={classes.messageArea}>
@@ -171,4 +200,4 @@ function PrivateMessageLayout() {
     </div>
   );
 }
-export default PrivateMessageLayout;
+export default PrivateMessagePage;
