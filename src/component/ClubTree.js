@@ -1,7 +1,23 @@
 import React from "react";
 import CoSpaceTreeViewMenu from "./CoSpaceTreeViewMenu";
+import {PeopleAltOutlined, PublicOutlined} from "@material-ui/icons";
+import {makeStyles} from "@material-ui/core";
 
-export default function ClubTree({clubs, callbackOnTreeItemClick, title = "Clubs & Sub-Clubs"}) {
+
+const useStyles = makeStyles((theme) => ({
+    treeItemIcon: {
+        marginLeft: theme.spacing(2)
+    },
+}));
+
+export default function ClubTree(
+    {
+        clubs,
+        callbackOnTreeItemClick,
+        title = "Clubs & Sub-Clubs",
+        titleIcon = <PublicOutlined/>
+    }) {
+    const classes = useStyles();
 
     const nameToClubObject = {}
     const mapNameToToClubObject = (club) => {
@@ -29,10 +45,16 @@ export default function ClubTree({clubs, callbackOnTreeItemClick, title = "Clubs
         callbackOnTreeItemClick(nameToClubObject[menuItem.text])
     }
 
+    const menuItems = clubs.map((club) => mapToMenuItem(club))
+
     return (
         <CoSpaceTreeViewMenu
             title={title}
-            menuItems={clubs.map((club) => mapToMenuItem(club))}
+            titleIcon={titleIcon}
+            expandIcon={<PeopleAltOutlined className={classes.treeItemIcon}/>}
+            collapseIcon={<PeopleAltOutlined className={classes.treeItemIcon}/>}
+            expanded={menuItems.map(menuItem => menuItem.text)}
+            menuItems={menuItems}
             callbackOnTreeItemClick={handleMenuItemClick}/>
     );
 }

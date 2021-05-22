@@ -4,10 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import ClubTree from '../component/ClubTree';
 import Box from "@material-ui/core/Box";
-import {FiberNew, TrendingUp} from "@material-ui/icons";
+import {AccountCircle, FiberNew, PublicOutlined, TrendingUp} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import PostFeed from "../component/post/PostFeed";
-import EventContainer from "../component/EventContainer";
 import {MemberService} from "../service/MemberService";
 import AboutMember from "../component/profile/AboutMember";
 import {useParams} from "react-router-dom";
@@ -71,7 +70,6 @@ export default function ProfilePage() {
     const classes = useStyles();
 
     const [commonClubsAndSubClubs, setCommonClubsAndSubClubs] = useState([]);
-    const [initialized, setInitialized] = useState(false);
     const [posts, setPosts] = useState([]);
     const [subClub, setSubClub] = useState({name: "Loading..."});
     const [sortingOrder, setSortingOrder] = React.useState('new');
@@ -115,6 +113,8 @@ export default function ProfilePage() {
         })
     }, [username, subClub]);
 
+    const isSelf = AuthService.getUsername() === username;
+
     return (
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
@@ -123,9 +123,10 @@ export default function ProfilePage() {
 
                         <Box className={classes.sectionBox}>
                             <ClubTree
+                                titleIcon={isSelf ? <AccountCircle/> : <PublicOutlined/>}
                                 callbackOnTreeItemClick={handleClubTreeItemClick}
                                 clubs={commonClubsAndSubClubs}
-                                title={"Common Clubs"}/>
+                                title={isSelf ? "Your Clubs" : "Common Clubs"}/>
                         </Box>
                     </Box>
                 </Grid>

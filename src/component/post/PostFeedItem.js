@@ -195,7 +195,7 @@ export function PostFeedItem({props}) {
                         </CardActions>
                     }
                     title={props.author}
-                    subheader={`${formatDistance(parseISO(props.created), new Date(), { addSuffix: true })} on ${props.parentName}`}/>
+                    subheader={`${formatDistance(parseISO(props.created), new Date(), {addSuffix: true})} on ${props.parentName}`}/>
 
                 <CardContent className={classes.postCardContent}>
                     <Grid container spacing={1}>

@@ -12,7 +12,6 @@ import ClubTree from "../component/ClubTree";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
-import PostFeed from "../component/post/PostFeed";
 import AboutFeed from "../component/AboutFeed";
 import EventContainer from "../component/EventContainer";
 import CreatePost from "../component/CreatePost";
@@ -126,12 +125,14 @@ function PostFeedLayout({children}) {
         console.log(clubs);
     }, [clubs]);
 
-    if (AuthService.hasJwtToken()) {
-        MemberService.getEnrolledSubClubsOfCurrentlySignedInUser().then(response => {
-            console.log("Enrolled sub-clubs:", response.data);
-            setEnrolledSubClubs(response.data);
-        });
-    }
+    useEffect(() => {
+        if (AuthService.hasJwtToken()) {
+            MemberService.getEnrolledSubClubsOfCurrentlySignedInUser().then(response => {
+                console.log("Enrolled sub-clubs:", response.data);
+                setEnrolledSubClubs(response.data);
+            });
+        }
+    }, [refreshFeed]);
 
     // create post pop-up
     const handleDialogOpen = () => {

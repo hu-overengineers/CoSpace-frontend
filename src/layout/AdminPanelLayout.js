@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import {Container, Divider, Typography} from "@material-ui/core";
 import CoSpaceTreeViewMenu from "../component/CoSpaceTreeViewMenu";
 import {useHistory} from "react-router-dom";
+import {SupervisorAccount} from "@material-ui/icons";
 
 
 const adminMenu = [
@@ -72,7 +73,9 @@ function AdminPanelLayout({children}) {
                     {/*<Typography variant="h4">Menu</Typography>*/}
                     {/*<Divider className={classes.divider}/>*/}
                     <CoSpaceTreeViewMenu title={"Menu"}
+                                         titleIcon={<SupervisorAccount/>}
                                          menuItems={adminMenu}
+                                         defaultExpanded={adminMenu.map(menuItem => menuItem.text)}
                                          callbackOnTreeItemClick={onItemClick}/>
                 </Container>
             </Grid>
