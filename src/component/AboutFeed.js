@@ -3,6 +3,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Avatar from '@material-ui/core/Avatar';
 import CakeIcon from '@material-ui/icons/Cake';
+import {AuthService} from "../service/AuthService";
+import Button from "@material-ui/core/Button";
+import {useHistory} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,12 +46,25 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         flexDirection: 'row',
         alignItems: 'center',
-    }
+    },
+    buttonContainer: {
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    button: {
+        flexGrow: 1,
+        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(1),
+    },
 }));
 
 
 export default function AboutFeed({feedInfo}) {
     const classes = useStyles();
+
+    const history = useHistory();
 
     return (
         <Paper variant="outlined">
@@ -73,7 +89,6 @@ export default function AboutFeed({feedInfo}) {
 
                 {(!feedInfo.isCustom) &&  // If it's not a custom feed like popular or random
                 <Box>
-
                     {feedInfo.parentName &&  // If it's a sub-club
                     <Box>
                         <Divider className={classes.divider}/>
@@ -119,6 +134,23 @@ export default function AboutFeed({feedInfo}) {
                             </Typography>
                         </Grid>
                     </Grid>
+
+                    {feedInfo.moderatorUsername === AuthService.getUsername() &&
+                    <Box>
+                        <Divider className={classes.divider}/>
+
+                        <Grid container className={classes.buttonContainer}>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                className={classes.button}
+                                onClick={(event) => {
+                                    history.push("/moderator")
+                                }}>
+                                MODERATOR PANEL
+                            </Button>
+                        </Grid>
+                    </Box>}
                 </Box>}
 
 
