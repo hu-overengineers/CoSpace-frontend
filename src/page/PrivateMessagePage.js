@@ -62,25 +62,32 @@ const DUMMY_DATA = [
     
 ];
 
-const useStyles = makeStyles({
+
+  const useStyles = makeStyles((theme) => ({
     table: {
-      minWidth: 650,
-    },
-    chatSection: {
-      width: '100%',
-      height: '80vh'
-    },
-    headBG: {
-        backgroundColor: '#e0e0e0'
-    },
-    borderRight500: {
-        borderRight: '1px solid #e0e0e0'
-    },
-    messageArea: {
-      height: '70vh',
-      overflowY: 'auto'
-    }
-  });
+        minWidth: 650,
+      },
+      chatSection: {
+        width: '100%',
+      },
+      headBG: {
+          backgroundColor: '#e0e0e0'
+      },
+      borderRight500: {
+          borderRight: '1px solid #e0e0e0'
+      },
+      messageArea: {
+        height: '70vh',
+        overflowY: 'auto'
+      },
+  
+      marginAll: {
+          marginTop: theme.spacing(3),
+          marginLeft: theme.spacing(3),
+          marginRight: theme.spacing(3),
+      }
+
+  }));
   
 
 
@@ -88,10 +95,10 @@ const useStyles = makeStyles({
 function PrivateMessageLayout() {
     const classes = useStyles();
 
-    return (<div>
+    return (<div className={classes.marginAll}>
     <Grid container>
         <Grid item xs={12} >
-            <Typography variant="h5" className="header-message">Chat</Typography>
+            <Typography variant="h5" className="header-message">Private Message</Typography>
         </Grid>
     </Grid>
     <Grid container component={Paper} className={classes.chatSection}>
@@ -105,9 +112,6 @@ function PrivateMessageLayout() {
                 </ListItem>
             </List>
             <Divider />
-            <Grid item xs={12} style={{padding: '10px'}}>
-                <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
-            </Grid>
             <Divider />
             <List>
                 <ListItem button key="user2">
@@ -115,7 +119,6 @@ function PrivateMessageLayout() {
                         <Avatar alt="user2" src="https://material-ui.com/static/images/avatar/1.jpg" />
                     </ListItemIcon>
                     <ListItemText primary="user2">user2</ListItemText>
-                    <ListItemText secondary="online" align="right"></ListItemText>
                 </ListItem>
                 <ListItem button key="user3">
                     <ListItemIcon>
