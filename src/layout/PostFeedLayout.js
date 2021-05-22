@@ -87,7 +87,7 @@ function PostFeedLayout({children}) {
     const [clubs, setClubs] = useState(customFeeds);
     const [enrolledSubClubs, setEnrolledSubClubs] = useState([]);
     const [feed, setFeed] = useState(customFeeds[0]);
-    const [events, setEvents] = useState([])
+    const [events, setEvents] = useState([]);
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
@@ -103,7 +103,7 @@ function PostFeedLayout({children}) {
                 feed.numberOfPostsInLastWeek = response.data.numberOfPostsInTimeFrame;
                 setFeed(feed);
             }).catch(response => {
-                console.error(response);
+                console.error("Error while fetching sub-club statistics:", response);
             });
         }
     }, [refreshFeed]);  // TODO: Figure out a better way to update feed info object with stats.
@@ -133,12 +133,32 @@ function PostFeedLayout({children}) {
     }, [refreshFeed]);
 
     useEffect(() => {
-        ClubService.getEvents(feed.name).then(response => {
-            console.log(`Events of ${feed.name}`, response.data);
-            setEvents(response.data);
-        }).catch(error => {
-            console.error(error);
-        })
+        if (!(feed.isCustom) || feed.parentName) {
+            ClubService.getEvents(feed.name).then(response => {
+                console.log(`Events of ${feed.name}`, response.data);
+
+                if (AuthService.hasJwtToken()) {
+
+                    MemberService.getAttendedEventsOfCurrentlySignedInUser().then(attendedEventsResponse => {
+                        console.log("Attended events:", response.data);
+
+                        const allEvents = response.data.map(event => {
+                            event.hasAttended = attendedEventsResponse.data.filter(anAttendedEventOfMember => anAttendedEventOfMember.id === event.id).length !== 0;
+                            return event;
+                        })
+
+                        setEvents(allEvents);
+
+                    }).catch(error => {
+                        console.log("Error while fetching attended events:", error);
+                    })
+                } else {
+                    setEvents(response.data);
+                }
+            }).catch(error => {
+                console.error(error);
+            })
+        }
     }, [feed]);
 
     // create post pop-up
@@ -228,14 +248,28 @@ function PostFeedLayout({children}) {
                             <EventContainer
                                 events={
                                     <List>
-                                        {events.map(event =>
+                                        {events && events.length !== 0 ? events.map(event =>
                                             <EventItem
+                                                key={event.id}
                                                 id={event.id}
                                                 title={event.title}
                                                 details={event.details}
                                                 date={new Date(event.date)}
+                                                hasAttended={event.hasAttended}
+                                                attendCallback={(id) => {
+                                                    ClubService.attendEvent(id).then(response => {
+                                                        console.log("Successfully attended event:", response.data);
+                                                        const aux = events.slice();
+                                                        aux.filter(event => event.id === response.data.id).forEach(event => {
+                                                            event.hasAttended = true;
+                                                        })
+                                                        setEvents(aux);
+                                                    }).catch(error => {
+                                                        console.error("Error while attending event:", error);
+                                                    })
+                                                }}
                                             />
-                                        )}
+                                        ) : "There are no events announced as of now."}
                                     </List>
                                 }/>
                         </Box>}

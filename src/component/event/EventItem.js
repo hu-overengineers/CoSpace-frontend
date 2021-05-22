@@ -1,8 +1,8 @@
 import Box from "@material-ui/core/Box";
-import {IconButton, ListItem, ListItemAvatar, ListItemText, makeStyles} from "@material-ui/core";
+import {IconButton, List, ListItem, ListItemAvatar, ListItemText, makeStyles} from "@material-ui/core";
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import {EventAvailable} from "@material-ui/icons";
+import {Event, EventAvailable} from "@material-ui/icons";
 import {formatRelative} from "date-fns";
 
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.main,
     },
     iconUnattended: {
-        color: theme.palette.getContrastText(theme.palette.primary.main),
+        color: theme.palette.text,
     },
     iconButton: {
         margin: theme.spacing(0),
@@ -41,7 +41,9 @@ export default function EventItem(
         isOnline,
         location,
         utilLink,
-        parent
+        parent,
+        hasAttended,
+        attendCallback,
     }) {
 
     const classes = useStyles();
@@ -50,8 +52,10 @@ export default function EventItem(
         <Box className={classes.root}>
             <ListItem key={id} className={classes.listItem}>
                 <ListItemAvatar>
-                    <IconButton variant={"outlined"} className={classes.iconButton}>
-                        {<EventAvailable className={classes.iconAttended}/>}
+                    <IconButton variant={"outlined"} className={classes.iconButton}
+                                onClick={() => attendCallback(id)}>
+                        {hasAttended ? <EventAvailable className={classes.iconAttended}/> :
+                            <Event className={classes.iconUnattended}/>}
                     </IconButton>
                 </ListItemAvatar>
                 <ListItemText
@@ -59,13 +63,16 @@ export default function EventItem(
                     primary={title}
                     secondary={
                         <React.Fragment>
-                            <tr><Typography
-                                component="span"
-                                variant="body2"
-                                color="textPrimary">
-                                {`${formatRelative(date, new Date()).toString()}`}
-                            </Typography></tr>
-                            <tr>{details}</tr>
+                            <List>
+                                <Typography
+                                    key={0}
+                                    component="span"
+                                    variant="body2"
+                                    color="textPrimary">
+                                    {`${formatRelative(date, new Date()).toString()}`}
+                                </Typography>
+                                <Box key={1}>{details}</Box>
+                            </List>
                         </React.Fragment>
                     }
                 />
