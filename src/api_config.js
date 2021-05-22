@@ -24,6 +24,7 @@ export const SUBCLUB_POSTS = "/subClubPosts";
 export const MEMBER = "/member";
 export const ENROLL = "/enroll";
 export const ADMIN = "/admin";
+export const REPORTS = "/reports";
 export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
