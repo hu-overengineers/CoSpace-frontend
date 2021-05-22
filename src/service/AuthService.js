@@ -66,10 +66,15 @@ const resetPassword = (email) => {
     return axios.post(BASE_URL + AUTH + RESET_PASSWORD, null,{params: {email: email}});
 }
 
+const changePasswordWithToken = (newPassword, token) => {
+    return axios.post(BASE_URL + RESET_PASSWORD, null, {params: {token: token, newPassword: newPassword}});
+}
+
+
 export const AuthService = {
     login, register, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken,
     getUsername,
     removeUsername,
-    resetPassword,
+    resetPassword,changePasswordWithToken, 
     isAdmin, saveAuthRoles, getAuthRoles
 };
