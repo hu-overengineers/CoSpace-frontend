@@ -145,7 +145,7 @@ export default function AboutFeed({feedInfo}) {
                                 color="primary"
                                 className={classes.button}
                                 onClick={(event) => {
-                                    history.push("/moderator")
+                                    history.push("/mod")
                                 }}>
                                 MODERATOR PANEL
                             </Button>
