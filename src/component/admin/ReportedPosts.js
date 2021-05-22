@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline',
   },
   content: {
-      padding: theme.spacing(4),
+      padding: theme.spacing(2),
   },
   buttons: {
     padding: theme.spacing(1),
@@ -37,6 +37,7 @@ function ReportedPosts() {
     const classes = useStyles();
     const [postReports, setPostReports] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [selectedPostOwner, setSelectedPostOwner] = useState(null);
 
     // Get Reports
     useEffect(() => {
@@ -44,6 +45,7 @@ function ReportedPosts() {
             setPostReports(response.data);
         });
     }, []);
+
 
     return (
 
@@ -64,8 +66,13 @@ function ReportedPosts() {
                                                 
                                                 PostService.getPostById(report.postId).then(response => {
                                                     setSelectedPost(response.data);
-                                                    
+                                                    AdminService.searchMembersByName(response.data.author, 0, 1).then(response => {
+                                                        console.log(response.data);
+                                                        setSelectedPostOwner(response.data[0]);
+                                                    });
                                                 });
+
+                                                
                                             }}>
                                             <ListItemIcon>
                                                 <ReportOutlinedIcon />
@@ -94,13 +101,24 @@ function ReportedPosts() {
                             </List>
                         </Container>
                     </Grid>
+                    
+                    
+                    {selectedPost ? 
                     <Grid key={2} item xs={6}>
                         <Container className={classes.content}>
                             <Typography variant="h6">Reported Post</Typography>
                             <div>
-                                {selectedPost ? <PostFeedItem props={selectedPost}/> : null}
+                                {selectedPost ? <PostFeedItem key = {selectedPost.postId} props={selectedPost}/> : null}
                             </div>
                         </Container>
+
+                        <Container className={classes.content}>
+                            <Typography variant="h6">Owner of Reported Post</Typography>
+                            <div>
+                                {selectedPostOwner ? <Typography>{JSON.stringify(selectedPostOwner)}</Typography> : null}
+                            </div>
+                        </Container>
+
 
                         <Container>      
 
@@ -112,7 +130,7 @@ function ReportedPosts() {
                                 <Grid item key={2} className={classes.buttons} >
                                     <Button variant="outlined">Remove Post</Button>
                                 </Grid>
-                                <Grid item key={2} className={classes.buttons} >
+                                <Grid item key={3} className={classes.buttons} >
                                     <Button variant="outlined">Another</Button>
                                 </Grid>
                             </Grid>
@@ -120,6 +138,7 @@ function ReportedPosts() {
                         </Container>
                         
                     </Grid>
+                    : <Typography className={classes.content}>Select a report to see the details.</Typography>} 
                 </Grid>
 
 
