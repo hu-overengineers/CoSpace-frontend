@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {Divider} from "@material-ui/core";
+import {Divider, List} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {ClubService} from "../service/ClubService";
-import {subDays} from "date-fns";
+import {formatISO, subDays} from "date-fns";
 import {AuthService} from "../service/AuthService";
 import {MemberService} from "../service/MemberService";
 import Box from "@material-ui/core/Box";
@@ -13,8 +13,9 @@ import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import AboutFeed from "../component/AboutFeed";
-import EventContainer from "../component/EventContainer";
+import EventContainer from "../component/event/EventContainer";
 import CreatePost from "../component/CreatePost";
+import EventItem from "../component/event/EventItem";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,6 +87,7 @@ function PostFeedLayout({children}) {
     const [clubs, setClubs] = useState(customFeeds);
     const [enrolledSubClubs, setEnrolledSubClubs] = useState([]);
     const [feed, setFeed] = useState(customFeeds[0]);
+    const [events, setEvents] = useState([]);
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
@@ -101,10 +103,10 @@ function PostFeedLayout({children}) {
                 feed.numberOfPostsInLastWeek = response.data.numberOfPostsInTimeFrame;
                 setFeed(feed);
             }).catch(response => {
-                console.error(response);
+                console.error("Error while fetching sub-club statistics:", response);
             });
         }
-    }, [refreshFeed]);
+    }, [refreshFeed]);  // TODO: Figure out a better way to update feed info object with stats.
 
     // Get club and sub-clubs
     useEffect(() => {
@@ -122,10 +124,6 @@ function PostFeedLayout({children}) {
     }, [refreshFeed]);
 
     useEffect(() => {
-        console.log(clubs);
-    }, [clubs]);
-
-    useEffect(() => {
         if (AuthService.hasJwtToken()) {
             MemberService.getEnrolledSubClubsOfCurrentlySignedInUser().then(response => {
                 console.log("Enrolled sub-clubs:", response.data);
@@ -133,6 +131,35 @@ function PostFeedLayout({children}) {
             });
         }
     }, [refreshFeed]);
+
+    useEffect(() => {
+        if (!(feed.isCustom) || feed.parentName) {
+            ClubService.getEvents(feed.name).then(response => {
+                console.log(`Events of ${feed.name}`, response.data);
+
+                if (AuthService.hasJwtToken()) {
+
+                    MemberService.getAttendedEventsOfCurrentlySignedInUser().then(attendedEventsResponse => {
+                        console.log("Attended events:", response.data);
+
+                        const allEvents = response.data.map(event => {
+                            event.hasAttended = attendedEventsResponse.data.filter(anAttendedEventOfMember => anAttendedEventOfMember.id === event.id).length !== 0;
+                            return event;
+                        })
+
+                        setEvents(allEvents);
+
+                    }).catch(error => {
+                        console.log("Error while fetching attended events:", error);
+                    })
+                } else {
+                    setEvents(response.data);
+                }
+            }).catch(error => {
+                console.error(error);
+            })
+        }
+    }, [feed]);
 
     // create post pop-up
     const handleDialogOpen = () => {
@@ -219,7 +246,28 @@ function PostFeedLayout({children}) {
                         </Box>
                         {feed.parentName && <Box className={classes.sectionBox}>
                             <EventContainer
-                                events={"There are no events."}/>
+                                events={
+                                    <List>
+                                        {events && events.length !== 0 ? events.map(event =>
+                                            <EventItem
+                                                key={event.id}
+                                                event={event}
+                                                attendCallback={(id) => {
+                                                    ClubService.attendEvent(id).then(response => {
+                                                        console.log("Successfully attended event:", response.data);
+                                                        const aux = events.slice();
+                                                        aux.filter(event => event.id === response.data.id).forEach(event => {
+                                                            event.hasAttended = true;
+                                                        })
+                                                        setEvents(aux);
+                                                    }).catch(error => {
+                                                        console.error("Error while attending event:", error);
+                                                    })
+                                                }}
+                                            />
+                                        ) : "There are no events announced as of now."}
+                                    </List>
+                                }/>
                         </Box>}
                         {/* TODO: Uncomment when available.
                             <Box className={classes.sectionBox}>
