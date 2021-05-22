@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,6 +9,7 @@ import {
     DialogContentText,DialogTitle,useMediaQuery,
     InputAdornment, IconButton, Chip, NativeSelect,
     FormControl, FormHelperText} from "@material-ui/core";
+import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
         width: 100,
         flexWrap: 'wrap',
     },
+    questionaryDialog: {
+        minHeight: '80vh',
+        maxHeight: '80vh',
+    }
 
 }));
 
@@ -66,17 +71,31 @@ function CreateClub() {
     };
     // ------------------------------------------------
 
-    const [openQuestionary, setQuestionary] = React.useState(false);
+    const [openQuestionaryDialog, setQuestionaryDialog] = React.useState(false);
+    const [submitQuestionary, setSubmitQuestionary] = React.useState(false);
+    const [questions, setQuestions] = React.useState([]);
 
-    const handleClickOpenQuestionary = () => {
-        setQuestionary(true);
+    const onSubmitQuestionary = () => {
+        setSubmitQuestionary(true);
+        setQuestionaryDialog(false);
     };
 
-    const handleClickCloseQuestionary = () => {
-        setQuestionary(false);
+    useEffect(() => {
+        console.log("create cluuuuuuuub", questions);
+    }, [questions])
+
+    const handleClickOpenQuestionaryDialog = () => {
+        setQuestionaryDialog(true);
+    };
+
+    const handleClickCloseQuestionaryDialog = () => {
+        setQuestionaryDialog(false);
     };
 
 
+    useEffect(() => {
+        console.log(questions);
+    },[questions])
     
 
 
@@ -310,31 +329,28 @@ function CreateClub() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={handleClickOpenQuestionary}
+                            onClick={handleClickOpenQuestionaryDialog}
                         >
                             Add a questionary
                         </Button>
-                        <Dialog open={openQuestionary} onClose={handleClickCloseQuestionary} aria-labelledby="form-dialog-title">
+                        <Dialog 
+                            open={openQuestionaryDialog} onClose={handleClickCloseQuestionaryDialog}
+                            aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"md"} >
                             <DialogTitle id="form-dialog-title">Create a questionary</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
                                     To add a new sub-club to this website, please create a questionary;
                                 </DialogContentText>
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="some label"
-                                    type="email"
-                                    fullWidth
-                                />
+
+                                <CreateQuestionnaire onSubmit={submitQuestionary} callBackQuestions={setQuestions}/>
+
 
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleClickCloseQuestionary} color="primary">
+                                <Button onClick={handleClickCloseQuestionaryDialog} color="primary">
                                     Cancel
                                 </Button>
-                                <Button onClick={handleClickCloseQuestionary} color="primary">
+                                <Button onClick={onSubmitQuestionary} color="primary">
                                     Add
                                 </Button>
                             </DialogActions>
