@@ -13,6 +13,9 @@ export const SUB_CLUB_STATS = "/subclub/statistics";
 export const SUB_CLUB_EVENTS = "/subclub/events";
 export const ATTEND_SUB_CLUB_EVENT = "/subclub/attend-event";
 
+export const MODERATOR = "/moderator";
+export const EVENT = "/event";
+
 // TODO: Fix some inconsistencies in naming.
 export const GET_POSTS = "/post";
 export const CREATE_POST = "/post/create";
