@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {Divider} from "@material-ui/core";
+import {Divider, List} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {ClubService} from "../service/ClubService";
-import {subDays} from "date-fns";
+import {formatISO, subDays} from "date-fns";
 import {AuthService} from "../service/AuthService";
 import {MemberService} from "../service/MemberService";
 import Box from "@material-ui/core/Box";
@@ -13,8 +13,9 @@ import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import AboutFeed from "../component/AboutFeed";
-import EventContainer from "../component/EventContainer";
+import EventContainer from "../component/event/EventContainer";
 import CreatePost from "../component/CreatePost";
+import EventItem from "../component/event/EventItem";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -86,6 +87,7 @@ function PostFeedLayout({children}) {
     const [clubs, setClubs] = useState(customFeeds);
     const [enrolledSubClubs, setEnrolledSubClubs] = useState([]);
     const [feed, setFeed] = useState(customFeeds[0]);
+    const [events, setEvents] = useState([])
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
@@ -104,7 +106,7 @@ function PostFeedLayout({children}) {
                 console.error(response);
             });
         }
-    }, [refreshFeed]);
+    }, [refreshFeed]);  // TODO: Figure out a better way to update feed info object with stats.
 
     // Get club and sub-clubs
     useEffect(() => {
@@ -122,10 +124,6 @@ function PostFeedLayout({children}) {
     }, [refreshFeed]);
 
     useEffect(() => {
-        console.log(clubs);
-    }, [clubs]);
-
-    useEffect(() => {
         if (AuthService.hasJwtToken()) {
             MemberService.getEnrolledSubClubsOfCurrentlySignedInUser().then(response => {
                 console.log("Enrolled sub-clubs:", response.data);
@@ -133,6 +131,15 @@ function PostFeedLayout({children}) {
             });
         }
     }, [refreshFeed]);
+
+    useEffect(() => {
+        ClubService.getEvents(feed.name).then(response => {
+            console.log(`Events of ${feed.name}`, response.data);
+            setEvents(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }, [feed]);
 
     // create post pop-up
     const handleDialogOpen = () => {
@@ -219,7 +226,18 @@ function PostFeedLayout({children}) {
                         </Box>
                         {feed.parentName && <Box className={classes.sectionBox}>
                             <EventContainer
-                                events={"There are no events."}/>
+                                events={
+                                    <List>
+                                        {events.map(event =>
+                                            <EventItem
+                                                id={event.id}
+                                                title={event.title}
+                                                details={event.details}
+                                                date={new Date(event.date)}
+                                            />
+                                        )}
+                                    </List>
+                                }/>
                         </Box>}
                         {/* TODO: Uncomment when available.
                             <Box className={classes.sectionBox}>

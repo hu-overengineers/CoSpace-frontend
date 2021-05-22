@@ -9,6 +9,8 @@ export const SUB_CLUB = "/subclub";
 export const COMMON_SUB_CLUBS = "/common-subclubs";
 export const SUB_CLUB_LIST = "/subclub/all";
 export const SUB_CLUB_STATS = "/subclub/statistics";
+export const SUB_CLUB_EVENTS = "/subclub/events";
+export const ATTEND_SUB_CLUB_EVENT = "/subclub/attend-event";
 
 // TODO: Fix some inconsistencies in naming.
 export const GET_POSTS = "/post";
