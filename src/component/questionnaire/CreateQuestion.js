@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import QuestionLayout from "../../layout/QuestionLayout";
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup } from "@material-ui/core";
@@ -108,7 +108,7 @@ export default function CreateQuestion({callBackOnSave}) {
                     style={{margin:"10px"}}
                     variant="outlined"
                     color="primary"
-                    onClick={(event) => {onSaveClick()}}
+                    onClick={() => {onSaveClick()}}
                     disableElevation> Save
                 </Button>
 

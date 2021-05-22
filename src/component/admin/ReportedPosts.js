@@ -21,8 +21,8 @@ function ReportedPosts() {
 
             {postReports.map((postReport) => (
                 <li>
-                    "Author": {postReport.author} <br/>
-                    "Content": {postReport.content}
+                    {JSON.stringify(postReport)}
+
                 </li>
             ))}
 
