@@ -11,7 +11,6 @@ import {Editor} from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import {PostService} from "../service/PostService";
-import {AuthService} from "../service/AuthService";
 
 class CreatePost extends Component {
 

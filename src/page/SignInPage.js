@@ -15,7 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import {Snackbar} from "@material-ui/core";
-import Copyright from "../component/Copyright";
+import Copyright from "../component/common/Copyright";
 import {Alert} from "@material-ui/lab";
 import {delay} from "../util/async";
 
@@ -112,6 +112,7 @@ export default function SignInPage() {
                             AuthService.login(username, password).then(r => {
                                 console.log("Response: " + JSON.stringify(r.data));
                                 AuthService.saveJwtToken(r.data.token);
+                                AuthService.saveAuthRoles(r.data.auth);
                                 setSnackbarSeverity("success");
                                 setSnackbarMessage("Welcome back!");
                                 setSnackbarOpen(true);
@@ -121,7 +122,7 @@ export default function SignInPage() {
                                 })
                             }).catch(e => {
                                 setSnackbarSeverity("error");
-                                if (e.response.status === 401) {
+                                if (e.response !== undefined && e.response.status === 401) {
                                     setSnackbarMessage("Entered credentials are incorrect.");
                                 } else {
                                     setSnackbarMessage("Something went wrong!");

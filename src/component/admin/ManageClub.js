@@ -4,11 +4,24 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputLabel from '@material-ui/core/InputLabel';
 import clsx from 'clsx';
 import {
-    Container, Grid, TextField,Typography,Dialog,
-    Button, DialogActions, DialogContent, 
-    DialogContentText,DialogTitle,useMediaQuery,
-    InputAdornment, IconButton, Chip, NativeSelect,
-    FormControl, FormHelperText} from "@material-ui/core";
+    Button,
+    Chip,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormControl,
+    FormHelperText,
+    Grid,
+    IconButton,
+    InputAdornment,
+    NativeSelect,
+    TextField,
+    Typography,
+    useMediaQuery
+} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,9 +92,6 @@ function ManageClub() {
     };
 
 
-    
-
-
     // ------------------------------------------------
     const [chipData, setChipData] = React.useState([
         {key: 0, label: 'game'},
@@ -126,7 +136,7 @@ function ManageClub() {
         setSelectedClubRequestName(event.target.value);
         if (event.target.value === "") {
             setIsVisible(false);
-        }else {
+        } else {
             setIsVisible(true);
         }
     };
@@ -148,70 +158,70 @@ function ManageClub() {
 
     return (
 
-        
+
         <Container>
-            
+
             <Dialog open={openCreateClub} onClose={handleCloseCreateClub} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add a new parent club</DialogTitle>
                 <DialogContent>
-                <DialogContentText>
-                    To add a new club to this website, please enter a club name and a club description.
-                </DialogContentText>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Club Name"
-                    type="email"
-                    fullWidth
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Club Description"
-                    type="email"
-                    fullWidth
-                />
+                    <DialogContentText>
+                        To add a new club to this website, please enter a club name and a club description.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Club Name"
+                        type="email"
+                        fullWidth
+                    />
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Club Description"
+                        type="email"
+                        fullWidth
+                    />
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleCloseCreateClub} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={handleCloseCreateClub} color="primary">
-                    Add
-                </Button>
+                    <Button onClick={handleCloseCreateClub} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleCloseCreateClub} color="primary">
+                        Add
+                    </Button>
                 </DialogActions>
             </Dialog>
 
             <Container>
-                        <div>
-                            <FormControl   className={classes.formControl}>
-                                <InputLabel htmlFor="age-native-helper">Sub-Club</InputLabel>
-                                <NativeSelect
-                                    value={selectedClubRequestName.name}
-                                    onChange={handleClubRequestNameChange}
-                                    inputProps={{
-                                        name: '',
-                                    }}>
-                                    <option aria-label="None" value=""/>
-                                    <option value={10}>Game</option>
-                                    <option value={20}>GTA5</option>
-                                </NativeSelect>
-                                <FormHelperText>Select a sub-club to edit</FormHelperText>
-                            </FormControl>
-                        </div>
-                    </Container>
-            
+                <div>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="age-native-helper">Sub-Club</InputLabel>
+                        <NativeSelect
+                            value={selectedClubRequestName.name}
+                            onChange={handleClubRequestNameChange}
+                            inputProps={{
+                                name: '',
+                            }}>
+                            <option aria-label="None" value=""/>
+                            <option value={10}>Game</option>
+                            <option value={20}>GTA5</option>
+                        </NativeSelect>
+                        <FormHelperText>Select a sub-club to edit</FormHelperText>
+                    </FormControl>
+                </div>
+            </Container>
 
-            {isVisible ?  <Grid container spacing={3}>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
 
-                </Grid>
-                
-                <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                            <FormControl   className={classes.formControl}>
+            {isVisible ? <Grid container spacing={3}>
+                    <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+
+                    </Grid>
+
+                    <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        <Container>
+                            <FormControl className={classes.formControl}>
                                 <InputLabel htmlFor="age-native-helper">A Parent Club</InputLabel>
                                 <NativeSelect
                                     value={selectedClubRequestName.name}
@@ -225,137 +235,138 @@ function ManageClub() {
                                 </NativeSelect>
                                 <FormHelperText>Select a parent club or add a new one</FormHelperText>
                             </FormControl>
-                    </Container>
-                </Grid>
-                <Grid item xs={1} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        </Container>
+                    </Grid>
+                    <Grid item xs={1} style={{maxHeight: '100vh', overflow: 'auto'}}>
                         <IconButton aria-label="add" onClick={handleClickOpenCreateClub}>
                             <AddCircleOutlineIcon/>
                         </IconButton>
 
-                </Grid>                            
+                    </Grid>
 
 
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <div>
-                            <TextField 
-                                required
-                                fullWidth
-                                id="standard-full-width"
-                                label="New Sub-Club Name"
-                                style={{margin: 8}}
-                                placeholder="Sub-Club name"
-                                margin="normal"
-                                InputLabelProps={{shrink: true,}}
-                                value={clubName}
-                                onChange={handleClubNameChange}
-                            />
-                        </div>
-                    </Container>
-                </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-
-                    <Container>
-                        <div>
-                            <TextField 
-                                required
-                                id="standard-full-width"
-                                label="New Sub-Club Description"
-                                style={{margin: 8}}
-                                placeholder="Sub-Club description"
-                                helperText="Description should include bla bla"
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{shrink: true,}}
-                                value={clubDescription}
-                                onChange={handleClubDescriptionChange}
-                            />
-                        </div>
-                    </Container>
-                </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <div className={classes.root}><Typography>Related Keywords</Typography></div>
-                    <Container>
-                            <div className={classes.root}>
-                        {chipData.map((data) => {
-                            return (
-                                <li key={data.key}>
-                                    <Chip
-                                        label={data.label}
-                                        onDelete={handleChipDelete(data)}
-                                        className={classes.chip}
-                                    />
-                                </li>
-                            );
-                        })}
-                        </div>
-                    </Container>
-                </Grid>
-
-                <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Typography className={classes.root}>Add New Keyword</Typography>
-                    <Container>
-                            <div >
-                                    <TextField
-                                        placeholder="some-tag"
-                                        className={clsx(classes.margin, classes.textField)}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position="start">#</InputAdornment>,
-                                        }}
-                                        value={tag}
-                                        onChange={handleTagTextFieldChange}
-                                    />
-                                </div>
-                    </Container>
-                </Grid>
-                <Grid item xs={1} >
-                    <Container>
-                        <IconButton aria-label="add" onClick={addTagClick}>
-                            <AddCircleOutlineIcon/>
-                        </IconButton>
-                    </Container>
-
-                </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={handleClickOpenQuestionary}
-                        >
-                            Edit questionary
-                        </Button>
-                        <Dialog open={openQuestionary} onClose={handleClickCloseQuestionary} aria-labelledby="form-dialog-title">
-                            <DialogTitle id="form-dialog-title">Create a questionary</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    To add a new sub-club to this website, please create a questionary;
-                                </DialogContentText>
+                    <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        <Container>
+                            <div>
                                 <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="name"
-                                    label="some label"
-                                    type="email"
+                                    required
                                     fullWidth
+                                    id="standard-full-width"
+                                    label="New Sub-Club Name"
+                                    style={{margin: 8}}
+                                    placeholder="Sub-Club name"
+                                    margin="normal"
+                                    InputLabelProps={{shrink: true,}}
+                                    value={clubName}
+                                    onChange={handleClubNameChange}
                                 />
+                            </div>
+                        </Container>
+                    </Grid>
+                    <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
 
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleClickCloseQuestionary} color="primary">
-                                    Cancel
-                                </Button>
-                                <Button onClick={handleClickCloseQuestionary} color="primary">
-                                    Add
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
-                    </Container>
-                </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                       <Container>
-                        <Button
+                        <Container>
+                            <div>
+                                <TextField
+                                    required
+                                    id="standard-full-width"
+                                    label="New Sub-Club Description"
+                                    style={{margin: 8}}
+                                    placeholder="Sub-Club description"
+                                    helperText="Description should include bla bla"
+                                    fullWidth
+                                    margin="normal"
+                                    InputLabelProps={{shrink: true,}}
+                                    value={clubDescription}
+                                    onChange={handleClubDescriptionChange}
+                                />
+                            </div>
+                        </Container>
+                    </Grid>
+                    <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        <div className={classes.root}><Typography>Related Keywords</Typography></div>
+                        <Container>
+                            <div className={classes.root}>
+                                {chipData.map((data) => {
+                                    return (
+                                        <li key={data.key}>
+                                            <Chip
+                                                label={data.label}
+                                                onDelete={handleChipDelete(data)}
+                                                className={classes.chip}
+                                            />
+                                        </li>
+                                    );
+                                })}
+                            </div>
+                        </Container>
+                    </Grid>
+
+                    <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        <Typography className={classes.root}>Add New Keyword</Typography>
+                        <Container>
+                            <div>
+                                <TextField
+                                    placeholder="some-tag"
+                                    className={clsx(classes.margin, classes.textField)}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">#</InputAdornment>,
+                                    }}
+                                    value={tag}
+                                    onChange={handleTagTextFieldChange}
+                                />
+                            </div>
+                        </Container>
+                    </Grid>
+                    <Grid item xs={1}>
+                        <Container>
+                            <IconButton aria-label="add" onClick={addTagClick}>
+                                <AddCircleOutlineIcon/>
+                            </IconButton>
+                        </Container>
+
+                    </Grid>
+                    <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        <Container>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={handleClickOpenQuestionary}
+                            >
+                                Edit questionary
+                            </Button>
+                            <Dialog open={openQuestionary} onClose={handleClickCloseQuestionary}
+                                    aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">Create a questionary</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        To add a new sub-club to this website, please create a questionary;
+                                    </DialogContentText>
+                                    <TextField
+                                        autoFocus
+                                        margin="dense"
+                                        id="name"
+                                        label="some label"
+                                        type="email"
+                                        fullWidth
+                                    />
+
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleClickCloseQuestionary} color="primary">
+                                        Cancel
+                                    </Button>
+                                    <Button onClick={handleClickCloseQuestionary} color="primary">
+                                        Add
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                        </Container>
+                    </Grid>
+                    <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        <Container>
+                            <Button
                                 variant="contained"
                                 color="primary"
                                 className={classes.submit}
@@ -363,51 +374,46 @@ function ManageClub() {
                             >
                                 Apply
                             </Button>
-                       </Container>
+                        </Container>
+                    </Grid>
+
+                    <Container>
+                        <Dialog
+                            fullScreen={fullScreen}
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                        >
+                            <DialogTitle
+                                id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    <Typography>Club Name: {clubName}</Typography>
+                                    <Typography>Club Description: {clubDescription} </Typography>
+                                    <Typography>Related Keywords: {chipData.map((chip) => (
+                                        chip.label + " "
+                                    ))}</Typography>
+
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button autoFocus onClick={handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleClose} color="primary" autoFocus>
+                                    Create
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </Container>
+
                 </Grid>
-            
-            <Container>
-                    <Dialog
-                        fullScreen={fullScreen}
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="responsive-dialog-title"
-                    >
-                        <DialogTitle
-                            id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <Typography>Club Name: {clubName}</Typography>
-                                <Typography>Club Description: {clubDescription} </Typography>
-                                <Typography>Related Keywords: {chipData.map((chip) => (
-                                    chip.label + " "
-                                ))}</Typography>
-
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button autoFocus onClick={handleClose} color="primary">
-                                Cancel
-                            </Button>
-                            <Button onClick={handleClose} color="primary" autoFocus>
-                                Create
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-            </Container>
-
-            </Grid>
-: null }
-            
-            
-
-
+                : null}
 
 
         </Container>);
 
 }
-
 
 
 export default ManageClub;

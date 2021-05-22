@@ -12,7 +12,7 @@ import {
 import {headersWithToken} from "./headers";
 
 const getPosts = (subClub) => {
-    if (subClub === "popular") {
+    if (subClub === "Popular") {
         return axios.get(BASE_URL + GET_POSTS + TRENDS);
     }
     return axios.get(BASE_URL + GET_POSTS + SUBCLUB_POSTS, {params: {subClubName: subClub}})

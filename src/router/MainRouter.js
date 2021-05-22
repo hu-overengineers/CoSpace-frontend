@@ -7,7 +7,7 @@ import NotFoundPage from "../page/NotFoundPage";
 import SignUpPage from "../page/SignUpPage";
 import SignInPage from "../page/SignInPage";
 import EnrollPage from "../page/EnrollPage";
-
+import PasswordResetPage from '../page/PasswordResetPage';
 
 
 export default function MainRouter() {
@@ -18,10 +18,13 @@ export default function MainRouter() {
                     <Route exact path="/">
                         <HomePage/>
                     </Route>
+                    <Route path="/feed">
+                        <HomePage/>
+                    </Route>
                     <Route path="/admin">
                         <AdminPage/>
                     </Route>
-                    <Route path="/profile">
+                    <Route path="/profile/:username">
                         <ProfilePage/>
                     </Route>
                     <Route path="/sign-up">
@@ -32,6 +35,9 @@ export default function MainRouter() {
                     </Route>
                     <Route path="/enroll">
                         <EnrollPage/>
+                    </Route>
+                    <Route path="/password-reset/:token?">
+                        <PasswordResetPage/>
                     </Route>
                     <Route path="*">
                         <NotFoundPage/>

@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Copyright from "../component/Copyright";
+import Copyright from "../component/common/Copyright";
 import {AuthService} from "../service/AuthService";
 import {Alert} from "@material-ui/lab";
 import {Snackbar} from "@material-ui/core";

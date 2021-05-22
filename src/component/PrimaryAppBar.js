@@ -82,7 +82,7 @@ export default function PrimaryAppBar() {
                     >
                         CoSpace
                     </Typography>
-                    
+
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon/>
@@ -118,7 +118,7 @@ export default function PrimaryAppBar() {
                         onClick={() => {
                             if (AuthService.hasJwtToken()) {
                                 // history.push("/sign-in")
-                                history.push("/profile")
+                                history.push("/profile/" + AuthService.getUsername())
                             } else {
                                 history.push("/sign-up")
                             }
