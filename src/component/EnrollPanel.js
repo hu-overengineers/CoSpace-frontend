@@ -4,7 +4,7 @@ import {Alert} from "@material-ui/lab";
 import {delay} from "../util/async";
 import AboutFeed from './AboutFeed';
 import Box from '@material-ui/core/Box';
-import Questionnaire from './Questionnaire';
+import Questionnaire from './questionnaire/Questionnaire';
 import {Assignment} from "@material-ui/icons";
 import {useHistory} from "react-router-dom";
 import {MemberService} from '../service/MemberService';
