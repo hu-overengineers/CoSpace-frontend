@@ -1,10 +1,9 @@
-import React, {useState, useRef, useEffect, Fragment} from "react";
+import React, {useState,  useEffect, Fragment} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CreateQuestion from "./CreateQuestion";
 import { Box, Button, Grid } from "@material-ui/core";
 import {Add} from "@material-ui/icons";
 import Divider from '@material-ui/core/Divider';
-import {delay} from "../../util/async";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,7 +57,7 @@ export default function CreateQuestionnaire({onSubmit, callBackQuestions}) {
                         <h2>Question {i+1}</h2>
                         <CreateQuestion callBackOnSave={saveQuestionObj}/>
 
-                        {i+1 != questionNum && (
+                        {i+1 !== questionNum && (
                             <Divider className={classes.divider}/>
                         )}
                     </Box>)

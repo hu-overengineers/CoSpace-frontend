@@ -34,4 +34,9 @@ const downvotePost = (postId) => {
     return axios.post(BASE_URL + DOWNVOTE_POST, null, headersWithToken({postId: postId}))
 }
 
-export const PostService = {getPosts, createPost, reportPost, upvotePost, downvotePost};
+const getPostById = (postId) => {
+    return axios.get(BASE_URL + GET_POSTS, {params: {postId: postId}})
+};
+
+
+export const PostService = {getPosts, createPost, reportPost, upvotePost, downvotePost, getPostById};

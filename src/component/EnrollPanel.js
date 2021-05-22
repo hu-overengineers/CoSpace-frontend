@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import {Button, Snackbar} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
-import {delay} from "../util/async";
 import AboutFeed from './AboutFeed';
 import Box from '@material-ui/core/Box';
 import Questionnaire from './questionnaire/Questionnaire';
 import {Assignment} from "@material-ui/icons";
-import {useHistory} from "react-router-dom";
-import {MemberService} from '../service/MemberService';
 
 
 export default function EnrollPanel({clickedSubClub, alreadyEnrolled}) {
@@ -15,7 +12,6 @@ export default function EnrollPanel({clickedSubClub, alreadyEnrolled}) {
     const [open, setSnackbarOpen] = useState(false);
     const [severity, setSnackbarSeverity] = useState("success");
     const [snackbarMessage, setSnackbarMessage] = useState("Welcome back!");
-    const history = useHistory()
     let buttonText = "ENROLL (skip the Questionnaire for now)";
 
 

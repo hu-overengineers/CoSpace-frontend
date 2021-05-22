@@ -26,6 +26,7 @@ export const SUBCLUB_POSTS = "/subClubPosts";
 export const MEMBER = "/member";
 export const ENROLL = "/enroll";
 export const ADMIN = "/admin";
+export const REPORTS = "/reports";
 export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
 export const ATTENDED_EVENTS = "/attended-events";
 
