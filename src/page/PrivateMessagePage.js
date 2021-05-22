@@ -2,18 +2,11 @@ import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
 import Fab from "@material-ui/core/Fab";
 import SendIcon from "@material-ui/icons/Send";
-import PrivateMessageUserItem from "../component/pm/PrivateMessageUserItem";
 import PrivateMessageUserItemList from "../component/pm/PrivateMessageUserItemList";
 import PrivateMessageFeed from "../component/pm/PrivateMessageFeed";
 import {AuthService} from "../service/AuthService";
@@ -39,8 +32,12 @@ const useStyles = makeStyles((theme) => ({
     },
     marginAll: {
         marginTop: theme.spacing(3),
-        marginLeft: theme.spacing(3),
-        marginRight: theme.spacing(3),
+        marginBottom: theme.spacing(2),
+        marginLeft: theme.spacing(12),
+        marginRight: theme.spacing(12),
+    },
+    title: {
+        marginBottom: theme.spacing(2)
     },
 }));
 
@@ -52,11 +49,10 @@ function PrivateMessagePage() {
     const [filteredMessages, setFilteredMessages] = useState([]);
     const [messages, setMessages] = useState([]);
     const [messageContent, setMessageContent] = useState(null);
-    
+
     useEffect(() => {
         PrivateMessagingService.getPrivateMessages().then(response => {
             console.log("PM:", response.data);
-            
             setMessages(response.data)
         })
     }, []);
@@ -73,6 +69,7 @@ function PrivateMessagePage() {
             }
         });
         const sortedUserList = [...usersSet];
+
         sortedUserList.sort((user1, user2) => {
             let common1 = messages.filter(
                 (message) => message.senderUsername === user1 || message.receiverUsername === user1
@@ -80,8 +77,7 @@ function PrivateMessagePage() {
             let common2 = messages.filter(
                 (message) => message.senderUsername === user2 || message.receiverUsername === user2
             );
-            //console.log(common1);
-            //console.log(common2);
+
             return Math.max.apply(Math, common2.map(message => message.created)) -
                 Math.max.apply(Math, common1.map(message => message.created));
         });
@@ -112,46 +108,48 @@ function PrivateMessagePage() {
 
     return (
         <div className={classes.marginAll}>
-            <Grid container>
+            <Grid container className={classes.title}>
                 <Grid item xs={12}>
                     <Typography variant="h5" className="header-message">
-                        Private Message
+                        Private Messages
                     </Typography>
                 </Grid>
             </Grid>
-            <Grid container component={Paper} className={classes.chatSection}>
-                <Grid item xs={3} className={classes.borderRight500}>
-                    <PrivateMessageUserItemList
-                        users={userList}
-                        selectedUser={selectedUser}
-                        callback={(username) => {
-                            console.log("Clicked:", username);
-                            setUser(username);
-                        }}
-                        username={AuthService.getUsername()}
-                    />
-                </Grid>
-                <Grid item xs={9}>
-                    <PrivateMessageFeed messages={filteredMessages}/>
-                    <Divider/>
-                    <Grid container style={{padding: "20px"}}>
-                        <Grid item xs={11}>
-                            <TextField
-                                value={messageContent}
-                                id="outlined-basic-email"
-                                label="Type something..."
-                                onChange={(event) => setMessageContent(event.target.value)}
-                                fullWidth
-                            />
-                        </Grid>
-                        <Grid xs={1} align="right">
-                            <Fab onClick={() => handleSendMessage()} color="primary" aria-label="add">
-                                <SendIcon/>
-                            </Fab>
+            <Paper variant={"outlined"}>
+                <Grid container className={classes.chatSection}>
+                    <Grid item xs={3} className={classes.borderRight500}>
+                        <PrivateMessageUserItemList
+                            users={userList}
+                            selectedUser={selectedUser}
+                            callback={(username) => {
+                                console.log("Clicked:", username);
+                                setUser(username);
+                            }}
+                            username={AuthService.getUsername()}
+                        />
+                    </Grid>
+                    <Grid item xs={9}>
+                        <PrivateMessageFeed messages={filteredMessages}/>
+                        <Divider/>
+                        <Grid container style={{padding: "20px"}}>
+                            <Grid item xs={11}>
+                                <TextField
+                                    value={messageContent}
+                                    id="outlined-basic-email"
+                                    label="Type something..."
+                                    onChange={(event) => setMessageContent(event.target.value)}
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid xs={1} align="right">
+                                <Fab onClick={() => handleSendMessage()} color="primary" aria-label="add">
+                                    <SendIcon/>
+                                </Fab>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </Paper>
         </div>
     );
 }
