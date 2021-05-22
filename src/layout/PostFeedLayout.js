@@ -91,7 +91,6 @@ function PostFeedLayout({children}) {
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
-    // const [postsInFeed, setPostsInFeed] = useState([]);
 
     // Get stats
     useEffect(() => {
@@ -146,8 +145,9 @@ function PostFeedLayout({children}) {
     }
 
     const handleClubTreeItemClick = (node) => {
-        history.push(`/feed/${node.name}`);
         setFeed(node);
+        doRefresh(!refreshFeed);
+        history.push(`/feed/${node.name}`);
     }
 
     return (
