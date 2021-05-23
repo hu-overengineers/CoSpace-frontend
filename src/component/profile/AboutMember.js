@@ -6,8 +6,10 @@ import CakeIcon from '@material-ui/icons/Cake';
 import Button from "@material-ui/core/Button";
 import {AuthService} from "../../service/AuthService";
 import {useHistory} from "react-router-dom";
-
-
+import Tooltip from '@material-ui/core/Tooltip';
+import {PrivateMessagingService} from "../../service/PrivateMessagingService"
+import { SentimentDissatisfied } from '@material-ui/icons';
+import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 const useStyles = makeStyles((theme) => ({
     divider: {
         marginTop: theme.spacing(1),
@@ -61,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AboutMember({username, timeRegistered, numberOfPostsInLastWeek}) {
+export default function AboutMember({hasCommonSubClub, isSelf, username, timeRegistered, numberOfPostsInLastWeek}) {
     console.log("Populating AboutMember section: " + username);
     const history = useHistory();
 
@@ -112,6 +114,32 @@ export default function AboutMember({username, timeRegistered, numberOfPostsInLa
                         </Typography>
                     </Grid>
                 </Grid>
+                <Divider className={classes.divider}/>
+                
+                {
+                    isSelf ? null : 
+                        <Grid container className={classes.buttonContainer}>
+                            <Tooltip title= {!hasCommonSubClub ? "You are not a member of a common club or sub club!" : "Send a private message!"  }>
+                                <span className={classes.buttonContainer}>
+                                    <Button
+                                        startIcon={<EmailOutlinedIcon />}
+                                        disabled = {!hasCommonSubClub}
+                                        variant="outlined"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={() => {
+                                    
+                                            PrivateMessagingService.send(username, "").then(response => {
+                                                console.log(response.data);
+                                                history.push("/pm");
+                                            })
+                                            
+                                        }}
+                                    >Send Message</Button>
+                                </span>
+                            </Tooltip>
+                        </Grid>
+                }
 
 
                 {AuthService.getUsername() === username && <Box>
