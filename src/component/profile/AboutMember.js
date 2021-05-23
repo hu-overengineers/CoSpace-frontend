@@ -9,6 +9,7 @@ import {useHistory} from "react-router-dom";
 import Tooltip from '@material-ui/core/Tooltip';
 import {PrivateMessagingService} from "../../service/PrivateMessagingService"
 import { SentimentDissatisfied } from '@material-ui/icons';
+import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 const useStyles = makeStyles((theme) => ({
     divider: {
         marginTop: theme.spacing(1),
@@ -119,8 +120,9 @@ export default function AboutMember({hasCommonSubClub, isSelf, username, timeReg
                     isSelf ? null : 
                         <Grid container className={classes.buttonContainer}>
                             <Tooltip title= {!hasCommonSubClub ? "You are not a member of a common club or sub club!" : "Send a private message!"  }>
-                                <span>
+                                <span className={classes.buttonContainer}>
                                     <Button
+                                        startIcon={<EmailOutlinedIcon />}
                                         disabled = {!hasCommonSubClub}
                                         variant="outlined"
                                         color="primary"
