@@ -6,8 +6,9 @@ import CakeIcon from '@material-ui/icons/Cake';
 import Button from "@material-ui/core/Button";
 import {AuthService} from "../../service/AuthService";
 import {useHistory} from "react-router-dom";
-
-
+import Tooltip from '@material-ui/core/Tooltip';
+import {PrivateMessagingService} from "../../service/PrivateMessagingService"
+import { SentimentDissatisfied } from '@material-ui/icons';
 const useStyles = makeStyles((theme) => ({
     divider: {
         marginTop: theme.spacing(1),
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AboutMember({username, timeRegistered, numberOfPostsInLastWeek}) {
+export default function AboutMember({hasCommonSubClub, isSelf, username, timeRegistered, numberOfPostsInLastWeek}) {
     console.log("Populating AboutMember section: " + username);
     const history = useHistory();
 
@@ -112,6 +113,34 @@ export default function AboutMember({username, timeRegistered, numberOfPostsInLa
                         </Typography>
                     </Grid>
                 </Grid>
+                <Divider className={classes.divider}/>
+                
+                {
+                    isSelf ? null : ( !hasCommonSubClub ? 
+                        <Tooltip title="You are not a member of a common club or sub club!">
+                            <span>
+                                <Button
+                                    disabled
+                                    variant="outlined"
+                                    color="primary"
+                                    className={classes.button}
+                                >Send Message</Button>
+                            </span>
+                        </Tooltip>
+
+                        : 
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className={classes.button}
+                            onClick={() => {
+                                history.push("/pm")
+                                PrivateMessagingService.send({username}, "First Message").then(response => {
+                                    console.log(response.data);
+                                })
+                            }}
+                            >Send Message</Button>)
+                }
 
 
                 {AuthService.getUsername() === username && <Box>

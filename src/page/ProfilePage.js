@@ -155,9 +155,12 @@ export default function ProfilePage() {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
-                            <AboutMember username={username}
-                                         timeRegistered={null}
-                                         numberOfPostsInLastWeek={0}
+                            <AboutMember 
+                                        hasCommonSubClub = {commonClubsAndSubClubs.length > 0}
+                                        isSelf = {isSelf}
+                                        username={username}
+                                        timeRegistered={null}
+                                        numberOfPostsInLastWeek={0}
                             />
                         </Box>
                     </Box>
