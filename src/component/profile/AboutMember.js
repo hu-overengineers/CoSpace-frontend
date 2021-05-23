@@ -116,30 +116,27 @@ export default function AboutMember({hasCommonSubClub, isSelf, username, timeReg
                 <Divider className={classes.divider}/>
                 
                 {
-                    isSelf ? null : ( !hasCommonSubClub ? 
-                        <Tooltip title="You are not a member of a common club or sub club!">
-                            <span>
-                                <Button
-                                    disabled
-                                    variant="outlined"
-                                    color="primary"
-                                    className={classes.button}
-                                >Send Message</Button>
-                            </span>
-                        </Tooltip>
-
-                        : 
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            className={classes.button}
-                            onClick={() => {
-                                history.push("/pm")
-                                PrivateMessagingService.send({username}, "First Message").then(response => {
-                                    console.log(response.data);
-                                })
-                            }}
-                            >Send Message</Button>)
+                    isSelf ? null : 
+                        <Grid container className={classes.buttonContainer}>
+                            <Tooltip title= {!hasCommonSubClub ? "You are not a member of a common club or sub club!" : "Send a private message!"  }>
+                                <span>
+                                    <Button
+                                        disabled = {!hasCommonSubClub}
+                                        variant="outlined"
+                                        color="primary"
+                                        className={classes.button}
+                                        onClick={() => {
+                                    
+                                            PrivateMessagingService.send(username, "").then(response => {
+                                                console.log(response.data);
+                                                history.push("/pm");
+                                            })
+                                            
+                                        }}
+                                    >Send Message</Button>
+                                </span>
+                            </Tooltip>
+                        </Grid>
                 }
 
 
