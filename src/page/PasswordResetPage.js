@@ -19,8 +19,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import DoneOutlineOutlinedIcon from '@material-ui/icons/DoneOutlineOutlined';
-import { HistorySharp } from "@material-ui/icons";
-import { set } from "date-fns/esm";
 
 const useStyles = makeStyles((theme) => ({
     paper: {

@@ -4,7 +4,7 @@ import {
     ATTENDED_EVENTS,
     BASE_URL,
     COMMON_SUB_CLUBS,
-    ENROLL,
+    ONE_SUB_CLUB_ENROLL,
     ENROLLED_SUBCLUBS,
     GET_POSTS,
     GET_POSTS_BY_AUTHOR,
@@ -25,8 +25,8 @@ const getCommonSubClubs = (username) => {
     return axios.get(BASE_URL + SUB_CLUB + COMMON_SUB_CLUBS, headersWithToken({username: username}))
 }
 
-const enrollToSubClub = (subClub) => {
-    return axios.post(BASE_URL + SUB_CLUB + ENROLL, {}, headersWithToken({subClubName: subClub}));
+const enrollToSubClub = (answers) => {
+    return axios.post(BASE_URL + ONE_SUB_CLUB_ENROLL, answers, headersWithToken());
 }
 
 const getPostsByAuthorAndSubClub = (author, subClubName) => {
