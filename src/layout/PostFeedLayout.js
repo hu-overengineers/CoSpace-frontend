@@ -16,6 +16,7 @@ import AboutFeed from "../component/AboutFeed";
 import EventContainer from "../component/event/EventContainer";
 import CreatePost from "../component/CreatePost";
 import EventItem from "../component/event/EventItem";
+import EnrollPanel from "../component/EnrollPanel";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +93,7 @@ function PostFeedLayout({children}) {
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
+    const [enrollDialogOpen, setEnrollDialogOpen] = React.useState(false);
 
     // Get stats
     useEffect(() => {
@@ -162,9 +164,22 @@ function PostFeedLayout({children}) {
     }, [feed]);
 
     // create post pop-up
-    const handleDialogOpen = () => {
+    const handleCreatePostDialogOpen = () => {
         setPostDialogOpen(true);
     };
+
+    // enroll subclub pop-up
+    const handleEnrollDialogOpen = () => {
+        setEnrollDialogOpen(true);
+    };
+
+    // enroll subclub pop-up
+    const handleEnrollment = (isEnrolled) => {
+        if(isEnrolled){
+            setEnrolledSubClubs([...enrolledSubClubs, feed])
+        }
+    };
+
 
     // event for new post creation
     const handleNewPost = (postCreated) => {
@@ -213,15 +228,6 @@ function PostFeedLayout({children}) {
                                 </ToggleButton>
                             </ToggleButtonGroup>
 
-                            <Button size="medium" style={{marginRight: "5px"}}
-                                    variant="contained"
-                                    color="primary"
-                                    startIcon={<Add/>}
-                                    onClick={() => {
-                                        history.push("/enroll");
-                                    }}
-                                    disableElevation>ENROLL TO NEW CLUB
-                            </Button>
 
                             {(!(feed.isCustom || (!feed.parentName))) &&
                             <Button size="medium"
@@ -230,7 +236,7 @@ function PostFeedLayout({children}) {
                                     disabled={enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0}
                                     startIcon={<Edit/>}
                                     onClick={() => {
-                                        handleDialogOpen()
+                                        handleCreatePostDialogOpen()
                                     }}
                                     disableElevation>CREATE POST</Button>}
                         </Box>
@@ -269,6 +275,22 @@ function PostFeedLayout({children}) {
                                     </List>
                                 }/>
                         </Box>}
+
+                        {((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0)
+                            &&
+                            (!(feed.isCustom || (!feed.parentName)))) && <Box className={classes.gridRightColumnBox}>
+                            <Button size="medium"
+                                        variant="contained"
+                                        color="primary"
+                                        startIcon={<Add/>}
+                                        onClick={() => {
+                                            handleEnrollDialogOpen()
+                                        }}
+                                        fullWidth
+                                        disableElevation>ENROLL
+                            </Button>
+                        </Box>}
+
                         {/* TODO: Uncomment when available.
                             <Box className={classes.sectionBox}>
                                 <ModeratorNotesSection
@@ -280,6 +302,8 @@ function PostFeedLayout({children}) {
             </Grid>
             <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
                         subclub={feed}/>
+            {(enrollDialogOpen) && <EnrollPanel open={enrollDialogOpen} setOpenDialog={setEnrollDialogOpen} setEnrolled={handleEnrollment} clickedSubClub={feed} alreadyEnrolled={false}/>}
+            
         </div>
     )
 }

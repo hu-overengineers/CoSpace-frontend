@@ -5,7 +5,8 @@ import {
     CLUB_LIST,
     SUB_CLUB_EVENTS,
     SUB_CLUB_LIST,
-    SUB_CLUB_STATS
+    SUB_CLUB_STATS,
+    SUB_CLUB_QUESTIONNAIRE
 } from "../api_config";
 import {headersWithToken} from "./headers";
 
@@ -39,6 +40,10 @@ const attendEvent = (eventId) => {
     return axios.post(BASE_URL + ATTEND_SUB_CLUB_EVENT, null, headersWithToken({eventId: eventId}))
 }
 
+const getSubClubQuestions = (subclubName) => {
+    return axios.get(BASE_URL + SUB_CLUB_QUESTIONNAIRE, headersWithToken({subClubName:subclubName}));
+}
+
 const parseSubClubs = async (subClubs) => {
 
     const clubs = await getClubs();
@@ -53,4 +58,4 @@ const parseSubClubs = async (subClubs) => {
 }
 
 
-export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubStatistics, getEvents, attendEvent};
+export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubStatistics, getEvents, attendEvent, getSubClubQuestions};
