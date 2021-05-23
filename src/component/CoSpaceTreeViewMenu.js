@@ -124,7 +124,8 @@ export default function CoSpaceTreeViewMenu(
         expandIcon,
         collapseIcon,
         defaultExpanded,
-        expanded
+        expanded,
+        emptyText = "There's nothing to look here."
     }) {
     const classes = useStyles();
     const treeClasses = useTreeItemStyles();
@@ -152,11 +153,11 @@ export default function CoSpaceTreeViewMenu(
                     defaultExpanded={defaultExpanded}
                     expanded={expanded}
                     defaultExpandIcon={expandIcon}>
-                    {menuItems.map((menuItem, index) => (
+                    {menuItems && menuItems.length !== 0 ? menuItems.map((menuItem, index) => (
                         <Box key={menuItem.text}>
                             {renderTree(menuItem, treeClasses, callbackOnTreeItemClick)}
                         </Box>
-                    ))}
+                    )) : <Typography className={treeClasses.label}>{emptyText}</Typography>}
 
                 </TreeView>
             </Box>
