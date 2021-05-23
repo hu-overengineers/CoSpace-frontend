@@ -156,7 +156,6 @@ export default function ProfilePage() {
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
                             <AboutMember username={username}
-                                         bio={"TODO"}
                                          timeRegistered={null}
                                          numberOfPostsInLastWeek={0}
                             />

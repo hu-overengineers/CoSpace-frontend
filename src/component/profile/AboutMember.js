@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AboutMember({username, bio, timeRegistered, numberOfPostsInLastWeek}) {
+export default function AboutMember({username, timeRegistered, numberOfPostsInLastWeek}) {
     console.log("Populating AboutMember section: " + username);
     const history = useHistory();
 
@@ -82,11 +82,6 @@ export default function AboutMember({username, bio, timeRegistered, numberOfPost
                     </Grid>
                 </Grid>
 
-
-                <Divider className={classes.divider}/>
-                <Typography className={classes.sectionBody}>
-                    {bio}
-                </Typography>
                 <Divider className={classes.divider}/>
 
                 <Grid container className={classes.divider} justify="center">
