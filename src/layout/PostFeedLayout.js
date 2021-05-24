@@ -76,11 +76,11 @@ const customFeeds = [
 function PostFeedLayout({children}) {
     const classes = useStyles();
     const history = useHistory();
-    const [sortingOrder, setSortingOrder] = React.useState('hot');
+    const [sortingOrder, setSortingOrder] = useState('today');
 
-    const handleSortingOrder = (event) => {
-        console.log("Sorting order: " + event.target.value);
-        setSortingOrder(event.target.value);
+    const handleSortingOrder = (event, sorting) => {
+        console.log("Sorting order: " + sorting);
+        setSortingOrder(sorting);
     };
 
     // Clubs and sub-clubs
