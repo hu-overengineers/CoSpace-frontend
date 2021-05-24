@@ -37,10 +37,6 @@ const getEvents = (subClubName) => {
     });
 }
 
-const attendEvent = (eventId) => {
-    return axios.post(BASE_URL + ATTEND_SUB_CLUB_EVENT, null, headersWithToken({eventId: eventId}))
-}
-
 const getSubClubQuestions = (subclubName) => {
     return axios.get(BASE_URL + SUB_CLUB_QUESTIONNAIRE, headersWithToken({subClubName:subclubName}));
 }
@@ -59,4 +55,4 @@ const parseSubClubs = async (subClubs) => {
 }
 
 
-export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubStatistics, getEvents, attendEvent, getSubClubQuestions};
+export const ClubService = {getClubs, getSubClubs, parseSubClubs, getSubClubStatistics, getEvents, getSubClubQuestions};
