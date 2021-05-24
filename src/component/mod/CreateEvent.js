@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     formInput: {
         marginBottom: theme.spacing(2),
     },
+    switchInput: {
+        marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+    },
     dateInput: {
         marginTop: 0,
     },
@@ -248,7 +253,7 @@ export function CreateEvent() {
                                         </MuiPickersUtilsProvider>);
                                 case "switch":
                                     return (
-                                        <Box className={classes.formInput}>
+                                        <Box className={classes.switchInput}>
                                             <FormControlLabel
                                                 control={<Switch
                                                     key={inputField.id}
