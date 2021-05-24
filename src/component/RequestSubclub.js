@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { MemberService } from '../service/MemberService';
+import {delay} from "../util/async";
 
 
 export default function EnrollPanel({open, setOpenDialog, club}) {
@@ -13,6 +14,7 @@ export default function EnrollPanel({open, setOpenDialog, club}) {
     const [nameValue, setNameValue] = useState("");
     const [detailValue, setDetailValue] = useState("");
     const [nameEmpty, setNameEmpty] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
     
     const handleDialogClose = (event) => {
         setOpenDialog(false);
@@ -21,22 +23,23 @@ export default function EnrollPanel({open, setOpenDialog, club}) {
     const onNameChange = (event) => {
         setNameValue(event.target.value)
         setNameEmpty(false);
-        console.log(nameValue);    }
+    }
 
     const onDetailsChange = (event) => {
         setDetailValue(event.target.value)
-        console.log(detailValue);    }
+    }
 
     const handleSubmit = (event) => {
         if (nameValue === "" || nameValue === undefined) { 
             setNameEmpty(true);
-            console.log("aaaaaaaaaa");
             return
-        }
-        console.log("can request", detailValue, nameValue);
-        
+        }        
         MemberService.requestSubClub(club.name, nameValue, detailValue).then((response) => {
             console.log(response.data);
+            setSubmitted(true);
+            delay(1000).then(() => {
+                setOpenDialog(false);
+            })
         }).catch((err) => {
             console.log(err);
         })
@@ -82,13 +85,12 @@ export default function EnrollPanel({open, setOpenDialog, club}) {
                                 color="primary">
                                 Exit
                             </Button>
-                            {(!false && (
-                                <Button
-                                    onClick={handleSubmit}
-                                    color="primary">
-                                    Request
-                                </Button>
-                                ))}
+                            <Button
+                                onClick={handleSubmit}
+                                disabled={submitted}
+                                color="primary">
+                                Request
+                            </Button>
                 </DialogActions>
             </Dialog>
 
