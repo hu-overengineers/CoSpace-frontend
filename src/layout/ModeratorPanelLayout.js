@@ -7,27 +7,18 @@ import {useHistory} from "react-router-dom";
 import {SupervisorAccount} from "@material-ui/icons";
 
 
-const adminMenu = [
+const modMenu = [
     {
-        text: "Clubs & Sub-Clubs",
+        text: "Events",
         children: [
             {
-                text: "Create club",
-                path: "/admin/create-club"
+                text: "Create event",
+                path: "/mod/create-event"
             },
             {
-                text: "Manage club",
-                path: "/admin/manage-club"
+                text: "Manage event",
+                path: "/mod/manage-event"
             }
-        ]
-    },
-    {
-        text: "Members",
-        children: [
-            {
-                text: "View member information",
-                path: "/admin/view-member-info"
-            },
         ]
     },
     {
@@ -35,7 +26,7 @@ const adminMenu = [
         children: [
             {
                 text: "Reported posts",
-                path: "/admin/reported-posts"
+                path: "/mod/reported-posts"
             },
         ]
     },
@@ -53,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function AdminPanelLayout({children}) {
+function ModeratorPanelLayout({children}) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -74,14 +65,14 @@ function AdminPanelLayout({children}) {
                     {/*<Divider className={classes.divider}/>*/}
                     <CoSpaceTreeViewMenu title={"Menu"}
                                          titleIcon={<SupervisorAccount/>}
-                                         menuItems={adminMenu}
-                                         defaultExpanded={adminMenu.map(menuItem => menuItem.text)}
+                                         menuItems={modMenu}
+                                         defaultExpanded={modMenu.map(menuItem => menuItem.text)}
                                          callbackOnTreeItemClick={onItemClick}/>
                 </Container>
             </Grid>
 
-            <Grid item xs={9} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                <Typography variant="h4">Administration Panel</Typography>
+            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                <Typography variant="h4">Moderator Panel</Typography>
                 <Divider className={classes.divider}/>
                 {children}
             </Grid>
@@ -99,4 +90,4 @@ function AdminPanelLayout({children}) {
     );
 }
 
-export default AdminPanelLayout;
+export default ModeratorPanelLayout;
