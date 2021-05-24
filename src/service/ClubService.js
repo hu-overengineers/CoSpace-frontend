@@ -1,15 +1,13 @@
 import axios from 'axios';
 import {
-    ATTEND_SUB_CLUB_EVENT,
     BASE_URL,
     CLUB_LIST,
     SUB_CLUB_EVENTS,
     SUB_CLUB_LIST,
-    SUB_CLUB_STATS,
-    SUB_CLUB_QUESTIONNAIRE
+    SUB_CLUB_QUESTIONNAIRE,
+    SUB_CLUB_STATS
 } from "../api_config";
 import {headersWithToken} from "./headers";
-import {formatISO} from "date-fns";
 
 const getClubs = () => {
     return axios.get(BASE_URL + CLUB_LIST)

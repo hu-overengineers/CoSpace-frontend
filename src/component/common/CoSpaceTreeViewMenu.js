@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         maxWidth: 400,
     },
-    root: {
-    },
+    root: {},
     treeViewTitleContainer: {
         display: 'flex',
         flexGrow: 1,
@@ -87,7 +86,7 @@ const useTreeItemStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(2)
     },
     iconContainer: {
-        marginLeft:  theme.spacing(1),
+        marginLeft: theme.spacing(1),
     },
 }));
 
@@ -125,6 +124,8 @@ export default function CoSpaceTreeViewMenu(
         collapseIcon,
         defaultExpanded,
         expanded,
+        selected,
+        defaultSelected,
         emptyText = "There's nothing to look here."
     }) {
     const classes = useStyles();
@@ -152,11 +153,11 @@ export default function CoSpaceTreeViewMenu(
                     defaultCollapseIcon={collapseIcon}
                     defaultExpanded={defaultExpanded}
                     expanded={expanded}
+                    defaultSelected={defaultSelected}
+                    selected={selected}
                     defaultExpandIcon={expandIcon}>
                     {menuItems && menuItems.length !== 0 ? menuItems.map((menuItem, index) => (
-                        <Box key={menuItem.text}>
-                            {renderTree(menuItem, treeClasses, callbackOnTreeItemClick)}
-                        </Box>
+                        renderTree(menuItem, treeClasses, callbackOnTreeItemClick)
                     )) : <Typography className={treeClasses.label}>{emptyText}</Typography>}
 
                 </TreeView>

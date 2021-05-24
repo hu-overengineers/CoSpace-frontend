@@ -99,14 +99,6 @@ export default function PrimaryAppBar() {
 
                     <IconButton
                         onClick={() => {
-
-                        }}
-                    >
-                        <Notifications/>
-                    </IconButton>
-
-                    <IconButton
-                        onClick={() => {
                             history.push("/pm");
                         }}
                     >
