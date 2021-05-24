@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import QuestionLayout from "../../layout/QuestionLayout";
-import { Button, FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup } from "@material-ui/core";
+import {Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({

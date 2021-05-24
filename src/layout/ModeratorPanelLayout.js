@@ -1,7 +1,7 @@
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {Container, Divider, Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 import CoSpaceTreeViewMenu from "../component/CoSpaceTreeViewMenu";
 import {useHistory} from "react-router-dom";
 import {SupervisorAccount} from "@material-ui/icons";

@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import QuestionLayout from "../../layout/QuestionLayout";
 import Paper from "@material-ui/core/Paper";
-import { Button } from "@material-ui/core";
+import {Button} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({

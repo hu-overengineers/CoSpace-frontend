@@ -8,8 +8,8 @@ import {AuthService} from "../../service/AuthService";
 import {useHistory} from "react-router-dom";
 import Tooltip from '@material-ui/core/Tooltip';
 import {PrivateMessagingService} from "../../service/PrivateMessagingService"
-import { SentimentDissatisfied } from '@material-ui/icons';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
+
 const useStyles = makeStyles((theme) => ({
     divider: {
         marginTop: theme.spacing(1),

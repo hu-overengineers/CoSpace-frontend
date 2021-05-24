@@ -5,7 +5,7 @@ import List from "@material-ui/core/List";
 import React, {useEffect, useRef} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {AuthService} from "../../service/AuthService";
-import {formatRelative, format, formatDistance} from "date-fns";
+import {format} from "date-fns";
 
 
 const useStyles = makeStyles((theme) => ({
