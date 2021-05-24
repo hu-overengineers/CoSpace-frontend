@@ -70,7 +70,7 @@ export function ManageEvent() {
 
             <FormControl className={classes.form} variant="filled">
                 <InputLabel >Select an Event to Edit</InputLabel>
-                <Select
+                <Select className={classes.formInput}
                     value={selectedEvent ?  selectedEvent.id : -1}
                     onChange={(e) => {
                         let id = e.target.value;
@@ -101,7 +101,11 @@ export function ManageEvent() {
                         key="event title"
                         required
                         variant={"filled"}
-                        onChange={() => {}}
+                        onChange={(e) => {
+                            let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
+                            eventCopy.title = e.target.value;
+                            setSelectedEvent(eventCopy);
+                        }}
                         value ={selectedEvent.title}
                         label = "Event title"
                     />
@@ -111,7 +115,11 @@ export function ManageEvent() {
                         key="event details"
                         required
                         variant={"filled"}
-                        onChange={() => {}}
+                        onChange={(e) => {
+                            let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
+                            eventCopy.details = e.target.value;
+                            setSelectedEvent(eventCopy);
+                        }}
                         value ={selectedEvent.details}
                         label = "Event details"
 
@@ -156,9 +164,10 @@ export function ManageEvent() {
                                         label="Will it be online?"
                                         color={"primary"}
                                         onChange={(e) => {
-                                            console.log("Switch:", e.target.checked, typeof e.target.checked);
                                             e.target.value = e.target.checked;
-                                            
+                                            let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
+                                            eventCopy.isOnline = e.target.value;
+                                            setSelectedEvent(eventCopy);
                                         }}
                             />} label="Will it be online?"/>
                     </Box>
@@ -168,7 +177,11 @@ export function ManageEvent() {
                         key="event location"
                         required
                         variant={"filled"}
-                        onChange={() => {}}
+                        onChange={(e) => {
+                            let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
+                            eventCopy.location = e.target.value;
+                            setSelectedEvent(eventCopy);
+                        }}
                         value ={selectedEvent.location}
                         label = "Location of event"
 
@@ -179,17 +192,31 @@ export function ManageEvent() {
                         key={"submit"}
                         type="submit"
                         variant={"outlined"}
-                        onClick={() =>{}}
+                        onClick={() =>{
+                            console.log("event will be: ", selectedEvent);
+                            ModeratorService.updateEvent(selectedEvent).then(response => {
+                                // TODO: CORS Error
+                                console.log("Succesfully updated:", response.data);
+
+                            })
+                        }}
                         >
                         EDIT EVENT
                     </Button>
+
                     <Button
                         className={classes.submitButton}
                         key={"delete"}
                         type="submit"
                         variant={"outlined"}
-                        onClick={() =>{}}
-                        disabled
+                        onClick={() =>{
+                            ModeratorService.deleteEvent(selectedEvent.id).then(response => {
+                                // TODO: CORS Error
+                                console.log("Succesfully updated:", response.data);
+                                
+                            })
+                        }}
+                        
                         >
                         DELETE EVENT
                     </Button>

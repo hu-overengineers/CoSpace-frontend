@@ -18,4 +18,13 @@ const getEvents = () => {
     return axios.get(BASE_URL + MODERATOR + EVENT, headersWithToken());
 }
 
-export const ModeratorService = {createEvent, getEvents};
+const updateEvent = (event) => {
+    return axios.put(BASE_URL + MODERATOR + EVENT, event, headersWithToken());
+}
+
+const deleteEvent = (eventId) => {
+    return axios.put(BASE_URL + MODERATOR + EVENT, {id: eventId}, headersWithToken());
+}
+
+
+export const ModeratorService = {createEvent, getEvents, updateEvent, deleteEvent};
