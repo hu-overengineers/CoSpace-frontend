@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Question from "./Question";
-import { Box, Button, Grid } from "@material-ui/core";
+import {Box, Grid} from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({

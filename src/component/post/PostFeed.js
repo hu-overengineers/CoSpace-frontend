@@ -5,7 +5,6 @@ import Box from "@material-ui/core/Box";
 import {PostService} from "../../service/PostService";
 import {useHistory, useParams} from "react-router-dom";
 import {subDays} from "date-fns";
-import NotFoundPage from "../../page/NotFoundPage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PostFeed({preloadedPosts}) {
-    const {feedName = "Popular", page = 0} = useParams();
+    const {feedName, page = 0} = useParams();
 
     const classes = useStyles();
     const history = useHistory();

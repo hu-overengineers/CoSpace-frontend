@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {BASE_URL, CREATE_POST, DOWNVOTE_POST, FEED, GET_POSTS, REPORT_POST, TRENDS, UPVOTE_POST} from "../api_config";
 import {headersWithToken} from "./headers";
-import {formatISO} from "date-fns";
 
 const getPosts = (feed, page, size, start, end) => {
     if (feed === "Popular") {

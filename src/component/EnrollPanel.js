@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Paper, Grid} from "@material-ui/core";
-import {Alert} from "@material-ui/lab";
-import AboutFeed from './AboutFeed';
+import {Button, Grid, Paper} from "@material-ui/core";
 import Box from '@material-ui/core/Box';
 import Questionnaire from './questionnaire/Questionnaire';
-import {Assignment} from "@material-ui/icons";
 import {ClubService} from '../service/ClubService';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';

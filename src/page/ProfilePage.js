@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Divider} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
-import ClubTree from '../component/ClubTree';
+import ClubTree from '../component/common/ClubTree';
 import Box from "@material-ui/core/Box";
 import {AccountCircle, FiberNew, PublicOutlined, TrendingUp} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gridLeftColumnBox: {
         marginTop: theme.spacing(3),
-        marginLeft: theme.spacing(3),
+        marginLeft: theme.spacing(2.5),
         marginRight: theme.spacing(0),
     },
     gridMiddleColumnBox: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     gridRightColumnBox: {
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(0),
-        marginRight: theme.spacing(3),
+        marginRight: theme.spacing(2.5),
     },
     sectionBox: {
         marginBottom: theme.spacing(2)

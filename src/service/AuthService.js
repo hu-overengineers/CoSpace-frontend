@@ -4,7 +4,15 @@
  */
 
 import axios from "axios";
-import {BASE_URL, LOGIN, LOGIN_WITH_TOKEN, REGISTER, RESET_PASSWORD, AUTH,CHANGE_PASSWORD_WITH_TOKEN} from "../api_config";
+import {
+    AUTH,
+    BASE_URL,
+    CHANGE_PASSWORD_WITH_TOKEN,
+    LOGIN,
+    LOGIN_WITH_TOKEN,
+    REGISTER,
+    RESET_PASSWORD
+} from "../api_config";
 import {headersWithToken} from "./headers";
 
 const login = (username, pass) => {

@@ -8,7 +8,7 @@ import {subDays} from "date-fns";
 import {AuthService} from "../service/AuthService";
 import {MemberService} from "../service/MemberService";
 import Box from "@material-ui/core/Box";
-import ClubTree from "../component/ClubTree";
+import ClubTree from "../component/common/ClubTree";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gridLeftColumnBox: {
         marginTop: theme.spacing(3),
-        marginLeft: theme.spacing(3),
+        marginLeft: theme.spacing(2.5),
         marginRight: theme.spacing(0),
     },
     gridMiddleColumnBox: {
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     gridRightColumnBox: {
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(0),
-        marginRight: theme.spacing(3),
+        marginRight: theme.spacing(2.5),
     },
     sectionBox: {
         marginBottom: theme.spacing(2)
@@ -76,11 +76,11 @@ const customFeeds = [
 function PostFeedLayout({children}) {
     const classes = useStyles();
     const history = useHistory();
-    const [sortingOrder, setSortingOrder] = React.useState('hot');
+    const [sortingOrder, setSortingOrder] = useState('today');
 
-    const handleSortingOrder = (event) => {
-        console.log("Sorting order: " + event.target.value);
-        setSortingOrder(event.target.value);
+    const handleSortingOrder = (event, sorting) => {
+        console.log("Sorting order: " + sorting);
+        setSortingOrder(sorting);
     };
 
     // Clubs and sub-clubs
@@ -206,6 +206,7 @@ function PostFeedLayout({children}) {
                         <Box className={classes.sectionBox}>
                             <ClubTree
                                 title={"Browse"}
+                                selected={feed.name}
                                 callbackOnTreeItemClick={handleClubTreeItemClick}
                                 clubs={clubs}/>
                         </Box>
@@ -222,7 +223,7 @@ function PostFeedLayout({children}) {
                                 exclusive
                                 onChange={handleSortingOrder}
                                 aria-label="text alignment">
-                                <ToggleButton value="hot" aria-label="left aligned">
+                                <ToggleButton value="today" aria-label="left aligned">
                                     <Whatshot/>
                                 </ToggleButton>
                                 <ToggleButton value="new" aria-label="centered">
