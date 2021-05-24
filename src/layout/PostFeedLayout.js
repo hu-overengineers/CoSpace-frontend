@@ -261,7 +261,7 @@ function PostFeedLayout({children}) {
                                                 key={event.id}
                                                 event={event}
                                                 attendCallback={(id) => {
-                                                    ClubService.attendEvent(id).then(response => {
+                                                    MemberService.attendEvent(id).then(response => {
                                                         console.log("Successfully attended event:", response.data);
                                                         const aux = events.slice();
                                                         aux.filter(event => event.id === response.data.id).forEach(event => {
