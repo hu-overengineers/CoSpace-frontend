@@ -29,21 +29,24 @@ function QuestionnaireEntrance() {
 }
 
 function PostQuestionnaire({response, setEnrolled}) {
-    response = response[0]
-    let score = response["Interest Rate"]
-    const enrolled = score >= 50;
     let bg_color;
     let result_text;
-    if (enrolled) {
-        setEnrolled(true);  
-        bg_color = "greenyellow"
-        result_text = "Congrats! You are successfully enrolled with score: "+score
+    response = response[0]
+    if (response["Interest Rate"] === undefined) {
+        bg_color = "#ff8a93"
+        result_text = "Sorry, you failed before so you cannot enroll again!"
     }
     else{
-        setEnrolled(false);  
-        bg_color = "#ff8a93"
-        result_text = "Sorry, you failed with score: "+score
-
+        let score = response["Interest Rate"]
+        const enrolled = score >= 50;
+        if (enrolled) {
+            bg_color = "#00e3aa"
+            result_text = "Congrats! You are successfully enrolled with score: "+score
+        }
+        else{
+            bg_color = "#ff8a93"
+            result_text = "Sorry, you failed with score: "+score    
+        }
     }
 
     return (
@@ -68,7 +71,6 @@ export default function EnrollPanel({clickedSubClub, open, setOpenDialog, setEnr
     const [enrollResponse, setEnrollResponse] = useState();
 
 
-    let buttonText = "ENROLL (skip the Questionnaire for now)";
 
 
     useEffect(() => {
@@ -91,8 +93,13 @@ export default function EnrollPanel({clickedSubClub, open, setOpenDialog, setEnr
             console.log("given answers on submit", givenAnswers);
             MemberService.enrollToSubClub(givenAnswers).then((response) => {
                 console.log("Response: " + response.data);
+                if (response.data[0].Message === "Success") {
+                    setEnrolled(true)
+                }
+                else{
+                    setEnrolled(false);
+                }
                 setEnrollResponse(response.data)
-                setEnrolled(true);
             }).finally(() => {
                 setSubmitted(true);
             })
