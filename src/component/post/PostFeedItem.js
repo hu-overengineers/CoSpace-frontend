@@ -30,6 +30,7 @@ import {PostService} from "../../service/PostService";
 import {AuthService} from "../../service/AuthService";
 import {Alert} from "@material-ui/lab";
 import {formatDistance, parseISO} from "date-fns";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         backgroundColor: theme.palette.secondary.main,
+        cursor: "pointer",
     },
     voteLabel: {
         flexGrow: 1,
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function PostFeedItem({props}) {
     const classes = useStyles();
+    const history = useHistory();
 
     // Up-voting & down-voting
     const [vote, setVote] = useState(props.voting);
@@ -165,12 +168,14 @@ export function PostFeedItem({props}) {
         });
     }
 
+    const handleAuthorClick = () => history.push(`/profile/${props.author}`);
+
     return (
         <Box>
             <Card variant="outlined" className={classes.root}>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
+                        <Avatar onClick={handleAuthorClick} aria-label="recipe" className={classes.avatar}>
                             {props.author.charAt(0).toUpperCase()}
                         </Avatar>
                     }
@@ -194,7 +199,7 @@ export function PostFeedItem({props}) {
                             </Menu>
                         </CardActions>
                     }
-                    title={props.author}
+                    title={<Box style={{"cursor": "pointer"}} onClick={handleAuthorClick}>{props.author}</Box>}
                     subheader={`${formatDistance(parseISO(props.created), new Date(), {addSuffix: true})} on ${props.parentName}`}/>
 
                 <CardContent className={classes.postCardContent}>

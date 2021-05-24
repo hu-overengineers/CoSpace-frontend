@@ -149,16 +149,18 @@ export default function ProfilePage() {
                         </Box>
                         <Divider className={classes.divider}/>
 
-                        <PostFeed posts={posts} subclub={subClub.name}/>
+                        <PostFeed preloadedPosts={posts} subclub={subClub.name}/>
                     </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
-                            <AboutMember username={username}
-                                         bio={"TODO"}
-                                         timeRegistered={null}
-                                         numberOfPostsInLastWeek={0}
+                            <AboutMember 
+                                        hasCommonSubClub = {commonClubsAndSubClubs.length > 0}
+                                        isSelf = {isSelf}
+                                        username={username}
+                                        timeRegistered={null}
+                                        numberOfPostsInLastWeek={0}
                             />
                         </Box>
                     </Box>

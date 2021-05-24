@@ -68,21 +68,36 @@ function PrivateMessagePage() {
                 usersSet.add(message.senderUsername);
             }
         });
-        const sortedUserList = [...usersSet];
+        let sortedUserList = [...usersSet];
 
         sortedUserList.sort((user1, user2) => {
             let common1 = messages.filter(
-                (message) => message.senderUsername === user1 || message.receiverUsername === user1
+                (message) => (message.senderUsername === user1 || message.receiverUsername === user1) 
             );
             let common2 = messages.filter(
-                (message) => message.senderUsername === user2 || message.receiverUsername === user2
+                (message) => (message.senderUsername === user2 || message.receiverUsername === user2)
             );
 
             return Math.max.apply(Math, common2.map(message => message.created)) -
                 Math.max.apply(Math, common1.map(message => message.created));
         });
 
+
+        
+        sortedUserList = sortedUserList.filter(user => {
+            
+            let receivedMessages = messages.filter(message => message.senderUsername === user && message.receiverUsername === username);
+            if (receivedMessages.length === 1) {
+                return receivedMessages[0].content !== "";
+            }else {
+                return true;
+            }
+
+        });
+            
+
         setUserList(sortedUserList);
+
     }, [messages]);
 
     useEffect(() => {
@@ -90,12 +105,14 @@ function PrivateMessagePage() {
     }, [userList])
 
     useEffect(() => {
-        const sortedFilteredMessages = messages.filter(message => message.senderUsername === selectedUser || message.receiverUsername === selectedUser);
+        let sortedFilteredMessages = messages.filter(message => message.senderUsername === selectedUser || message.receiverUsername === selectedUser);
         sortedFilteredMessages.sort((message1, message2) => message1.timestamp <= message2.timestamp);
+        sortedFilteredMessages = sortedFilteredMessages.filter(message => message.content !== "");
         setFilteredMessages(sortedFilteredMessages);
     }, [messages, selectedUser]);
 
     const handleSendMessage = () => {
+        if (messageContent === null || messageContent === "") return;
         PrivateMessagingService.send(selectedUser, messageContent).then(response => {
             const aux = messages.slice();
             aux.push(response.data);
@@ -141,7 +158,7 @@ function PrivateMessagePage() {
                                     fullWidth
                                 />
                             </Grid>
-                            <Grid xs={1} align="right">
+                            <Grid item xs={1} align="right">
                                 <Fab onClick={() => handleSendMessage()} color="primary" aria-label="add">
                                     <SendIcon/>
                                 </Fab>

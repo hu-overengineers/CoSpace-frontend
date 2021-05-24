@@ -4,8 +4,8 @@ import PostFeed from "../component/post/PostFeed";
 export default function PostFeedSwitch() {
     return (
         <Switch>
-            <Route path="/feed/:feedName">
-                <PostFeed/>
+            <Route path="/feed/:feedName/:page?">
+                <PostFeed />
             </Route>
         </Switch>
     );

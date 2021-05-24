@@ -175,7 +175,7 @@ function PostFeedLayout({children}) {
 
     // enroll subclub pop-up
     const handleEnrollment = (isEnrolled) => {
-        if(isEnrolled){
+        if (isEnrolled) {
             setEnrolledSubClubs([...enrolledSubClubs, feed])
         }
     };
@@ -242,7 +242,9 @@ function PostFeedLayout({children}) {
                         </Box>
                         <Divider className={classes.divider}/>
 
+                        {/* Feed */}
                         {children}
+
                     </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
@@ -277,33 +279,29 @@ function PostFeedLayout({children}) {
                         </Box>}
 
                         {((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0)
-                            &&
-                            (!(feed.isCustom || (!feed.parentName)))) && <Box className={classes.gridRightColumnBox}>
+                            && (!(feed.isCustom || (!feed.parentName)))) &&
+                        <Box>
                             <Button size="medium"
-                                        variant="contained"
-                                        color="primary"
-                                        startIcon={<Add/>}
-                                        onClick={() => {
-                                            handleEnrollDialogOpen()
-                                        }}
-                                        fullWidth
-                                        disableElevation>ENROLL
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<Add/>}
+                                    onClick={() => {
+                                        handleEnrollDialogOpen()
+                                    }}
+                                    fullWidth
+                                    disableElevation>ENROLL
                             </Button>
                         </Box>}
 
-                        {/* TODO: Uncomment when available.
-                            <Box className={classes.sectionBox}>
-                                <ModeratorNotesSection
-                                    notes={"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}/>
-                            </Box>
-                         */}
                     </Box>
                 </Grid>
             </Grid>
             <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
                         subclub={feed}/>
-            {(enrollDialogOpen) && <EnrollPanel open={enrollDialogOpen} setOpenDialog={setEnrollDialogOpen} setEnrolled={handleEnrollment} clickedSubClub={feed} alreadyEnrolled={false}/>}
-            
+            {(enrollDialogOpen) &&
+            <EnrollPanel open={enrollDialogOpen} setOpenDialog={setEnrollDialogOpen} setEnrolled={handleEnrollment}
+                         clickedSubClub={feed} alreadyEnrolled={false}/>}
+
         </div>
     )
 }
