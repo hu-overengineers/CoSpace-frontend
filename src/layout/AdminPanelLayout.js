@@ -2,7 +2,7 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import {Divider, Typography} from "@material-ui/core";
-import CoSpaceTreeViewMenu from "../component/CoSpaceTreeViewMenu";
+import CoSpaceTreeViewMenu from "../component/common/CoSpaceTreeViewMenu";
 import {useHistory} from "react-router-dom";
 import {SupervisorAccount} from "@material-ui/icons";
 import Box from "@material-ui/core/Box";

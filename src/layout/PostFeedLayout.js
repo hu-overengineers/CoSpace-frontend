@@ -8,7 +8,7 @@ import {subDays} from "date-fns";
 import {AuthService} from "../service/AuthService";
 import {MemberService} from "../service/MemberService";
 import Box from "@material-ui/core/Box";
-import ClubTree from "../component/ClubTree";
+import ClubTree from "../component/common/ClubTree";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
@@ -217,7 +217,7 @@ function PostFeedLayout({children}) {
                                 exclusive
                                 onChange={handleSortingOrder}
                                 aria-label="text alignment">
-                                <ToggleButton value="hot" aria-label="left aligned">
+                                <ToggleButton value="today" aria-label="left aligned">
                                     <Whatshot/>
                                 </ToggleButton>
                                 <ToggleButton value="new" aria-label="centered">

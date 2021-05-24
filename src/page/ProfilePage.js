@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Divider} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
-import ClubTree from '../component/ClubTree';
+import ClubTree from '../component/common/ClubTree';
 import Box from "@material-ui/core/Box";
 import {AccountCircle, FiberNew, PublicOutlined, TrendingUp} from "@material-ui/icons";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
