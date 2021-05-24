@@ -3,8 +3,9 @@ import {PostFeedItem} from "./PostFeedItem";
 import {List, makeStyles} from '@material-ui/core';
 import Box from "@material-ui/core/Box";
 import {PostService} from "../../service/PostService";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {subDays} from "date-fns";
+import NotFoundPage from "../../page/NotFoundPage";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,6 +22,7 @@ export default function PostFeed({preloadedPosts}) {
     const {feedName = "Popular", page = 0} = useParams();
 
     const classes = useStyles();
+    const history = useHistory();
 
     const [postsInFeed, setPostsInFeed] = useState(preloadedPosts ?? []);
 
@@ -44,11 +46,11 @@ export default function PostFeed({preloadedPosts}) {
     return (
         <div>
             <List className={classes.root}>
-                {postsInFeed.map((post, index) => (
+                {postsInFeed ? postsInFeed.map((post, index) => (
                     <Box key={post.id} className={classes.feedItem}>
                         {<PostFeedItem props={post}/>}
                     </Box>
-                ))}
+                )): history.push("/notfound")}
             </List>
         </div>
     );
