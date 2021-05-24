@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
 
 const customFeeds = [
     {isCustom: true, name: "Popular", details: "Popular posts in all clubs and sub-clubs right now.", children: []},
-    {isCustom: true, name: "Random", details: "Random gems that you may find interesting.", children: []}
 ];
 
 
