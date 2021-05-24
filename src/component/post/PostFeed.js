@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PostFeed({preloadedPosts}) {
-    const {feedName = "Popular", page = 1} = useParams();
+    const {feedName = "Popular", page = 0} = useParams();
 
     const classes = useStyles();
 
@@ -39,7 +39,7 @@ export default function PostFeed({preloadedPosts}) {
         } else {
             setPostsInFeed(preloadedPosts);
         }
-    }, [feedName, preloadedPosts]);
+    }, [feedName, page, preloadedPosts]);
 
     return (
         <div>
