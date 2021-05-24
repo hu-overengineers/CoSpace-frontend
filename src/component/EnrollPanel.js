@@ -31,16 +31,19 @@ function QuestionnaireEntrance() {
     )
 }
 
-function PostQuestionnaire({score}) {
-    score = parseInt(score.split(" ")[1])
+function PostQuestionnaire({response, setEnrolled}) {
+    response = response[0]
+    let score = response["Interest Rate"]
     const enrolled = score >= 50;
     let bg_color;
     let result_text;
     if (enrolled) {
+        setEnrolled(true);  
         bg_color = "greenyellow"
         result_text = "Congrats! You are successfully enrolled with score: "+score
     }
     else{
+        setEnrolled(false);  
         bg_color = "#ff8a93"
         result_text = "Sorry, you failed with score: "+score
 
@@ -91,18 +94,8 @@ export default function EnrollPanel({clickedSubClub, open, setOpenDialog, setEnr
             console.log("given answers on submit", givenAnswers);
             MemberService.enrollToSubClub(givenAnswers).then((response) => {
                 console.log("Response: " + response.data);
-                // delay(1000).then(() => {
-                //     history.push("/")
-                // })
                 setEnrollResponse(response.data)
                 setEnrolled(true);
-            }).catch((err) => {
-                if (err.response) {
-                    // couldn't pass the questionnaire
-                    console.log("Response: " + err.response.data);
-                    setEnrollResponse(err.response.data)  
-                    setEnrolled(false);  
-                }
             }).finally(() => {
                 setSubmitted(true);
             })
@@ -122,7 +115,7 @@ export default function EnrollPanel({clickedSubClub, open, setOpenDialog, setEnr
                         {(onQuestionnaire) && 
                             <Box margin="10px">
                                 {(!submitted) && <Questionnaire questions={questions} callBackOnAnswer={setGivenAnswers}/>}
-                                {(submitted) && <PostQuestionnaire score={enrollResponse}/>}
+                                {(submitted) && <PostQuestionnaire response={enrollResponse} setEnrolled={setEnrolled}/>}
 
                             </Box>
                         }
