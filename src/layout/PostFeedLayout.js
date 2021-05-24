@@ -17,7 +17,7 @@ import EventContainer from "../component/event/EventContainer";
 import CreatePost from "../component/CreatePost";
 import EventItem from "../component/event/EventItem";
 import EnrollPanel from "../component/EnrollPanel";
-
+import RequestSubclub from "../component/RequestSubclub.js"
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -94,6 +94,7 @@ function PostFeedLayout({children}) {
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const [enrollDialogOpen, setEnrollDialogOpen] = React.useState(false);
+    const [requestDialogOpen, setRequestDialogOpen] = React.useState(false);
 
     // Get stats
     useEffect(() => {
@@ -171,6 +172,11 @@ function PostFeedLayout({children}) {
     // enroll subclub pop-up
     const handleEnrollDialogOpen = () => {
         setEnrollDialogOpen(true);
+    };
+
+    // enroll subclub pop-up
+    const handleRequestDialogOpen = () => {
+        setRequestDialogOpen(true);
     };
 
     // enroll subclub pop-up
@@ -293,6 +299,21 @@ function PostFeedLayout({children}) {
                             </Button>
                         </Box>}
 
+                        {((!feed.isCustom) && (!feed.parentName)) &&
+                        <Box>
+                            <Button size="medium"
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<Add/>}
+                                    onClick={() => {
+                                        handleRequestDialogOpen()
+                                    }}
+                                    fullWidth
+                                    disableElevation>REQUEST NEW SUBCLUB
+                            </Button>
+                        </Box>}
+
+
                     </Box>
                 </Grid>
             </Grid>
@@ -300,7 +321,10 @@ function PostFeedLayout({children}) {
                         subclub={feed}/>
             {(enrollDialogOpen) &&
             <EnrollPanel open={enrollDialogOpen} setOpenDialog={setEnrollDialogOpen} setEnrolled={handleEnrollment}
-                         clickedSubClub={feed} alreadyEnrolled={false}/>}
+                         clickedSubClub={feed}/>}
+
+            {(requestDialogOpen) && <RequestSubclub open={requestDialogOpen} setOpenDialog={setRequestDialogOpen}club={feed}/>}
+
 
         </div>
     )
