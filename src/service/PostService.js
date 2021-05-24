@@ -1,21 +1,29 @@
 import axios from 'axios';
-import {
-    BASE_URL,
-    CREATE_POST,
-    DOWNVOTE_POST,
-    GET_POSTS,
-    REPORT_POST,
-    SUBCLUB_POSTS,
-    TRENDS,
-    UPVOTE_POST
-} from "../api_config";
+import {BASE_URL, CREATE_POST, DOWNVOTE_POST, FEED, GET_POSTS, REPORT_POST, TRENDS, UPVOTE_POST} from "../api_config";
 import {headersWithToken} from "./headers";
+import {formatISO} from "date-fns";
 
-const getPosts = (subClub) => {
-    if (subClub === "Popular") {
-        return axios.get(BASE_URL + GET_POSTS + TRENDS);
+const getPosts = (feed, page, size, start, end) => {
+    if (feed === "Popular") {
+        return axios.get(BASE_URL + GET_POSTS + TRENDS,
+            {
+                params: {
+                    page: page,
+                    size: size,
+                    start: start.toISOString(),
+                    end: end.toISOString(),
+                }
+            });
     }
-    return axios.get(BASE_URL + GET_POSTS + SUBCLUB_POSTS, {params: {subClubName: subClub}})
+    return axios.get(BASE_URL + GET_POSTS + FEED, {
+        params: {
+            name: feed,
+            page: page,
+            size: size,
+            start: start.toISOString(),
+            end: end.toISOString(),
+        }
+    })
 }
 
 const createPost = (newPost) => {

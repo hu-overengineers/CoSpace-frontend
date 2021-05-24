@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import {Divider, List} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {ClubService} from "../service/ClubService";
-import {formatISO, subDays} from "date-fns";
+import {subDays} from "date-fns";
 import {AuthService} from "../service/AuthService";
 import {MemberService} from "../service/MemberService";
 import Box from "@material-ui/core/Box";
@@ -242,7 +242,9 @@ function PostFeedLayout({children}) {
                         </Box>
                         <Divider className={classes.divider}/>
 
+                        {/* Feed */}
                         {children}
+
                     </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
@@ -290,7 +292,7 @@ function PostFeedLayout({children}) {
                                     disableElevation>ENROLL
                             </Button>
                         </Box>}
-                        
+
                     </Box>
                 </Grid>
             </Grid>

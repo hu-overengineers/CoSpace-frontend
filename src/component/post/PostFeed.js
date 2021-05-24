@@ -4,6 +4,7 @@ import {List, makeStyles} from '@material-ui/core';
 import Box from "@material-ui/core/Box";
 import {PostService} from "../../service/PostService";
 import {useParams} from "react-router-dom";
+import {subDays} from "date-fns";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,17 +17,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function PostFeed({posts}) {
-    const {feedName = "Popular"} = useParams();
+export default function PostFeed({preloadedPosts}) {
+    const {feedName = "Popular", page = 1} = useParams();
 
     const classes = useStyles();
 
-    const [postsInFeed, setPostsInFeed] = useState(posts ?? []);
+    const [postsInFeed, setPostsInFeed] = useState(preloadedPosts ?? []);
 
     // Get posts
     useEffect(() => {
-        if (posts === undefined) {
-            PostService.getPosts(feedName).then(response => {
+        if (preloadedPosts === undefined) {
+            PostService.getPosts(feedName, page, 10, subDays(new Date(), 7), new Date()).then(response => {
                 console.log(`Fetched posts of ${feedName}`);
                 console.log(response.data)
                 setPostsInFeed(response.data);
@@ -36,9 +37,9 @@ export default function PostFeed({posts}) {
                 setPostsInFeed([]);
             });
         } else {
-            setPostsInFeed(posts);
+            setPostsInFeed(preloadedPosts);
         }
-    }, [feedName, posts]);
+    }, [feedName, preloadedPosts]);
 
     return (
         <div>

@@ -9,6 +9,7 @@ import {
     SUB_CLUB_QUESTIONNAIRE
 } from "../api_config";
 import {headersWithToken} from "./headers";
+import {formatISO} from "date-fns";
 
 const getClubs = () => {
     return axios.get(BASE_URL + CLUB_LIST)
@@ -22,8 +23,8 @@ const getSubClubStatistics = (subClubName, startTime, endTime) => {
     return axios.get(BASE_URL + SUB_CLUB_STATS, {
         params: {
             subClubName: subClubName,
-            timeStart: startTime.getTime(),
-            timeEnd: endTime.getTime()
+            start: startTime.toISOString(),
+            end: endTime.toISOString(),
         }
     });
 }

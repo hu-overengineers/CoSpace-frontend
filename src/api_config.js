@@ -23,7 +23,7 @@ export const UPVOTE_POST = "/post/upvote";
 export const DOWNVOTE_POST = "/post/downvote";
 export const GET_POSTS_BY_AUTHOR = "/by-author";
 export const TRENDS = "/trends";
-export const SUBCLUB_POSTS = "/subClubPosts";
+export const FEED = "/feed";
 
 export const MEMBER = "/member";
 export const ADMIN = "/admin";

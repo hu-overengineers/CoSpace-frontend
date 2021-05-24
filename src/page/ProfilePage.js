@@ -149,7 +149,7 @@ export default function ProfilePage() {
                         </Box>
                         <Divider className={classes.divider}/>
 
-                        <PostFeed posts={posts} subclub={subClub.name}/>
+                        <PostFeed preloadedPosts={posts} subclub={subClub.name}/>
                     </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
