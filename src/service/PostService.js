@@ -22,6 +22,7 @@ const getPosts = (feed, page, size, start, end) => {
             size: size,
             start: start.toISOString(),
             end: end.toISOString(),
+            sort: "voting,desc"
         }
     })
 }
