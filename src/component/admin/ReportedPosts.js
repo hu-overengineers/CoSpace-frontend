@@ -37,7 +37,10 @@ const useStyles = makeStyles((theme) => ({
     gridReportInfoContainer: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
-    }
+    },
+    gridHorizontalSection: {
+        paddingRight: theme.spacing(2),
+    },
 }));
 
 
@@ -111,28 +114,32 @@ function ReportedPosts() {
                 {selectedPost ?
                     <Box>
 
-                        <Grid item >
+                        <Grid item>
                             <Typography variant="h6" className={classes.title}>Reported Post</Typography>
                             {selectedPost ? <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
                         </Grid>
 
-                        <Grid item >
-                            <Typography variant="h6" className={classes.title}>Author Information</Typography>
-                            {selectedPostOwner ? <MemberInfo info={selectedPostOwner}/> : null}
-
-                        </Grid>
-
-                        <Typography variant="h6" className={classes.title}>Actions</Typography>
-
                         <Grid container>
-                            <Grid item key={1} className={classes.button }>
-                                <Button variant="outlined">BAN MEMBER</Button>
+                            <Grid item key={1} xs={6} className={classes.gridHorizontalSection}>
+                                <Typography variant="h6" className={classes.title}>Author Information</Typography>
+                                {selectedPostOwner ? <MemberInfo info={selectedPostOwner}/> : null}
                             </Grid>
 
-                            <Grid item key={2} className={classes.button }>
-                                <Button variant="outlined">REMOVE POST</Button>
+                            <Grid item key={2} xs={6} className={classes.gridHorizontalSection}>
+                                <Typography variant="h6" className={classes.title}>Actions</Typography>
+                                <Grid container>
+                                    <Grid item key={1} className={classes.button}>
+                                        <Button variant="outlined">BAN MEMBER</Button>
+                                    </Grid>
+
+                                    <Grid item key={2} className={classes.button}>
+                                        <Button variant="outlined">REMOVE POST</Button>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
+
+
                     </Box>
                     : <Typography className={classes.title}>Select a report to see the details.</Typography>}
             </Grid>

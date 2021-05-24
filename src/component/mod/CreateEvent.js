@@ -141,6 +141,7 @@ export function CreateEvent() {
             setSnackbarSeverity("success");
             setSnackbarMessage("Event successfully created!");
             setSnackbarOpen(true);
+            setValues({...initialFormValues});
             delay(5000).then(() => history.push("/feed/Popular"));
         }).catch(error => {
             console.error("Error while creating event:", error);
@@ -207,6 +208,7 @@ export function CreateEvent() {
                                             onChange={handleInputValue}
                                             required={inputField.required}
                                             name={inputField.name}
+                                            value={values[inputField.name]}
                                             label={inputField.conditionalLabel === undefined ? inputField.label :
                                                 ((values[inputField.conditionalLabel.condition] === "true")
                                                     ? inputField.conditionalLabel.correct
@@ -260,6 +262,7 @@ export function CreateEvent() {
                                                     id={inputField.id}
                                                     name={inputField.name}
                                                     label={inputField.label}
+                                                    value={values[inputField.name]}
                                                     onChange={(e) => {
                                                         console.log("Switch:", e.target.checked, typeof e.target.checked);
                                                         e.target.value = e.target.checked;
