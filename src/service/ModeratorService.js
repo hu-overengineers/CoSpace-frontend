@@ -14,4 +14,8 @@ const createEvent = (title, details, date, isOnline, location, utilLink) => {
     }, headersWithToken());
 }
 
-export const ModeratorService = {createEvent};
+const getEvents = () => {
+    return axios.get(BASE_URL + MODERATOR + EVENT, headersWithToken());
+}
+
+export const ModeratorService = {createEvent, getEvents};
