@@ -8,6 +8,8 @@ import "date-fns"; // DO NOT REMOVE, OR YOU WILL BE DOOMED!
 import DateFnsUtils from "@date-io/date-fns";
 import {ModeratorService} from "../../service/ModeratorService";
 import {Alert} from "@material-ui/lab";
+import {delay} from "../../util/async";
+import {useHistory} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,6 +86,7 @@ const initialFormValues = {
 
 export function CreateEvent() {
     const classes = useStyles();
+    const history = useHistory();
 
     // We'll update "values" as the form updates
     const [values, setValues] = useState(initialFormValues);
@@ -133,6 +136,7 @@ export function CreateEvent() {
             setSnackbarSeverity("success");
             setSnackbarMessage("Event successfully created!");
             setSnackbarOpen(true);
+            delay(5000).then(() => history.push("/feed/Popular"));
         }).catch(error => {
             console.error("Error while creating event:", error);
             setSnackbarSeverity("error");
