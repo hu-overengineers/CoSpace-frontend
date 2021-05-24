@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PostFeed({preloadedPosts}) {
-    const {feedName = "Popular", page = 0} = useParams();
+    const {feedName, page = 0} = useParams();
 
     const classes = useStyles();
     const history = useHistory();

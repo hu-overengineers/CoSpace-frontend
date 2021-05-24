@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gridLeftColumnBox: {
         marginTop: theme.spacing(3),
-        marginLeft: theme.spacing(3),
+        marginLeft: theme.spacing(2.5),
         marginRight: theme.spacing(0),
     },
     gridMiddleColumnBox: {
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     gridRightColumnBox: {
         marginTop: theme.spacing(3),
         marginLeft: theme.spacing(0),
-        marginRight: theme.spacing(3),
+        marginRight: theme.spacing(2.5),
     },
     sectionBox: {
         marginBottom: theme.spacing(2)

@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ClubTree(
     {
         clubs,
+        selected,
         callbackOnTreeItemClick,
         title = "Clubs & Sub-Clubs",
         titleIcon = <PublicOutlined/>
@@ -51,6 +52,7 @@ export default function ClubTree(
         <CoSpaceTreeViewMenu
             title={title}
             titleIcon={titleIcon}
+            selected={selected}
             expandIcon={<PeopleAltOutlined className={classes.treeItemIcon}/>}
             collapseIcon={<PeopleAltOutlined className={classes.treeItemIcon}/>}
             expanded={menuItems.map(menuItem => menuItem.text)}

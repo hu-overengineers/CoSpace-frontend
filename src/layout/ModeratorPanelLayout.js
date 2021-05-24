@@ -5,6 +5,7 @@ import {Container, Divider, Typography} from "@material-ui/core";
 import CoSpaceTreeViewMenu from "../component/CoSpaceTreeViewMenu";
 import {useHistory} from "react-router-dom";
 import {SupervisorAccount} from "@material-ui/icons";
+import Box from "@material-ui/core/Box";
 
 
 const modMenu = [
@@ -35,12 +36,21 @@ const modMenu = [
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: "24px"
     },
     divider: {
-        marginTop: "8px",
-        marginBottom: "8px"
-    }
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+    gridLeftColumnBox: {
+        paddingTop: theme.spacing(3),
+        paddingLeft: theme.spacing(2.5),
+        paddingRight: theme.spacing(0),
+    },
+    gridRightColumnBox: {
+        paddingTop: theme.spacing(3),
+        paddingLeft: theme.spacing(2.5),
+        paddingRight: theme.spacing(2.5),
+    },
 }));
 
 
@@ -59,8 +69,8 @@ function ModeratorPanelLayout({children}) {
 
         <Grid container className={classes.root}>
 
-            <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto',}}>
-                <Container>
+            <Grid item xs={3} className={classes.gridLeftColumnBox}>
+                <Box>
                     {/*<Typography variant="h4">Menu</Typography>*/}
                     {/*<Divider className={classes.divider}/>*/}
                     <CoSpaceTreeViewMenu title={"Menu"}
@@ -68,22 +78,14 @@ function ModeratorPanelLayout({children}) {
                                          menuItems={modMenu}
                                          defaultExpanded={modMenu.map(menuItem => menuItem.text)}
                                          callbackOnTreeItemClick={onItemClick}/>
-                </Container>
+                </Box>
             </Grid>
 
-            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+            <Grid item xs={6} className={classes.gridRightColumnBox}>
                 <Typography variant="h4">Moderator Panel</Typography>
                 <Divider className={classes.divider}/>
                 {children}
             </Grid>
-
-            {/* TODO: Include whenever available in backend */}
-            {/*<Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>*/}
-            {/*    <Container>*/}
-            {/*        <Typography variant="h4">Overview</Typography>*/}
-            {/*        <Divider className={classes.divider}/>*/}
-            {/*    </Container>*/}
-            {/*</Grid>*/}
 
         </Grid>
 
