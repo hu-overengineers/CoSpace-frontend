@@ -80,7 +80,7 @@ function AdminPanelLayout({children}) {
                 </Container>
             </Grid>
 
-            <Grid item xs={8} style={{maxHeight: '100vh', overflow: 'auto'}}>
+            <Grid item xs={9} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Typography variant="h4">Administration Panel</Typography>
                 <Divider className={classes.divider}/>
                 {children}
