@@ -1,51 +1,45 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Paper, Grid} from "@material-ui/core";
-import {Alert} from "@material-ui/lab";
-import AboutFeed from './AboutFeed';
-import Box from '@material-ui/core/Box';
-import Questionnaire from './questionnaire/Questionnaire';
-import {Assignment} from "@material-ui/icons";
-import {ClubService} from '../service/ClubService';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {MemberService} from "../service/MemberService";
 import TextField from '@material-ui/core/TextField';
+import { MemberService } from '../service/MemberService';
 
 
 export default function EnrollPanel({open, setOpenDialog, club}) {
 
     const [nameValue, setNameValue] = useState("");
+    const [detailValue, setDetailValue] = useState("");
     const [nameEmpty, setNameEmpty] = useState(false);
-    const [detailsEmpty, setDetailsEmpty] = useState(false);
-
+    
     const handleDialogClose = (event) => {
         setOpenDialog(false);
     };
 
     const onNameChange = (event) => {
-        if (nameValue === "") {
-            setNameEmpty(true);
-        }
-        else{
-            setNameEmpty(false);
-        }
-        console.log(event.target.value);
-    }
+        setNameValue(event.target.value)
+        setNameEmpty(false);
+        console.log(nameValue);    }
 
     const onDetailsChange = (event) => {
-        if (event.target.value === "") {
-            setDetailsEmpty(true);
-        }
-        else{
-            setDetailsEmpty(false);
-        }
-        console.log(event.target.value);
-    }
+        setDetailValue(event.target.value)
+        console.log(detailValue);    }
 
     const handleSubmit = (event) => {
-        console.log("asdsad");
+        if (nameValue === "" || nameValue === undefined) { 
+            setNameEmpty(true);
+            console.log("aaaaaaaaaa");
+            return
+        }
+        console.log("can request", detailValue, nameValue);
+        
+        MemberService.requestSubClub(club.name, nameValue, detailValue).then((response) => {
+            console.log(response.data);
+        }).catch((err) => {
+            console.log(err);
+        })
 
     }
 
@@ -70,8 +64,6 @@ export default function EnrollPanel({open, setOpenDialog, club}) {
                             />
                     <TextField 
                         style={{marginTop:"5vh"}}
-                        required
-                        error={detailsEmpty}
                         id="outlined-multiline"
                         label="details"
                         multiline

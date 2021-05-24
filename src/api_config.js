@@ -34,6 +34,7 @@ export const REPORTS = "/reports";
 export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
 export const ATTENDED_EVENTS = "/attended-events";
 export const PRIVATE_MESSAGE = "/private-message";
+export const REQUEST_SUBCLUB= "/request-subclub";
 
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 

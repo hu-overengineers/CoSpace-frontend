@@ -9,7 +9,8 @@ import {
     GET_POSTS,
     GET_POSTS_BY_AUTHOR,
     MEMBER,
-    SUB_CLUB
+    SUB_CLUB,
+    REQUEST_SUBCLUB
 } from "../api_config.js";
 import {headersWithToken} from "./headers";
 
@@ -37,11 +38,17 @@ const attendEvent = (eventId) => {
     return axios.post(BASE_URL + ATTEND_SUB_CLUB_EVENT, null, headersWithToken({eventId: eventId}))
 }
 
+const requestSubClub = (parentName, subclubName, details) => {
+    const body = {subClubName:subclubName, clubName:parentName}
+    return axios.post(BASE_URL + MEMBER + REQUEST_SUBCLUB, body, headersWithToken());
+}
+
 export const MemberService = {
     getEnrolledSubClubsOfCurrentlySignedInUser,
     enrollToSubClub,
     getPostsByAuthorAndSubClub,
     getCommonSubClubs,
     getAttendedEventsOfCurrentlySignedInUser,
-    attendEvent
+    attendEvent,
+    requestSubClub
 };
