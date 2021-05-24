@@ -8,7 +8,7 @@ import SignUpPage from "../page/SignUpPage";
 import SignInPage from "../page/SignInPage";
 import PasswordResetPage from '../page/PasswordResetPage';
 import PrivateMessagePage from "../page/PrivateMessagePage";
-import ModPage from "../page/ModPage";
+import ModeratorPage from "../page/ModeratorPage";
 
 
 export default function MainRouter() {
@@ -41,7 +41,7 @@ export default function MainRouter() {
                         <PrivateMessagePage/>
                     </Route>
                     <Route path="/mod">
-                        <ModPage/>
+                        <ModeratorPage/>
                     </Route>
                     <Route path="*">
                         <NotFoundPage/>

@@ -71,7 +71,7 @@ function ModeratorPanelLayout({children}) {
                 </Container>
             </Grid>
 
-            <Grid item xs={8} style={{maxHeight: '100vh', overflow: 'auto'}}>
+            <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                 <Typography variant="h4">Moderator Panel</Typography>
                 <Divider className={classes.divider}/>
                 {children}

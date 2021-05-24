@@ -2,7 +2,7 @@ import React from "react";
 import ModeratorPanelSwitch from "../router/ModeratorPanelSwitch";
 import ModeratorPanelLayout from "../layout/ModeratorPanelLayout";
 
-function ModPage() {
+function ModeratorPage() {
     return (
         <ModeratorPanelLayout>
             <ModeratorPanelSwitch/>
@@ -10,4 +10,4 @@ function ModPage() {
     );
 }
 
-export default ModPage;
+export default ModeratorPage;
