@@ -56,7 +56,7 @@ export default function ReviewCard({review}) {
                         </IconButton>
                     }
                     title={review.author}
-                    subheader = {review.date}
+                    subheader = "review.date will be added"
                 />
                 <CardContent>
                     <Typography variant = "body" color="textSecondary">

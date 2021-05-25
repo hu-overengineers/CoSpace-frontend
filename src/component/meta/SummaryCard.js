@@ -17,6 +17,8 @@ import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
+
+
 import { Legend } from '@devexpress/dx-react-chart-material-ui';
 import {
     Chart,
@@ -28,6 +30,7 @@ import {
   
   import { scaleBand } from '@devexpress/dx-chart-core';
   import { ArgumentScale, Stack } from '@devexpress/dx-react-chart';
+import { ReviewService } from "../../service/ReviewService";
   
 
   
@@ -47,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function SummaryCard({reviews}) {
+export default function SummaryCard({subClubName, reviews}) {
 
     const classes = useStyles();
 
@@ -71,6 +74,8 @@ export default function SummaryCard({reviews}) {
 
     const [rating, setRating] = React.useState(3.2);
     const [inputRating, setInputRating] = React.useState(3);
+    const [inputContent, setInputContent] = useState("");
+
 
     let totalRating=0;
     let rateStructure = {
@@ -125,8 +130,8 @@ export default function SummaryCard({reviews}) {
                 <Container className={classes.root}>    
                     <Grid container spacing={3}>
                         <Grid key="1" item xs={4}>
-                            <Typography color="textSecondary" variant="h2" align="left">{totalRating / 5}</Typography>
-                            <Rating value={totalRating / 5} readOnly />
+                            <Typography color="textSecondary" variant="h2" align="left">{(totalRating / reviews.length).toPrecision(3)}</Typography>
+                            <Rating value={(totalRating / reviews.length).toPrecision(3)} readOnly />
                             
                             <Typography color="textSecondary" variant="body1">
                                 <PermIdentityOutlinedIcon/> {reviews.length} total
@@ -224,7 +229,9 @@ export default function SummaryCard({reviews}) {
                             label="Your Review"
                             variant="outlined"
                             type="input"
-                            //onChange={}
+                            onChange={(event) => {
+                                setInputContent(event.target.value);
+                            }}
                             fullWidth
                             />
                     
@@ -236,7 +243,16 @@ export default function SummaryCard({reviews}) {
                                 Exit
                             </Button>
                             <Button
-                                //onClick={}
+                                onClick={
+                                    ReviewService.makeReview({subClubName}, {
+                                                                            "content": {inputContent},
+                                                                            "rating": {inputRating},
+                                                                            "author": "authorname",
+                                                                            "parentName": "quia"
+                                                                            }).then(response => {
+                                                                                console.log("RESPONSE", response.data);
+                                                                            })
+                                }
                                 
                                 color="primary">
                                 Submit

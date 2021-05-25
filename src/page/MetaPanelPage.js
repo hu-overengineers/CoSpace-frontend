@@ -11,6 +11,7 @@ import AboutFeed from "../component/AboutFeed";
 import ReviewCard from "../component/meta/ReviewCard";
 import SummaryCard from "../component/meta/SummaryCard";
 import Masonry from "react-masonry-css"
+import { ReviewService } from "../service/ReviewService";
 
 const useStyles = makeStyles((theme) => ({
     summaryContainer: {
@@ -24,6 +25,13 @@ export default function MetaPanelPage() {
     const classes = useStyles();
     const params = useParams();
     const subclubname = params.subclubname;
+
+    useEffect(() => {
+        ReviewService.getReviews(subclubname).then(response => {
+            console.log(response.data);
+        });
+    }, [])
+
 
     const [reviews, setReviews] = useState([
         {
@@ -113,7 +121,7 @@ export default function MetaPanelPage() {
         <Container>
 
             <Container className={classes.summaryContainer}>
-                <SummaryCard reviews={reviews}/>
+                <SummaryCard subClubName = {subclubname} reviews={reviews}/>
             </Container>
         
 

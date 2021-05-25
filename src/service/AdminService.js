@@ -35,7 +35,6 @@ const createSubClub = (body) => {
 }
 
 const deleteReport = (reportId) => {
-    console.log(BASE_URL + ADMIN + DELETE_REPORT, {reportId: reportId},headersWithToken());
     return axios.post(BASE_URL + ADMIN + DELETE_REPORT, null, headersWithToken({reportId: reportId}));
 }
 
