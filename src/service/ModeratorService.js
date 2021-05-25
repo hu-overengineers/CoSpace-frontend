@@ -39,7 +39,11 @@ const deletePost= (postId) => {
 }
 
 const ban = (username, subClubName, reason) => {
-    return axios.post(BASE_URL + MODERATOR + BAN, null, headersWithToken({username: username, subClubName: subClubName, reason: reason}));
+    return axios.post(BASE_URL + MODERATOR + BAN, null,
+        headersWithToken( 
+            {username: username, 
+        subClubName: subClubName, 
+        reason: reason}));
 }
 
 export const ModeratorService = {createEvent, getEvents, updateEvent, deleteEvent, getPostReports, deleteReport, deletePost, ban};

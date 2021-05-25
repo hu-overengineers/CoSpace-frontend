@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import {PostService} from "../../service/PostService";
 import Box from "@material-ui/core/Box";
 import MemberInfo from "../admin/MemberInfo";
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 
 export function ReportedPosts() {
     const classes = useStyles();
+    const history = useHistory();
+
     const [postReports, setPostReports] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);
     const [selectedReport, setSelectedReport] = useState(null);
@@ -63,8 +66,10 @@ export function ReportedPosts() {
         setSelectedReport(report);
         PostService.getPostById(report.postId).then(response => {
             setSelectedPost(response.data);
+            console.log("post", response.data);
             AdminService.searchMembersByName(response.data.author, 0, 1).then(response => {
                 setSelectedPostOwner(response.data[0]);
+                console.log("post owner, ", response.data[0])
             });
         });
     };
@@ -133,7 +138,7 @@ export function ReportedPosts() {
                             <Grid container>
                                 <Grid item key={1} className={classes.button}>
                                     <Button variant="outlined" onClick={()=>{
-                                       ModeratorService.ban(selectedPostOwner.username, selectedPost.subClubName, "reason").then(response => {
+                                       ModeratorService.ban(selectedPostOwner.username, "voluptatem", "reason").then(response => {
                                         console.log("BAN: ", response.data);
                                        
                                     })
@@ -144,7 +149,9 @@ export function ReportedPosts() {
                                     <Button variant="outlined" onClick = {() => {
                                         ModeratorService.deleteReport(selectedReport.id).then(response => {
                                             console.log("DELETE REPORT", response.data);
-
+                                            setSelectedReport(null);
+                                            setSelectedPost(null);
+                                            setSelectedPostOwner(null);
                                         })
                                     }}>Delete Report</Button>
                                 </Grid>
@@ -152,6 +159,8 @@ export function ReportedPosts() {
                                     <Button variant="outlined" onClick = {() => {
                                         ModeratorService.deletePost(selectedPost.id).then(response => {
                                             console.log("DELETE POST", response.data);
+                                            setSelectedReport(null);
+                                            setSelectedPost(null);
                                         })
                                     }}>Delete Post</Button>
                                 </Grid>
