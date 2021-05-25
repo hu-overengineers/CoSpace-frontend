@@ -308,10 +308,7 @@ function PostFeedLayout({children}) {
                             </Button>
                         </Box>}
                         
-                        
-                        {!(((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0)
-                            && (!(feed.isCustom || (!feed.parentName))))) && 
-                            
+                        {/** Change visibility */}
                         <Box className={classes.button}>
                             <Button size="medium"
                                     variant="outlined"
@@ -321,10 +318,10 @@ function PostFeedLayout({children}) {
                                         history.push(`/metapanel/${feed.name}`)
                                     }}
                                     fullWidth
-                                    disableElevation>{feed.name} meta panel
+                                    disableElevation>{feed.name} metapanel
                             </Button>
                         </Box>
-                        }
+    
 
 
                         {((!feed.isCustom) && (!feed.parentName)) &&
