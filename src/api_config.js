@@ -31,6 +31,7 @@ export const FEED = "/feed";
 export const MEMBER = "/member";
 export const ADMIN = "/admin";
 export const REPORTS = "/reports";
+export const DELETE_REPORT = "/delete-report";
 export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
 export const ATTENDED_EVENTS = "/attended-events";
 export const PRIVATE_MESSAGE = "/private-message";
