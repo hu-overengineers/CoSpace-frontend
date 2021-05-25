@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, CREATE_POST, DOWNVOTE_POST, FEED, GET_POSTS, REPORT_POST, TRENDS, UPVOTE_POST} from "../api_config";
+import {BASE_URL, CREATE_POST, DOWNVOTE_POST, FEED, GET_POSTS, REPORT_POST, UPVOTE_POST} from "../api_config";
 import {headersWithToken} from "./headers";
 import {subDays} from "date-fns";
 

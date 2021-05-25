@@ -69,6 +69,7 @@ export default function ProfilePage() {
 
     const classes = useStyles();
 
+    const [user, setUser] = useState();
     const [commonClubsAndSubClubs, setCommonClubsAndSubClubs] = useState([]);
     const [posts, setPosts] = useState([]);
     const [subClub, setSubClub] = useState({name: "Loading..."});
@@ -78,6 +79,13 @@ export default function ProfilePage() {
         console.log("Sorting order: " + event.target.value);
         setSortingOrder(event.target.value);
     };
+
+    useEffect(() => {
+        MemberService.getUserByName(username).then(response => {
+            setUser(response.data);
+        });
+    }, [])
+
 
     // Get the member's enrolled sub-clubs
     useEffect(() => {
@@ -159,7 +167,7 @@ export default function ProfilePage() {
                                         hasCommonSubClub = {commonClubsAndSubClubs.length > 0}
                                         isSelf = {isSelf}
                                         username={username}
-                                        timeRegistered={null}
+                                        timeRegistered={user ? user.created : null }
                                         numberOfPostsInLastWeek={0}
                             />
                         </Box>

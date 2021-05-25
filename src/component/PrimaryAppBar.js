@@ -9,7 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import {useHistory} from 'react-router-dom';
 import {InputBase} from "@material-ui/core";
 import logo from '../resource/logo.png';
-import {Message, Notifications} from "@material-ui/icons";
+import {Message} from "@material-ui/icons";
 import {AuthService} from "../service/AuthService";
 
 const useStyles = makeStyles((theme) => ({

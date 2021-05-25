@@ -43,6 +43,10 @@ const requestSubClub = (parentName, subclubName, details) => {
     return axios.post(BASE_URL + MEMBER + REQUEST_SUBCLUB, body, headersWithToken());
 }
 
+const getUserByName = (username) => {
+    return axios.get(BASE_URL + MEMBER, {params: {username: username}});
+}
+
 export const MemberService = {
     getEnrolledSubClubsOfCurrentlySignedInUser,
     enrollToSubClub,
@@ -50,5 +54,5 @@ export const MemberService = {
     getCommonSubClubs,
     getAttendedEventsOfCurrentlySignedInUser,
     attendEvent,
-    requestSubClub
+    requestSubClub,getUserByName
 };

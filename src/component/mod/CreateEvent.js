@@ -9,8 +9,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import {ModeratorService} from "../../service/ModeratorService";
 import {Alert} from "@material-ui/lab";
 import {delay} from "../../util/async";
-import {useHistory} from "react-router-dom";
-import {Event, SupervisorAccount} from "@material-ui/icons";
+import {Event} from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +91,6 @@ const initialFormValues = {
 
 export function CreateEvent() {
     const classes = useStyles();
-    const history = useHistory();
 
     const [eventCreated, setEventCreated] = useState(false);
 

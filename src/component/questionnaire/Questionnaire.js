@@ -27,7 +27,7 @@ export default function Questionnaire({questions, callBackOnAnswer}) {
 
     const handleQuestionAnswering = (question_id, newGivenAnswer) => {
       console.log(givenAnswers);
-      let givenAnswerIndex = givenAnswers.findIndex(a => a.id == question_id)
+      let givenAnswerIndex = givenAnswers.findIndex(a => a.id === question_id)
       let givenAnswer = givenAnswers[givenAnswerIndex]
       givenAnswer.groundTruth = newGivenAnswer;
       const tempList = [...givenAnswers];
@@ -42,7 +42,7 @@ export default function Questionnaire({questions, callBackOnAnswer}) {
               return (<Box className={classes.questionBox} key={"q"+index.toString()}>
                   <h2 style={{padding:"10px"}}>Question {index+1}</h2>
                   <Question question={quest} callBackOnChange={handleQuestionAnswering}/>
-                  {index+1 != questions.length && (
+                  {index+1 !== questions.length && (
                       <Divider className={classes.divider}/>
                   )}
               </Box>)

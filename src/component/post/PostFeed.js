@@ -4,7 +4,6 @@ import {List, makeStyles} from '@material-ui/core';
 import Box from "@material-ui/core/Box";
 import {PostService} from "../../service/PostService";
 import {useHistory, useParams} from "react-router-dom";
-import {subDays} from "date-fns";
 
 
 const useStyles = makeStyles((theme) => ({
