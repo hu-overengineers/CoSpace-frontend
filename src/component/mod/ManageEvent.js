@@ -1,21 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {FormControlLabel, FormGroup, Snackbar, Switch, TextField, Typography} from "@material-ui/core";
+import {FormControlLabel, FormGroup,  Switch, TextField, Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {KeyboardDateTimePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers';
 import Box from "@material-ui/core/Box";
 import "date-fns"; // DO NOT REMOVE, OR YOU WILL BE DOOMED!
 import DateFnsUtils from "@date-io/date-fns";
 import {ModeratorService} from "../../service/ModeratorService";
-import {Alert} from "@material-ui/lab";
-import {delay} from "../../util/async";
-import {useHistory} from "react-router-dom";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {DeleteForever, Event, Update} from "@material-ui/icons";
+import {DeleteForever,  Update} from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +51,6 @@ const initialFormValues = {
 
 export function ManageEvent() {
     const classes = useStyles();
-    const history = useHistory();
 
     const [events, setEvents] = useState([initialFormValues]);
     const [selectedEvent, setSelectedEvent] = useState(initialFormValues);

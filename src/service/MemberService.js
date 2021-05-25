@@ -1,4 +1,3 @@
-import { ExitToAppSharp } from '@material-ui/icons';
 import axios from 'axios';
 import {
     ATTEND_SUB_CLUB_EVENT,
