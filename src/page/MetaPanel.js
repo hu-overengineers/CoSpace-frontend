@@ -40,25 +40,25 @@ export default function ProfilePage() {
         {
             author: "cagatay",
             content: "Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur ipsam.",
-            rating: 10,
+            rating: 0,
             parentName: "parentname",
         },
         {
             author: "cagatay",
             content: "Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel.Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur Quidem soluta et consequuntur consequatur ipsam.",
-            rating: 7,
+            rating: 1,
             parentName: "parentname",
         },
         {
             author: "yigit",
             content: "Accusantium eum quo aut suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 8,
+            rating: 2,
             parentName: "parentname"
         },
         {
             author: "asfa",
             content: "sfasfasf eum quo aut suscipit quo. Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequaturNumquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 5,
+            rating: 3,
             parentName: "parentname"
         },
         {
@@ -70,7 +70,37 @@ export default function ProfilePage() {
         {
             author: "WHO I AM",
             content: "sfasfasadfasdfsf eum quo Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 3,
+            rating: 5,
+            parentName: "parentname"
+        },
+        {
+            author: "WHO I AM",
+            content: "sfasfasadfasdfsf eum quo Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
+            rating: 6,
+            parentName: "parentname"
+        },
+        {
+            author: "WHO I AM",
+            content: "sfasfasadfasdfsf eum quo Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
+            rating: 7,
+            parentName: "parentname"
+        },
+        {
+            author: "WHO I AM",
+            content: "sfasfasadfasdfsf eum quo Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
+            rating: 8,
+            parentName: "parentname"
+        },
+        {
+            author: "WHO I AM",
+            content: "sfasfasadfasdfsf eum quo Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
+            rating: 9,
+            parentName: "parentname"
+        },
+        {
+            author: "WHO I AM",
+            content: "sfasfasadfasdfsf eum quo Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
+            rating: 10,
             parentName: "parentname"
         },
     ]);

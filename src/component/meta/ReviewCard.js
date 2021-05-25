@@ -10,25 +10,39 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import { Avatar, IconButton, Typography } from "@material-ui/core";
 import { MoreVertOutlined } from "@material-ui/icons";
-import { blue, green, red, yellow } from "@material-ui/core/colors";
+import { blue, green, lightGreen, orange, red, yellow } from "@material-ui/core/colors";
 
 
 const useStyles = makeStyles({
     avatar: {
+        // TODO: Make these looking good!
         backgroundColor: (review) => {
-            if (review.rating > 8) {
-                return green[700];
-            }
-            if (review.rating > 6) {
-                return blue[review.rating * 100];
-            }
-            if (review.rating > 3) {
-                return yellow[400 + review.rating * 100];
-            }
-            return red[300];
+            switch(review.rating) {
+                case 10:
+                    return "#76FF03";
+                case 9:
+                    return "#64DD17";
+                case 8:
+                    return "#2E7D32";
+                case 7:
+                    return "#B9F6CA";
+                case 6:
+                    return "#00695C";
+                case 5:
+                    return "#80CBC4";              
+                case 4:
+                    return "#FDD835";
+                case 3:
+                    return "#FB8C00";
+                case 2:
+                    return "#E65100";
+                case 1:
+                    return "#EF5350";
+                case 0:
+                    return "#D50000";
         }
-    }
-})
+    },
+}})
 
 export default function ReviewCard({review}) {
 
