@@ -221,12 +221,11 @@ export default function SummaryCard({subClubName, reviews}) {
                             </Button>
                             <Button
                                 onClick={
-                                    ReviewService.makeReview({subClubName}, {
-                                                                            "content": {inputContent},
-                                                                            "rating": {inputRating},
-                                                                            "author": "authorname",
-                                                                            "parentName": "quia"
-                                                                            }).then(response => {
+                                    ReviewService.makeReview(
+                                        {subClubName}, 
+                                        {inputContent},
+                                        {inputRating}, 
+                                        "authorname").then(response => {
                                                                                 console.log("RESPONSE", response.data);
                                                                             })
                                 }

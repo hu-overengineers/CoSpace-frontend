@@ -29,6 +29,7 @@ export const GET_POSTS_BY_AUTHOR = "/by-author";
 export const TRENDS = "/trends";
 export const FEED = "/feed";
 export const REVIEWS = "/reviews"
+export const REVIEW = "/review"
 export const MEMBER = "/member";
 export const ADMIN = "/admin";
 export const REPORTS = "/reports";
