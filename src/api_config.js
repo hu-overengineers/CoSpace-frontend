@@ -17,7 +17,8 @@ export const ONE_SUB_CLUB_ENROLL = "/subclub/enroll-subclub";
 
 export const MODERATOR = "/moderator";
 export const EVENT = "/event";
-
+export const DELETE_POST = "/delete-post";
+export const BAN = "/ban;"
 // TODO: Fix some inconsistencies in naming.
 export const GET_POSTS = "/post";
 export const CREATE_POST = "/post/create";
