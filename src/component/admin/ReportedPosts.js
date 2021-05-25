@@ -133,7 +133,9 @@ function ReportedPosts() {
                                 <Typography variant="h6" className={classes.title}>Actions</Typography>
                                 <Grid container>
                                     <Grid item key={1} className={classes.button}>
-                                        <Button variant="outlined">BAN MEMBER</Button>
+                                        <Button variant="outlined" onClick={()=>{
+                                            // TODO: call kick member function from AdminService
+                                        }}>KICK MEMBER from COSPACE</Button>
                                     </Grid>
 
                                     <Grid item key={2} className={classes.button}>
