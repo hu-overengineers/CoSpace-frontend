@@ -15,7 +15,6 @@ import Button from '@material-ui/core/Button';
 import {PostService} from "../../service/PostService";
 import Box from "@material-ui/core/Box";
 import MemberInfo from "../admin/MemberInfo";
-import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function ReportedPosts() {
     const classes = useStyles();
-    const history = useHistory();
 
     const [postReports, setPostReports] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);

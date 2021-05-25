@@ -1,40 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import { Avatar, Box, Button, Dialog, DialogTitle, IconButton, TextField, ThemeProvider, Typography } from "@material-ui/core";
-import { Add, MoreVertOutlined } from "@material-ui/icons";
+import {Box, Button, Dialog, DialogTitle, TextField,  Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import AboutFeed from "../AboutFeed";
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-
-
-
-import { Legend } from '@devexpress/dx-react-chart-material-ui';
-import {
-    Chart,
-    ArgumentAxis,
-    ValueAxis,
-    BarSeries,
-  } from '@devexpress/dx-react-chart-material-ui';
-  
-  
-  import { scaleBand } from '@devexpress/dx-chart-core';
-  import { ArgumentScale, Stack } from '@devexpress/dx-react-chart';
+import { Stack } from '@devexpress/dx-react-chart';
 import { ReviewService } from "../../service/ReviewService";
+import { Chart, ArgumentAxis, ValueAxis, BarSeries,} from '@devexpress/dx-react-chart-material-ui';
   
-
-  
-
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(3)
@@ -47,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
       },
    
 }))
-
 
 
 export default function SummaryCard({subClubName, reviews}) {
@@ -72,7 +50,6 @@ export default function SummaryCard({subClubName, reviews}) {
         setOpenDialog(false);
     };
 
-    const [rating, setRating] = React.useState(3.2);
     const [inputRating, setInputRating] = React.useState(3);
     const [inputContent, setInputContent] = useState("");
 

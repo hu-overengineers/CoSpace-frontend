@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputLabel from '@material-ui/core/InputLabel';
 import clsx from 'clsx';
@@ -20,7 +20,6 @@ import {
     NativeSelect,
     TextField,
     Typography,
-    useMediaQuery
 } from "@material-ui/core";
 import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire"
 import {AdminService} from "../../service/AdminService";
@@ -63,10 +62,6 @@ const useStyles = makeStyles((theme) => ({
 function CreateClub() {
     const classes = useStyles();
     const [canCreate, setCanCreate] = React.useState(false);
-
-    // Dialog ----------------------------------
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     // ------------------------ CREATE CLUB DIALOG ------------------------
     const [openClubDialog, setClubDialog] = React.useState(false);

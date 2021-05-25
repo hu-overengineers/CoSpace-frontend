@@ -1,13 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-
-import {Divider, List} from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
-import {useHistory} from "react-router-dom";
-
 import {useParams} from "react-router-dom";
-import AboutFeed from "../component/AboutFeed";
 import ReviewCard from "../component/meta/ReviewCard";
 import SummaryCard from "../component/meta/SummaryCard";
 import Masonry from "react-masonry-css"
