@@ -18,6 +18,7 @@ import CreatePost from "../component/CreatePost";
 import EventItem from "../component/event/EventItem";
 import EnrollPanel from "../component/EnrollPanel";
 import RequestSubclub from "../component/RequestSubclub.js"
+import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -64,7 +65,10 @@ const useStyles = makeStyles((theme) => ({
     list: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-    }
+    },
+    button: {
+        marginTop: theme.spacing(2),
+    },
 }));
 
 
@@ -302,6 +306,25 @@ function PostFeedLayout({children}) {
                                     disableElevation>ENROLL
                             </Button>
                         </Box>}
+                        
+                        
+                        {!(((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0)
+                            && (!(feed.isCustom || (!feed.parentName))))) && 
+                            
+                        <Box className={classes.button}>
+                            <Button size="medium"
+                                    variant="outlined"
+                                    color="primary"
+                                    startIcon={<RateReviewOutlinedIcon/>}
+                                    onClick={() => {
+                                        history.push(`/metapanel/${feed.name}`)
+                                    }}
+                                    fullWidth
+                                    disableElevation>{feed.name} meta panel
+                            </Button>
+                        </Box>
+                        }
+
 
                         {((!feed.isCustom) && (!feed.parentName)) &&
                         <Box>
