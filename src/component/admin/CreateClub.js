@@ -210,9 +210,7 @@ function CreateClub() {
 
 
     useEffect(() => {
-        console.log("mmmmmmmmmmmmmmmmmmmmmmmmmm");
-        console.log(questions, subclubName, clubName, subclubDescription);
-        if (questions.length !== 0 && subclubName !== "" && clubName !== "" && subclubDescription !== "") {
+        if (questions.length >= 3  && subclubName !== "" && clubName !== "" && subclubDescription !== "") {
             setCanCreate(true);
         }
         else{
@@ -234,7 +232,6 @@ function CreateClub() {
                 createObject.details += " "+chp.label
             });
         }
-        console.log(createObject);
         AdminService.createSubClub(createObject).then((response) => {
             console.log(response.data);
         })
@@ -424,6 +421,9 @@ function CreateClub() {
                         >
                             Add a questionnaire
                         </Button>
+
+                        {((questions.length < 3) && <p style={{marginTop:"5px"}}>Please add {Math.max(0, 3-questions.length)} or more Questions</p>)}
+
                         <Dialog 
                             open={openQuestionnaireDialog} onClose={handleClickCloseQuestionnaireDialog}
                             aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"md"} >
