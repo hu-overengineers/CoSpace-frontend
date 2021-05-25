@@ -85,20 +85,22 @@ export default function AboutMember({hasCommonSubClub, isSelf, username, timeReg
                     </Grid>
                 </Grid>
 
-                <Divider className={classes.divider}/>
-
-                <Grid container className={classes.divider} justify="center">
-                    <Grid key={2} item>
-                        <Container>
-                            <Typography variant="h6">
-                                {numberOfPostsInLastWeek}
-                            </Typography>
-                            <Typography variant="body1">
-                                {"posts last week"}
-                            </Typography>
-                        </Container>
-                    </Grid>
-                </Grid>
+                {numberOfPostsInLastWeek !== undefined &&
+                    <Box><Divider className={classes.divider}/>
+                        <Grid container className={classes.divider} justify="center">
+                            <Grid key={2} item>
+                                <Container>
+                                    <Typography variant="h6">
+                                        {numberOfPostsInLastWeek}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {"posts last week"}
+                                    </Typography>
+                                </Container>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                }
 
                 <Divider className={classes.divider}/>
                 <Grid container className={classes.dateRegisteredContainer}>
