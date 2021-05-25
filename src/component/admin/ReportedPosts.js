@@ -6,7 +6,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
-
+import {useHistory} from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ReportOutlinedIcon from '@material-ui/icons/ReportOutlined';
@@ -45,9 +45,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 function ReportedPosts() {
+    const history = useHistory()
     const classes = useStyles();
     const [postReports, setPostReports] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [selectedReport, setSelectedReport] = useState(null);
     const [selectedPostOwner, setSelectedPostOwner] = useState({});
 
     // Get Reports
@@ -55,13 +57,13 @@ function ReportedPosts() {
         AdminService.getPostReports().then(response => {
             setPostReports(response.data);
         });
-    }, []);
+    }, [selectedReport]);
 
     const handleReportClick = (e, report) => {
+        setSelectedReport(report);
         PostService.getPostById(report.postId).then(response => {
             setSelectedPost(response.data);
             AdminService.searchMembersByName(response.data.author, 0, 1).then(response => {
-                console.log(response.data);
                 setSelectedPostOwner(response.data[0]);
             });
         });
@@ -135,7 +137,14 @@ function ReportedPosts() {
                                     </Grid>
 
                                     <Grid item key={2} className={classes.button}>
-                                        <Button variant="outlined">REMOVE POST</Button>
+                                        <Button variant="outlined" onClick = {() => {
+                                            AdminService.deleteReport(selectedReport.id).then(response => {
+                                                console.log(response.data);
+                                                setSelectedReport(null);
+                                                setSelectedPost(null);
+                                                setSelectedPostOwner(null);
+                                            })
+                                        }}>REMOVE Report</Button>
                                     </Grid>
                                 </Grid>
                             </Grid>
