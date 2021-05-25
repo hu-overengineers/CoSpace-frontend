@@ -143,9 +143,7 @@ export default function AboutMember({hasCommonSubClub, isSelf, username, timeReg
                         </Grid>
                 }
 
-
                 {AuthService.getUsername() === username && <Box>
-                    <Divider className={classes.divider}/>
                     <Grid container className={classes.buttonContainer}>
                         <Button
                             variant="outlined"
