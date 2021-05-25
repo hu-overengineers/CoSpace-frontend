@@ -13,7 +13,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
-import parse from "html-react-parser"
+import parse from "html-react-parser";
 import {
     Dialog,
     DialogActions,
@@ -35,8 +35,12 @@ import {useHistory} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     root: {},
     media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
+       // width: null,
+       // height: 300,
+       // "object-fit": "contain",
+       // resize: "inline",
+       // resizeMode: "contain",
+       // overflow: "hidden",
     },
     expand: {
         transform: 'rotate(0deg)',
@@ -61,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
     },
     contentBox: {
         marginRight: theme.spacing(2),
+    },
+    contentTypography: {
+        maxWidth: theme.spacing(30),
     },
 }));
 
@@ -201,7 +208,6 @@ export function PostFeedItem({props}) {
                     }
                     title={<Box style={{"cursor": "pointer"}} onClick={handleAuthorClick}>{props.author}</Box>}
                     subheader={`${formatDistance(parseISO(props.created), new Date(), {addSuffix: true})} on ${props.parentName}`}/>
-
                 <CardContent className={classes.postCardContent}>
                     <Grid container spacing={1}>
                         <Grid item xs={1} style={{textAlign: "center"}}>
@@ -225,8 +231,10 @@ export function PostFeedItem({props}) {
                                 <Typography gutterBottom variant="h5" component="h2">
                                     {props.title}
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary" component="span">
-                                    {parse(props.content)}
+                                <Typography variant="body2" color="textSecondary">
+                                    <Box className={classes.media}>
+                                        {parse(props.content)}
+                                    </Box>
                                 </Typography>
                             </Box>
                         </Grid>

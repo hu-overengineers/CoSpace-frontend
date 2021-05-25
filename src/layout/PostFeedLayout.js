@@ -76,12 +76,16 @@ const customFeeds = [
 function PostFeedLayout({children}) {
     const classes = useStyles();
     const history = useHistory();
-    const [sortingOrder, setSortingOrder] = useState('today');
+    const [sorting, setSorting] = useState('today');
 
     const handleSortingOrder = (event, sorting) => {
         console.log("Sorting order: " + sorting);
-        setSortingOrder(sorting);
+        setSorting(sorting);
     };
+
+    useEffect(() => {
+        
+    }, [sorting])
 
     // Clubs and sub-clubs
     const [clubs, setClubs] = useState(customFeeds);
@@ -219,7 +223,7 @@ function PostFeedLayout({children}) {
                         <Box display="flex">
                             <ToggleButtonGroup
                                 className={classes.sortingFeedToggleGroup}
-                                value={sortingOrder}
+                                value={sorting}
                                 exclusive
                                 onChange={handleSortingOrder}
                                 aria-label="text alignment">

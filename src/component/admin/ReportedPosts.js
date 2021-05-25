@@ -116,7 +116,9 @@ function ReportedPosts() {
 
                         <Grid item>
                             <Typography variant="h6" className={classes.title}>Reported Post</Typography>
-                            {selectedPost ? <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
+                            <Box className={classes.postFeedItemWrapper}>{selectedPost ?
+                                <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
+                            </Box>
                         </Grid>
 
                         <Grid container>

@@ -1,27 +1,33 @@
 import axios from 'axios';
 import {BASE_URL, CREATE_POST, DOWNVOTE_POST, FEED, GET_POSTS, REPORT_POST, TRENDS, UPVOTE_POST} from "../api_config";
 import {headersWithToken} from "./headers";
+import {subDays} from "date-fns";
 
-const getPosts = (feed, page, size, start, end) => {
-    if (feed === "Popular") {
-        return axios.get(BASE_URL + GET_POSTS + TRENDS,
-            {
-                params: {
-                    page: page,
-                    size: size,
-                    start: start.toISOString(),
-                    end: end.toISOString(),
-                }
-            });
-    }
+const getPosts = (feed, page, size, sort) => {
     return axios.get(BASE_URL + GET_POSTS + FEED, {
         params: {
             name: feed,
             page: page,
             size: size,
-            start: start.toISOString(),
-            end: end.toISOString(),
-            sort: "voting,desc"
+            start: (() => {
+                switch (sort) {
+                    case "today":  return subDays(new Date(), 1).toISOString();
+                    case "new": return subDays(new Date(), 30).toISOString();
+                    case "top": return subDays(new Date(), 7).toISOString();
+                    default:
+                        break;
+                }
+            })(),
+            end: new Date().toISOString(),
+            sort: (() => {
+                switch (sort) {
+                    case "today":  return "voting,desc";
+                    case "new": return "created,desc";
+                    case "top": return "voting,desc";
+                    default:
+                        break;
+                }
+            })()
         }
     })
 }

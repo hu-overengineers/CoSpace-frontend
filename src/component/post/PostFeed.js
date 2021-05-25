@@ -18,7 +18,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PostFeed({preloadedPosts}) {
-    const {feedName, page = 0} = useParams();
+    const {feedName, sort = "today", page = 0} = useParams();
+
+    console.log("Feed: ", feedName, sort, page);
 
     const classes = useStyles();
     const history = useHistory();
@@ -28,7 +30,7 @@ export default function PostFeed({preloadedPosts}) {
     // Get posts
     useEffect(() => {
         if (preloadedPosts === undefined) {
-            PostService.getPosts(feedName, page, 10, subDays(new Date(), 7), new Date()).then(response => {
+            PostService.getPosts(feedName, page, 10, sort).then(response => {
                 console.log(`Fetched posts of ${feedName}`);
                 console.log(response.data)
                 setPostsInFeed(response.data);
