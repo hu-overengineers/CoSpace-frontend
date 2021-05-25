@@ -264,6 +264,7 @@ function PostFeedLayout({children}) {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
+                           
                             <AboutFeed feedInfo={feed}/>
                         </Box>
                         {feed.parentName && <Box className={classes.sectionBox}>

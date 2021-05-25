@@ -9,7 +9,7 @@ import SignInPage from "../page/SignInPage";
 import PasswordResetPage from '../page/PasswordResetPage';
 import PrivateMessagePage from "../page/PrivateMessagePage";
 import ModeratorPage from "../page/ModeratorPage";
-import MetaPanel from "../page/MetaPanel";
+import MetaPanelPage from "../page/MetaPanelPage";
 
 
 
@@ -46,7 +46,7 @@ export default function MainRouter() {
                         <ModeratorPage/>
                     </Route>
                     <Route path="/metapanel/:subclubname">
-                        <MetaPanel/>
+                        <MetaPanelPage/>
                     </Route>
                     <Route path="*">
                         <NotFoundPage/>
