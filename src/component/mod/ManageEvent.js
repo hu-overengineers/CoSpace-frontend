@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import {DeleteForever,  Update} from "@material-ui/icons";
+import {delay} from "../../util/async";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +55,7 @@ export function ManageEvent() {
 
     const [events, setEvents] = useState([initialFormValues]);
     const [selectedEvent, setSelectedEvent] = useState(initialFormValues);
+    const [eventChanged, setEventChanged] = useState(false);
 
 
     useEffect(()=> {
@@ -104,6 +106,7 @@ export function ManageEvent() {
                             eventCopy.title = e.target.value;
                             setSelectedEvent(eventCopy);
                         }}
+                        disabled={eventChanged}
                         value ={selectedEvent.title}
                         label = "Event title"
                     />
@@ -113,6 +116,7 @@ export function ManageEvent() {
                         key="event details"
                         required
                         variant={"filled"}
+                        disabled={eventChanged}
                         onChange={(e) => {
                             let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
                             eventCopy.details = e.target.value;
@@ -138,14 +142,11 @@ export function ManageEvent() {
                             name="{inputField.name}"
                             label="Date and time"
                             value={selectedEvent.date}
-                            onChange={(e) => {
+                            disabled={eventChanged}
+                            onChange={(date) => {
                                 let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
-                                eventCopy.date = e;
-
+                                eventCopy.date = date;
                                 setSelectedEvent(eventCopy);
-
-                                console.log("asfasf", e);
-                                console.log("selec", selectedEvent);
                             }}
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
@@ -161,6 +162,7 @@ export function ManageEvent() {
                                         name="{inputField.name}"
                                         label="Will it be online?"
                                         color={"primary"}
+                                        disabled={eventChanged}
                                         onChange={(e) => {
                                             e.target.value = e.target.checked;
                                             let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
@@ -175,6 +177,7 @@ export function ManageEvent() {
                         key="event location"
                         required
                         variant={"filled"}
+                        disabled={eventChanged}
                         onChange={(e) => {
                             let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
                             eventCopy.location = e.target.value;
@@ -190,13 +193,14 @@ export function ManageEvent() {
                         key={"submit"}
                         type="submit"
                         variant={"outlined"}
+                        disabled={eventChanged}
                         startIcon={<Update/>}
                         onClick={() =>{
                             console.log("event will be: ", selectedEvent);
                             ModeratorService.updateEvent(selectedEvent).then(response => {
-                                // TODO: CORS Error
-                                console.log("Succesfully updated:", response.data);
-
+                                console.log("Successfully updated:", response.data);
+                                setEventChanged(true);
+                                delay(2000).then(() => window.location.reload());
                             })
                         }}
                         >
@@ -208,12 +212,13 @@ export function ManageEvent() {
                         key={"delete"}
                         type="submit"
                         variant={"outlined"}
+                        disabled={eventChanged}
                         startIcon={<DeleteForever/>}
                         onClick={() =>{
                             ModeratorService.deleteEvent(selectedEvent.id).then(response => {
-                                // TODO: CORS Error
-                                console.log("Succesfully updated:", response.data);
-                                
+                                console.log("Successfully deleted:", response.data);
+                                setEventChanged(true);
+                                delay(2000).then(() => window.location.reload());
                             })
                         }}
                         
