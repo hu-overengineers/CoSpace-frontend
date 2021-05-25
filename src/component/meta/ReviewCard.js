@@ -10,39 +10,32 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import { Avatar, IconButton, Typography } from "@material-ui/core";
 import { MoreVertOutlined } from "@material-ui/icons";
-import { blue, green, lightGreen, orange, red, yellow } from "@material-ui/core/colors";
+
 
 
 const useStyles = makeStyles({
     avatar: {
-        // TODO: Make these looking good!
         backgroundColor: (review) => {
-            switch(review.rating) {
-                case 10:
-                    return "#76FF03";
-                case 9:
-                    return "#64DD17";
-                case 8:
-                    return "#2E7D32";
-                case 7:
-                    return "#B9F6CA";
-                case 6:
-                    return "#00695C";
-                case 5:
-                    return "#80CBC4";              
-                case 4:
-                    return "#FDD835";
-                case 3:
-                    return "#FB8C00";
-                case 2:
-                    return "#E65100";
-                case 1:
-                    return "#EF5350";
-                case 0:
-                    return "#D50000";
+            if (review.rating === 5) {
+                return "#57bb8a";
+            }
+            if (review.rating === 4) {
+                return "#9ace6a";
+            }
+            if (review.rating === 3) {
+                return "#ffcf02";
+            }
+            if (review.rating === 2) {
+                return "#ff9f02";
+            }
+            if (review.rating === 1) {
+                return "#ff6f31";
+            }
+            return "#ffffff";
+            
         }
     },
-}})
+})
 
 export default function ReviewCard({review}) {
 
@@ -63,7 +56,7 @@ export default function ReviewCard({review}) {
                         </IconButton>
                     }
                     title={review.author}
-                    subheader={review.rating}
+                    subheader = {review.date}
                 />
                 <CardContent>
                     <Typography variant = "body" color="textSecondary">
