@@ -78,7 +78,7 @@ function PostFeedLayout({children}) {
     const history = useHistory();
     const [sorting, setSorting] = useState('today');
 
-    const handleSortingOrder = (event, sorting) => {
+    const handleSorting = (event, sorting) => {
         console.log("Sorting order: " + sorting);
         setSorting(sorting);
     };
@@ -225,7 +225,7 @@ function PostFeedLayout({children}) {
                                 className={classes.sortingFeedToggleGroup}
                                 value={sorting}
                                 exclusive
-                                onChange={handleSortingOrder}
+                                onChange={handleSorting}
                                 aria-label="text alignment">
                                 <ToggleButton value="today" aria-label="left aligned">
                                     <Whatshot/>
