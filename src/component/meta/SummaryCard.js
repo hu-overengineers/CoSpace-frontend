@@ -8,12 +8,15 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { Avatar, Box, Button, IconButton, ThemeProvider, Typography } from "@material-ui/core";
+import { Avatar, Box, Button, Dialog, DialogTitle, IconButton, TextField, ThemeProvider, Typography } from "@material-ui/core";
 import { Add, MoreVertOutlined } from "@material-ui/icons";
 import { Rating } from "@material-ui/lab";
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import AboutFeed from "../AboutFeed";
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+
 import { Legend } from '@devexpress/dx-react-chart-material-ui';
 import {
     Chart,
@@ -32,7 +35,13 @@ import {
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(3)
-    }
+    },
+    ratingStars: {
+        width: 200,
+        display: 'flex',
+        alignItems: 'center',
+        paddingBottom: theme.spacing(2),
+      },
    
 }))
 
@@ -42,8 +51,26 @@ export default function SummaryCard({reviews}) {
 
     const classes = useStyles();
 
-    const [rating, setRating] = React.useState(3.2);
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [hover, setHover] = React.useState(-1);
+    const labels = {
+        0.5: 'Useless',
+        1: 'Useless+',
+        1.5: 'Poor',
+        2: 'Poor+',
+        2.5: 'Ok',
+        3: 'Ok+',
+        3.5: 'Good',
+        4: 'Good+',
+        4.5: 'Excellent',
+        5: 'Excellent+',
+      };
+    const handleDialogClose = (event) => {
+        setOpenDialog(false);
+    };
 
+    const [rating, setRating] = React.useState(3.2);
+    const [inputRating, setInputRating] = React.useState(3);
 
     let totalRating=0;
     let rateStructure = {
@@ -99,7 +126,7 @@ export default function SummaryCard({reviews}) {
                     <Grid container spacing={3}>
                         <Grid key="1" item xs={4}>
                             <Typography color="textSecondary" variant="h2" align="left">{totalRating / 5}</Typography>
-                            <Rating value={rating} readOnly />
+                            <Rating value={totalRating / 5} readOnly />
                             
                             <Typography color="textSecondary" variant="body1">
                                 <PermIdentityOutlinedIcon/> {reviews.length} total
@@ -113,7 +140,7 @@ export default function SummaryCard({reviews}) {
                                         color="primary"
                                         startIcon={<RateReviewOutlinedIcon/>}
                                         onClick={() => {
-                                            
+                                            setOpenDialog(true);
                                         }}
                                         fullWidth
                                         disableElevation>Write a Review
@@ -169,7 +196,53 @@ export default function SummaryCard({reviews}) {
                 </Container>
             </Paper>
 
+            <Dialog open={openDialog} onClose={handleDialogClose} aria-labelledby="form-dialog-title"
+                fullWidth={true} maxWidth={"md"}>
 
+                <DialogTitle id="form-dialog-title">Review about {feed.name}</DialogTitle>
+                <DialogContent >
+                        
+                <div className={classes.ratingStars}>
+                    
+                    <Rating
+                        precision={0.5}
+                        value={inputRating}
+                        onChange={(event, newValue) => {
+                            setInputRating(newValue);
+                        }}
+                        onChangeActive={(event, newHover) => {
+                            setHover(newHover);
+                          }}
+                    />
+                    {inputRating !== null && <Box ml={2}>{labels[hover !== -1 ? hover : inputRating]}</Box>}
+                </div>
+
+                    <TextField
+                            autoFocus
+                            required
+                 
+                            label="Your Review"
+                            variant="outlined"
+                            type="input"
+                            //onChange={}
+                            fullWidth
+                            />
+                    
+                </DialogContent>
+                <DialogActions>
+                            <Button 
+                                onClick={handleDialogClose}
+                                color="primary">
+                                Exit
+                            </Button>
+                            <Button
+                                //onClick={}
+                                
+                                color="primary">
+                                Submit
+                            </Button>
+                </DialogActions>
+            </Dialog>                            
             
         </div>
     );
