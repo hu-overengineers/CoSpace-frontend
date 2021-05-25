@@ -10,6 +10,7 @@ import {ModeratorService} from "../../service/ModeratorService";
 import {Alert} from "@material-ui/lab";
 import {delay} from "../../util/async";
 import {useHistory} from "react-router-dom";
+import {Event, SupervisorAccount} from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -93,6 +94,8 @@ export function CreateEvent() {
     const classes = useStyles();
     const history = useHistory();
 
+    const [eventCreated, setEventCreated] = useState(false);
+
     // We'll update "values" as the form updates
     const [values, setValues] = useState(initialFormValues);
     // "errors" is used to check the form for errors
@@ -141,8 +144,8 @@ export function CreateEvent() {
             setSnackbarSeverity("success");
             setSnackbarMessage("Event successfully created!");
             setSnackbarOpen(true);
-            setValues({...initialFormValues});
-            delay(5000).then(() => history.push("/feed/Popular"));
+            setEventCreated(true);
+            delay(2000).then(() => window.location.reload());
         }).catch(error => {
             console.error("Error while creating event:", error);
             setSnackbarSeverity("error");
@@ -207,6 +210,7 @@ export function CreateEvent() {
                                             variant={"filled"}
                                             onChange={handleInputValue}
                                             required={inputField.required}
+                                            disabled={eventCreated}
                                             name={inputField.name}
                                             value={values[inputField.name]}
                                             label={inputField.conditionalLabel === undefined ? inputField.label :
@@ -235,6 +239,7 @@ export function CreateEvent() {
                                                 format="MM.dd.yyyy HH:mm"
                                                 margin="normal"
                                                 className={classes.dateInput}
+                                                disabled={eventCreated}
                                                 id={inputField.id}
                                                 name={inputField.name}
                                                 label={inputField.label}
@@ -261,6 +266,7 @@ export function CreateEvent() {
                                                     key={inputField.id}
                                                     id={inputField.id}
                                                     name={inputField.name}
+                                                    disabled={eventCreated}
                                                     label={inputField.label}
                                                     value={values[inputField.name]}
                                                     onChange={(e) => {
@@ -283,8 +289,9 @@ export function CreateEvent() {
                     key={"submit"}
                     type="submit"
                     variant={"outlined"}
+                    startIcon={<Event/>}
                     onClick={handleFormSubmit}
-                    disabled={!formIsValid()}>
+                    disabled={!formIsValid() || eventCreated}>
                     CREATE EVENT
                 </Button>
             </FormGroup>
