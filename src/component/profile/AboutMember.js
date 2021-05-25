@@ -9,6 +9,7 @@ import {useHistory} from "react-router-dom";
 import Tooltip from '@material-ui/core/Tooltip';
 import {PrivateMessagingService} from "../../service/PrivateMessagingService"
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
+import {MeetingRoom, SupervisorAccount} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     divider: {
@@ -115,25 +116,26 @@ export default function AboutMember({hasCommonSubClub, isSelf, username, timeReg
                     </Grid>
                 </Grid>
                 <Divider className={classes.divider}/>
-                
+
                 {
-                    isSelf ? null : 
+                    isSelf ? null :
                         <Grid container className={classes.buttonContainer}>
-                            <Tooltip title= {!hasCommonSubClub ? "You are not a member of a common club or sub club!" : "Send a private message!"  }>
+                            <Tooltip
+                                title={!hasCommonSubClub ? "You are not a member of a common club or sub club!" : "Send a private message!"}>
                                 <span className={classes.buttonContainer}>
                                     <Button
-                                        startIcon={<EmailOutlinedIcon />}
-                                        disabled = {!hasCommonSubClub}
+                                        startIcon={<EmailOutlinedIcon/>}
+                                        disabled={!hasCommonSubClub}
                                         variant="outlined"
                                         color="primary"
                                         className={classes.button}
                                         onClick={() => {
-                                    
+
                                             PrivateMessagingService.send(username, "").then(response => {
                                                 console.log(response.data);
                                                 history.push("/pm");
                                             })
-                                            
+
                                         }}
                                     >Send Message</Button>
                                 </span>
@@ -148,6 +150,7 @@ export default function AboutMember({hasCommonSubClub, isSelf, username, timeReg
                         <Button
                             variant="outlined"
                             color="primary"
+                            startIcon={<MeetingRoom/>}
                             className={classes.button}
                             onClick={(event) => {
                                 AuthService.logout()
@@ -160,6 +163,7 @@ export default function AboutMember({hasCommonSubClub, isSelf, username, timeReg
                         {AuthService.getAuthRoles().includes("ADMIN") && <Button
                             variant="outlined"
                             color="secondary"
+                            startIcon={<SupervisorAccount/>}
                             className={classes.button}
                             onClick={(event) => {
                                 history.push("/admin")

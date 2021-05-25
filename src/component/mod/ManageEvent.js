@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {DeleteForever, Event, Update} from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
     form: {
         display: "flex",
     },
-    submitButton: {}
+    submitButton: {
+        marginBottom: theme.spacing(2)
+    }
 }));
 
 const initialFormValues = {
@@ -69,7 +72,7 @@ export function ManageEvent() {
             <Typography className={classes.explanation}>Edit this event for your sub-club.</Typography>
 
             <FormControl className={classes.form} variant="filled">
-                <InputLabel >Select an Event to Edit</InputLabel>
+                <InputLabel >Select an event to edit</InputLabel>
                 <Select className={classes.formInput}
                     value={selectedEvent ?  selectedEvent.id : -1}
                     onChange={(e) => {
@@ -192,6 +195,7 @@ export function ManageEvent() {
                         key={"submit"}
                         type="submit"
                         variant={"outlined"}
+                        startIcon={<Update/>}
                         onClick={() =>{
                             console.log("event will be: ", selectedEvent);
                             ModeratorService.updateEvent(selectedEvent).then(response => {
@@ -209,6 +213,7 @@ export function ManageEvent() {
                         key={"delete"}
                         type="submit"
                         variant={"outlined"}
+                        startIcon={<DeleteForever/>}
                         onClick={() =>{
                             ModeratorService.deleteEvent(selectedEvent.id).then(response => {
                                 // TODO: CORS Error

@@ -6,6 +6,7 @@ import CakeIcon from '@material-ui/icons/Cake';
 import {AuthService} from "../service/AuthService";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
+import {SupervisorAccount} from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -144,6 +145,7 @@ export default function AboutFeed({feedInfo}) {
                                 variant="outlined"
                                 color="primary"
                                 className={classes.button}
+                                startIcon={<SupervisorAccount/>}
                                 onClick={(event) => {
                                     history.push("/mod")
                                 }}>
