@@ -168,7 +168,6 @@ export default function ProfilePage() {
                                         isSelf = {isSelf}
                                         username={username}
                                         timeRegistered={user ? user.created : null }
-                                        numberOfPostsInLastWeek={0}
                             />
                         </Box>
                     </Box>

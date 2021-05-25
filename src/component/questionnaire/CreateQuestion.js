@@ -44,7 +44,7 @@ function QuestionTextField({id, callBackOnChange}){
 }
 
 
-export default function CreateQuestion({callBackOnSave}) {
+export default function CreateQuestion({callBackOnSave, qid}) {
     const classes = useStyles();
     const [questionObject, setQuestion] = React.useState({
             content:"", 
@@ -62,12 +62,14 @@ export default function CreateQuestion({callBackOnSave}) {
     id2Field.set("Q", "content")
     const [radioValue, setRadioValue] = React.useState('');
     const onRadioChange = (event) => {
-      setQuestion({...questionObject, groundTruth:event.target.value});
-      setRadioValue(event.target.value);
+        const updatingField = id2Field.get(event.target.value);
+        const groundTruth = questionObject[updatingField]
+        setQuestion({...questionObject, groundTruth:groundTruth});
+        setRadioValue(event.target.value);
     };
 
     function onSaveClick() {
-        callBackOnSave(questionObject);
+        callBackOnSave(qid, questionObject);
     }
 
     function onTextFieldChange(id, value) {

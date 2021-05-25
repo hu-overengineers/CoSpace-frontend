@@ -4,6 +4,10 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
   },
+  avatar: {
+    color: theme.palette.getContrastText('#00e3aa'),
+    backgroundColor: '#00e3aa',
+  },
 }));
 
 function PrivateMessageUserItem(props) {
@@ -18,7 +22,7 @@ function PrivateMessageUserItem(props) {
       onClick={() => props.callback(props.username)}
     >
       <ListItemIcon>
-        <Avatar alt={props.username}>
+        <Avatar className={classes.avatar} alt={props.username}>
           {" "}
           {props.username[0].toUpperCase()}{" "}
         </Avatar>

@@ -53,18 +53,18 @@ function PrivateMessagePage() {
     useEffect(() => {
         PrivateMessagingService.getPrivateMessages().then(response => {
             console.log("PM:", response.data);
-            setMessages(response.data)
+            setMessages(response.data);
         })
     }, []);
 
     useEffect(() => {
-        const username = AuthService.getUsername();
+        const self = AuthService.getUsername();
 
         const usersSet = new Set();
         messages.forEach((message) => {
-            if (message.senderUsername === username) {
+            if (message.senderUsername === self) {
                 usersSet.add(message.receiverUsername);
-            } else if (message.receiverUsername === username) {
+            } else if (message.receiverUsername === self) {
                 usersSet.add(message.senderUsername);
             }
         });
@@ -78,30 +78,25 @@ function PrivateMessagePage() {
                 (message) => (message.senderUsername === user2 || message.receiverUsername === user2)
             );
 
-            return Math.max.apply(Math, common2.map(message => message.created)) -
-                Math.max.apply(Math, common1.map(message => message.created));
+            return Math.max.apply(Math, common2.map(message => new Date(message.created).getTime())) -
+                Math.max.apply(Math, common1.map(message => new Date(message.created).getTime()));
         });
 
-
-        
         sortedUserList = sortedUserList.filter(user => {
-            
-            let receivedMessages = messages.filter(message => message.senderUsername === user && message.receiverUsername === username);
+            let receivedMessages = messages.filter(message => message.senderUsername === user && message.receiverUsername === self);
             if (receivedMessages.length === 1) {
                 return receivedMessages[0].content !== "";
-            }else {
+            } else {
                 return true;
             }
-
         });
-            
 
         setUserList(sortedUserList);
-
     }, [messages]);
 
     useEffect(() => {
-        console.log(userList);
+        console.log("User List:", userList);
+        if (selectedUser === null && userList.length > 0) setUser(userList[0]);
     }, [userList])
 
     useEffect(() => {
@@ -159,7 +154,7 @@ function PrivateMessagePage() {
                                 />
                             </Grid>
                             <Grid item xs={1} align="right">
-                                <Fab onClick={() => handleSendMessage()} color="primary" aria-label="add">
+                                <Fab disabled={selectedUser === null} onClick={() => handleSendMessage()} color="primary" aria-label="add">
                                     <SendIcon/>
                                 </Fab>
                             </Grid>

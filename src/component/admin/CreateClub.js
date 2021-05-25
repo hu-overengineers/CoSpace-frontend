@@ -23,7 +23,8 @@ import {
     useMediaQuery
 } from "@material-ui/core";
 import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire"
-
+import {AdminService} from "../../service/AdminService";
+import {ClubService} from "../../service/ClubService";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -49,68 +50,133 @@ const useStyles = makeStyles((theme) => ({
         width: 100,
         flexWrap: 'wrap',
     },
-    questionaryDialog: {
+    questionnaireDialog: {
         minHeight: '80vh',
         maxHeight: '80vh',
+    },
+    selectFromReqs: {
+        marginLeft: "5vh"
     }
 
 }));
 
 function CreateClub() {
     const classes = useStyles();
+    const [canCreate, setCanCreate] = React.useState(false);
 
     // Dialog ----------------------------------
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    // 
-    const [openCreateClub, setCreateClub] = React.useState(false);
-
-    const handleClickOpenCreateClub = () => {
-        setCreateClub(true);
-    };
-
+    // ------------------------ CREATE CLUB DIALOG ------------------------
+    const [openClubDialog, setClubDialog] = React.useState(false);
+    const [createClubName, setCreateClubName] = React.useState("");
+    const [createClubDetails, setCreateClubDetails] = React.useState("");
+    const [refreshClubsTrigger, setRefreshClubsTrigger] = React.useState(false);
+    
     const handleCloseCreateClub = () => {
-        setCreateClub(false);
+        setCreateClubDetails("")
+        setCreateClubName("")
+        
+        setClubDialog(false);
     };
-    // ------------------------------------------------
 
-    const [openQuestionaryDialog, setQuestionaryDialog] = React.useState(false);
-    const [submitQuestionary, setSubmitQuestionary] = React.useState(false);
+    const handleSubmitCreateClub = () => {
+        AdminService.createClub(createClubName, createClubDetails).then((response) => {
+            setRefreshClubsTrigger(!refreshClubsTrigger);
+        })
+        handleCloseCreateClub()
+    };
+
+    const onClubCreateNameChange = (event) => {
+        setCreateClubName(event.target.value);
+    }
+
+    const onClubCreateDetailsChange = (event) => {
+        setCreateClubDetails(event.target.value);
+    }
+
+    // ------------------------ QUESTIONNAIRE ------------------------
+
+    const [openQuestionnaireDialog, setQuestionnaireDialog] = React.useState(false);
+    const [submitQuestionnaireTrigger, setSubmitQuestionnaireTrigger] = React.useState(false);
     const [questions, setQuestions] = React.useState([]);
 
-    const onSubmitQuestionary = () => {
-        setSubmitQuestionary(true);
-        setQuestionaryDialog(false);
+    const onSubmitQuestionnaire = () => {
+        setSubmitQuestionnaireTrigger(!submitQuestionnaireTrigger);
+        setQuestionnaireDialog(false);
     };
+
+    const handleClickOpenQuestionnaireDialog = () => {
+        setQuestionnaireDialog(true);
+    };
+
+    const handleClickCloseQuestionnaireDialog = () => {
+        setQuestionnaireDialog(false);
+    };
+
+
+    // ------------------------ REQUESTED/NEW SUBCLUBS ------------------------
+
+    const [requests, setRequests] = React.useState([]);
+
+    
+    useEffect(() => {
+        AdminService.getRequestedSubclubs().then((response) => {
+            setRequests(response.data);
+        })
+    }, []);
+
+    const [selectedSubClubRequest, setSelectedSubClubRequest] = React.useState({});
+    const [subclubName, setSubclubName] = React.useState("");
+
+    const handleClubRequestNameChange = (event) => {
+        if (event.target.value === "" || event.target.value === undefined) {
+            setClubName("")
+            setSubclubName("")
+            return
+        }
+        const requestObj = JSON.parse(event.target.value)
+        setSelectedSubClubRequest(requestObj);
+        setSubclubName(requestObj.subClubName);
+        if (createdClubs.includes(requestObj.clubName)) {
+            setClubName(requestObj.clubName);
+        }
+        else {
+            setClubName("")
+        }
+    };
+
+    const handleSubClubNameTextChange = (event) => {
+        setSubclubName(event.target.value)
+        if (!(requests.map((req) => {return req.subClubName}).includes(event.target.value))) {
+        }
+    }
+
+    // ------------------------ CLUBS ------------------------
+    const [createdClubs, setCreatedClubs] = React.useState([]);
+    const [clubName, setClubName] = React.useState("");
 
     useEffect(() => {
-    }, [questions])
+        ClubService.getClubs().then((response) => {
+            setCreatedClubs(response.data.map((clb) => {return clb.name}));
+        })
+    }, [refreshClubsTrigger]);
 
-    const handleClickOpenQuestionaryDialog = () => {
-        setQuestionaryDialog(true);
+
+    const handleClubNameChange = (event) => {
+        setClubName(event.target.value);
     };
 
-    const handleClickCloseQuestionaryDialog = () => {
-        setQuestionaryDialog(false);
+    // ------------------------ SUBCLUB DETAILS ------------------------
+    const [subclubDescription, setSubClubDescription] = React.useState("");
+
+    const handleClubDescriptionChange = (event) => {
+        setSubClubDescription(event.target.value);
     };
 
-
-    // ------------------------------------------------
-    const [chipData, setChipData] = React.useState([
-        {key: 0, label: 'game'},
-        {key: 1, label: 'gta5'},
-        {key: 2, label: 'video-game'},
-    ]);
+    // ------------------------ KEYWORDS ------------------------
+    const [chipData, setChipData] = React.useState([]);
 
     const handleChipDelete = (chipToDelete) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
@@ -142,32 +208,42 @@ function CreateClub() {
         setChipData(newChips);
     };
 
-    // ------------------------------------------------
-    const [selectedClubRequestName, setSelectedClubRequestName] = React.useState("");
 
-    const handleClubRequestNameChange = (event) => {
-        setSelectedClubRequestName(event.target.value);
-    };
-    // ------------------------------------------------
+    useEffect(() => {
+        if (questions.length >= 3  && subclubName !== "" && clubName !== "" && subclubDescription !== "") {
+            setCanCreate(true);
+        }
+        else{
+            setCanCreate(false)
+        }
+    }, [questions, subclubName, clubName, subclubDescription])
 
-    const [clubName, setClubName] = React.useState("");
 
-    const handleClubNameChange = (event) => {
-        setClubName(event.target.value);
-    };
+    const handleSubmitCreation = (event) => {
+        const createObject = {
+                name: subclubName,
+                parentName: clubName,
+                questions:questions,
+                details: subclubDescription
+            }
+        if(chipData.length !== 0){
+            createObject.details += " Keywords: ";
+            chipData.forEach(chp => {
+                createObject.details += " "+chp.label
+            });
+        }
+        AdminService.createSubClub(createObject).then((response) => {
+            console.log(response.data);
+        })
 
-    // ------------------------------------------------
-    const [clubDescription, setClubDescription] = React.useState("");
+    }
 
-    const handleClubDescriptionChange = (event) => {
-        setClubDescription(event.target.value);
-    };
 
 
     return (
         <Container>
 
-            <Dialog open={openCreateClub} onClose={handleCloseCreateClub} aria-labelledby="form-dialog-title">
+            <Dialog open={openClubDialog} onClose={handleCloseCreateClub} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add a new parent club</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -178,6 +254,7 @@ function CreateClub() {
                         margin="dense"
                         id="name"
                         label="Club Name"
+                        onChange={onClubCreateNameChange}
                         type="email"
                         fullWidth
                     />
@@ -186,7 +263,9 @@ function CreateClub() {
                         margin="dense"
                         id="name"
                         label="Club Description"
+                        onChange={onClubCreateDetailsChange}
                         type="email"
+                        
                         fullWidth
                     />
                 </DialogContent>
@@ -194,7 +273,7 @@ function CreateClub() {
                     <Button onClick={handleCloseCreateClub} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleCloseCreateClub} color="primary">
+                    <Button disabled={createClubName === "" || createClubDetails === ""} onClick={handleSubmitCreateClub} color="primary">
                         Add
                     </Button>
                 </DialogActions>
@@ -206,16 +285,13 @@ function CreateClub() {
                     <Container>
                         <div>
                             <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="age-native-helper">Sub-Club Request</InputLabel>
+                                <InputLabel htmlFor="age-native-helper">Sub-Club Requests</InputLabel>
                                 <NativeSelect
-                                    value={selectedClubRequestName.name}
-                                    onChange={handleClubRequestNameChange}
-                                    inputProps={{
-                                        name: '',
-                                    }}>
+                                    onChange={handleClubRequestNameChange}>
                                     <option aria-label="None" value=""/>
-                                    <option value={10}>Game</option>
-                                    <option value={20}>GTA5</option>
+                                    {requests.map((req, i) => (
+                                        <option key={i} value={JSON.stringify(req)}>{req.clubName} / {req.subClubName}</option>
+                                    ))}
                                 </NativeSelect>
                                 <FormHelperText>Select a sub-club request</FormHelperText>
                             </FormControl>
@@ -225,23 +301,23 @@ function CreateClub() {
                 <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
                     <Container>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-helper">A Parent Club</InputLabel>
+                            <InputLabel htmlFor="age-native-helper">A Parent Club * </InputLabel>
                             <NativeSelect
-                                value={selectedClubRequestName.name}
-                                onChange={handleClubRequestNameChange}
-                                inputProps={{
-                                    name: '',
-                                }}>
-                                <option aria-label="None" value=""/>
-                                <option value={10}>Parent 1</option>
-                                <option value={20}>Parent 2</option>
+                                required
+                                onChange={handleClubNameChange}
+                                value={clubName}
+                                >
+                                    <option aria-label="None" value=""/>
+                                    {createdClubs.map((clb, i) => (
+                                        <option key={i} value={clb}>{clb}</option>
+                                    ))}
                             </NativeSelect>
                             <FormHelperText>Select a parent club or add a new one</FormHelperText>
                         </FormControl>
                     </Container>
                 </Grid>
                 <Grid item xs={1} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <IconButton aria-label="add" onClick={handleClickOpenCreateClub}>
+                    <IconButton aria-label="add" onClick={() => {setClubDialog(true)}}>
                         <AddCircleOutlineIcon/>
                     </IconButton>
 
@@ -260,8 +336,8 @@ function CreateClub() {
                                 placeholder="Sub-Club name"
                                 margin="normal"
                                 InputLabelProps={{shrink: true,}}
-                                value={clubName}
-                                onChange={handleClubNameChange}
+                                value={subclubName}
+                                onChange={handleSubClubNameTextChange}
                             />
                         </div>
                     </Container>
@@ -280,7 +356,7 @@ function CreateClub() {
                                 fullWidth
                                 margin="normal"
                                 InputLabelProps={{shrink: true,}}
-                                value={clubDescription}
+                                value={subclubDescription}
                                 onChange={handleClubDescriptionChange}
                             />
                         </div>
@@ -290,6 +366,12 @@ function CreateClub() {
                     <div className={classes.root}><Typography>Related Keywords</Typography></div>
                     <Container>
                         <div className={classes.root}>
+
+                            {(chipData.length === 0 && (
+                                <Chip
+                                    label="Empty"
+                                    className={classes.chip}/>))}
+
                             {chipData.map((data) => {
                                 return (
                                     <li key={data.key}>
@@ -335,28 +417,31 @@ function CreateClub() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={handleClickOpenQuestionaryDialog}
+                            onClick={handleClickOpenQuestionnaireDialog}
                         >
-                            Add a questionary
+                            Add a questionnaire
                         </Button>
+
+                        {((questions.length < 3) && <p style={{marginTop:"5px"}}>Please add {Math.max(0, 3-questions.length)} or more Questions</p>)}
+
                         <Dialog 
-                            open={openQuestionaryDialog} onClose={handleClickCloseQuestionaryDialog}
+                            open={openQuestionnaireDialog} onClose={handleClickCloseQuestionnaireDialog}
                             aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"md"} >
-                            <DialogTitle id="form-dialog-title">Create a questionary</DialogTitle>
+                            <DialogTitle id="form-dialog-title">Create a questionnaire</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    To add a new sub-club to this website, please create a questionary;
+                                    To add a new sub-club to this website, please create a questionnaire;
                                 </DialogContentText>
 
-                                <CreateQuestionnaire onSubmit={submitQuestionary} callBackQuestions={setQuestions}/>
+                                <CreateQuestionnaire onSubmitTrigger={submitQuestionnaireTrigger} oldQuestions={questions} callBackQuestions={setQuestions}/>
 
 
                             </DialogContent>
                             <DialogActions>
-                                <Button onClick={handleClickCloseQuestionaryDialog} color="primary">
+                                <Button onClick={handleClickCloseQuestionnaireDialog} color="primary">
                                     Cancel
                                 </Button>
-                                <Button onClick={onSubmitQuestionary} color="primary">
+                                <Button onClick={onSubmitQuestionnaire} color="primary">
                                     Add
                                 </Button>
                             </DialogActions>
@@ -369,43 +454,13 @@ function CreateClub() {
                             variant="contained"
                             color="primary"
                             className={classes.submit}
-                            onClick={handleClickOpen}
+                            disabled={!canCreate}
+                            onClick={handleSubmitCreation}
                         >
                             Create
                         </Button>
                     </Container>
                 </Grid>
-                <Container>
-
-                    <Dialog
-                        fullScreen={fullScreen}
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="responsive-dialog-title"
-                    >
-                        <DialogTitle
-                            id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <Typography>Club Name: {clubName}</Typography>
-                                <Typography>Club Description: {clubDescription} </Typography>
-                                <Typography>Related Keywords: {chipData.map((chip) => (
-                                    chip.label + " "
-                                ))}</Typography>
-
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button autoFocus onClick={handleClose} color="primary">
-                                Cancel
-                            </Button>
-                            <Button onClick={handleClose} color="primary" autoFocus>
-                                Create
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                </Container>
-
             </Grid>
 
 

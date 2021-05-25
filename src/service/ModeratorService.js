@@ -23,7 +23,7 @@ const updateEvent = (event) => {
 }
 
 const deleteEvent = (eventId) => {
-    return axios.put(BASE_URL + MODERATOR + EVENT, {id: eventId}, headersWithToken());
+    return axios.delete(BASE_URL + MODERATOR + EVENT, {id: eventId}, headersWithToken());
 }
 
 

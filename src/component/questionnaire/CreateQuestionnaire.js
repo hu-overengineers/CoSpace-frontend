@@ -21,21 +21,37 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export default function CreateQuestionnaire({onSubmit, callBackQuestions}) {
+export default function CreateQuestionnaire({onSubmitTrigger, callBackQuestions, oldQuestions}) {
     const classes = useStyles();
     const [questionNum, setQuestinNum] = useState(1)
     const [questions, setQuestions] = useState([])
 
     useEffect(() => {
-        if (onSubmit){
-            callBackQuestions(questions)
-        }
-        return;
-    },[onSubmit])
+        const newlist = questions.concat(oldQuestions)
+        callBackQuestions(newlist)
+    },[onSubmitTrigger])
 
-    function saveQuestionObj(questionObj) {
+    function isQuestionValid(questionObj){
+        if (questionObj.content === "" || questionObj.answer1 === "" || questionObj.answer2 === "" ||
+        questionObj.answer3 === "" || questionObj.answer4 === "" || questionObj.groundTruth === "") {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+
+    function saveQuestionObj(qid, questionObj) {
+        if (!isQuestionValid(questionObj)) {
+            return
+        }
         const templist = [...questions];
-        templist.push(questionObj);
+        if(qid === questions.length) {
+            templist.push(questionObj);
+        }
+        else {
+            templist[qid] = questionObj
+        }
         setQuestions(templist);
     }
 
@@ -55,7 +71,7 @@ export default function CreateQuestionnaire({onSubmit, callBackQuestions}) {
                 {[...Array(questionNum)].map((quest, i) => {
                     return (<Box key={"q"+i.toString()}>
                         <h2>Question {i+1}</h2>
-                        <CreateQuestion callBackOnSave={saveQuestionObj}/>
+                        <CreateQuestion qid={i} callBackOnSave={saveQuestionObj}/>
 
                         {i+1 !== questionNum && (
                             <Divider className={classes.divider}/>
