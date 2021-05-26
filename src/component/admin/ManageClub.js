@@ -69,7 +69,9 @@ function ManageClub() {
 
     const handleDeleteSubClub = () => {
         AdminService.deleteSubClub(selectedClub.id).then(response => {
-            console.log(response.data);
+            window.location.reload()
+
+           
         });
     }
 
