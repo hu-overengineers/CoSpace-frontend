@@ -16,6 +16,7 @@ import {PostService} from "../../service/PostService";
 import Box from "@material-ui/core/Box";
 import MemberInfo from "../admin/MemberInfo";
 import NoResultsFound from "../common/NoResultsFound";
+import {delay} from "../../util/async";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,7 +58,6 @@ export function ReportedPosts() {
     // Get Reports
     useEffect(() => {
         ModeratorService.getPostReports().then(response => {
-            console.log("reports", response.data)
             setPostReports(response.data);
         });
     }, [selectedReport]);
@@ -66,10 +66,8 @@ export function ReportedPosts() {
         setSelectedReport(report);
         PostService.getPostById(report.postId).then(response => {
             setSelectedPost(response.data);
-            console.log("post", response.data);
             AdminService.searchMembersByName(response.data.author, 0, 1).then(response => {
                 setSelectedPostOwner(response.data[0]);
-                console.log("post owner, ", response.data[0])
             });
         });
     };
@@ -139,9 +137,17 @@ export function ReportedPosts() {
                                 <Grid container>
                                     <Grid item key={1} className={classes.button}>
                                         <Button variant="outlined" onClick={() => {
-                                            ModeratorService.ban(selectedPostOwner.username, "voluptatem", "reason").then(response => {
-                                                console.log("BAN: ", response.data);
+                                            ModeratorService.ban(selectedPostOwner.username, selectedPost.parentName, "no-reason").then(response => {
 
+                                                ModeratorService.deletePost(selectedPost.id).then(response => {
+                                                    console.log("DELETE POST", response.data);
+                                                    setSelectedReport(null);
+                                                    setSelectedPost(null);
+                                                    delay(1000).then(e => {
+                                                        window.location.reload();
+                                                    });
+                                                   
+                                                })
                                             })
                                         }}>Ban Member</Button>
                                     </Grid>
