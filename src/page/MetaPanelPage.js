@@ -20,97 +20,17 @@ export default function MetaPanelPage() {
     const params = useParams();
     const subclubname = params.subclubname;
 
+  
+
+
+    const [reviews, setReviews] = useState([]);
+
     useEffect(() => {
         ReviewService.getReviews(subclubname).then(response => {
-            console.log(response.data);
+            console.log("get reviews", response.data);
+            setReviews(response.data);
         });
     }, [])
-
-
-    const [reviews, setReviews] = useState([
-        {
-            author: "cagatay",
-            content: "Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex inctio corrupti odio harum et officia. Iustinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et co distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et cab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur ipsam.",
-            rating: 5,
-            date: "September 14, 2016",
-            parentName: "parentname",
-        },
-        {
-            author: "yigit",
-            content: "Accusantium eum quo aut suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 2,
-            date: "September 14, 2016",
-            parentName: "parentname"
-        },
-        {
-            author: "cagatay",
-            content: "Minus earum neque. Earum distinctio corrupti odiinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et co harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel.Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur Quidem soluta et consequuntur consequatur ipsam.",
-            rating: 5,
-            date: "September 14, 2016",
-            parentName: "parentname",
-        },
-        {
-            author: "cagatay",
-            content: "Minus earum neque. Earumtotio corrupti odio Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur Quidem soluta et consequuntur consequatur ipsam.",
-            rating: 5,
-            date: "September 14, 2016",
-            parentName: "parentname",
-        },
-        {
-            author: "cagatay",
-            content: "Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel.Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur Quidem soluta et consequuntur consequatur ipsam.",
-            rating: 4,
-            date: "September 14, 2016",
-            parentName: "parentname",
-        },
-        {
-            author: "cagatay",
-            content: "Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel.Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur Quidem soluta et consequuntur consequatur ipsam.",
-            rating: 2,
-            date: "September 14, 2016",
-            parentName: "parentname",
-        },
-        
-        {
-            author: "WHO I AM",
-            date: "September 14, 2021",
-            content: "sfasfasadfasdfsf eum quo Minus earum neque. Earum distinctio corrupti odio harum et officia. Iusto distinctio ad ex ab eligendi. Qui praesentium vel. Quidem soluta et consequuntur consequatur suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 1,
-            parentName: "parentname"
-        },
-        {
-            author: "yigit",
-            content: "Accusantium eum quo aut suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating:3,
-            date: "September 14, 2016",
-            parentName: "parentname"
-        },
-
-        {
-            author: "yigit",
-            content: "Accusantium eum quo aut suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 5,
-            date: "September 14, 2016",
-            parentName: "parentname"
-        },
-        {
-            author: "yigit",
-            content: "Accusantium eum quo aut suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 3,
-            date: "September 14, 2016",
-            parentName: "parentname"
-        },
-        {
-            author: "yigit",
-            content: "Accusantium eum quo aut suscipit quo. Numquam aut cum aut quis aperiam totam quaerat. Delectus numquam cupiditate recusandae earum est est nemo. Eaque molestias impedit eligendi.",
-            rating: 3,
-            date: "September 14, 2016",
-            parentName: "parentname"
-        },
-
-    ]);
-
-    
 
     return (
         

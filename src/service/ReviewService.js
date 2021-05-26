@@ -14,13 +14,13 @@ const getReviews = (subClubName) => {
 
 const makeReview = (subClubName, content, rating, authorName) => {
     let body = {
-        content: content.inputContent,
-        rating: rating.inputRating,
+        content: content,
+        rating: rating,
         author: authorName,
-        parentName: subClubName.subClubName,
+        parentName: subClubName,
     };
-    console.log(BASE_URL + SUB_CLUB + REVIEW, body, headersWithToken({subClubName: subClubName.subClubName}));
-    return axios.post(BASE_URL + SUB_CLUB + REVIEW, body, headersWithToken({subClubName: subClubName.subClubName}));
+    console.log(BASE_URL + SUB_CLUB + REVIEW, body, headersWithToken({subClubName: subClubName}));
+    return axios.post(BASE_URL + SUB_CLUB + REVIEW, body, headersWithToken({subClubName: subClubName}));
 }
 
 

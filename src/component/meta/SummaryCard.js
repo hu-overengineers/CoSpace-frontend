@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -13,6 +13,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { Stack } from '@devexpress/dx-react-chart';
 import { ReviewService } from "../../service/ReviewService";
 import { Chart, ArgumentAxis, ValueAxis, BarSeries,} from '@devexpress/dx-react-chart-material-ui';
+import { useHistory } from "react-router";
+import {delay} from "../../util/async";
   
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,8 +31,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function SummaryCard({subClubName, reviews}) {
-
+    const history = useHistory();
     const classes = useStyles();
+
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [hover, setHover] = React.useState(-1);
@@ -49,6 +52,25 @@ export default function SummaryCard({subClubName, reviews}) {
     const handleDialogClose = (event) => {
         setOpenDialog(false);
     };
+
+
+    const onClickSubmit = (event) => {
+    
+        ReviewService.makeReview(
+            subClubName, 
+            inputContent,
+            inputRating, 
+            "authorname").then(response => {
+                console.log("RESPONSE", response.data);
+                setOpenDialog(false);
+
+                delay(1000).then(() => window.location.reload());
+                
+             });
+    }
+    const onContentChange = (event) => {
+        setInputContent(event.target.value);
+    }
 
     const [inputRating, setInputRating] = React.useState(3);
     const [inputContent, setInputContent] = useState("");
@@ -187,7 +209,7 @@ export default function SummaryCard({subClubName, reviews}) {
                 <div className={classes.ratingStars}>
                     
                     <Rating
-                        precision={0.5}
+                        
                         value={inputRating}
                         onChange={(event, newValue) => {
                             setInputRating(newValue);
@@ -206,9 +228,7 @@ export default function SummaryCard({subClubName, reviews}) {
                             label="Your Review"
                             variant="outlined"
                             type="input"
-                            onChange={(event) => {
-                                setInputContent(event.target.value);
-                            }}
+                            onChange={onContentChange}
                             fullWidth
                             />
                     
@@ -220,15 +240,7 @@ export default function SummaryCard({subClubName, reviews}) {
                                 Exit
                             </Button>
                             <Button
-                                onClick={
-                                    ReviewService.makeReview(
-                                        {subClubName}, 
-                                        {inputContent},
-                                        {inputRating}, 
-                                        "authorname").then(response => {
-                                                                                console.log("RESPONSE", response.data);
-                                                                            })
-                                }
+                                onClick={onClickSubmit}
                                 
                                 color="primary">
                                 Submit
