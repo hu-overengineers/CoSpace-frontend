@@ -225,6 +225,8 @@ function PostFeedLayout({children}) {
         history.push(`/feed/${node.name}`);
     }
 
+    const isEnrolled = (feed) => enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0;
+
     return (
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
@@ -312,7 +314,7 @@ function PostFeedLayout({children}) {
                                 }/>
                         </Box>}
 
-                        {((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0)
+                        {((!isEnrolled(feed))
                             && (!(feed.isCustom || (!feed.parentName)))) &&
                         <Box>
                             <Button size="medium"
@@ -326,8 +328,8 @@ function PostFeedLayout({children}) {
                                     disableElevation>ENROLL
                             </Button>
                         </Box>}
-                        
-                        {/** Change visibility */}
+
+                        {(isEnrolled(feed)) &&
                         <Box className={classes.button}>
                             <Button size="medium"
                                     variant="outlined"
@@ -339,7 +341,7 @@ function PostFeedLayout({children}) {
                                     fullWidth
                                     disableElevation>{feed.name} META
                             </Button>
-                        </Box>
+                        </Box>}
     
 
 
@@ -358,7 +360,7 @@ function PostFeedLayout({children}) {
                         </Box>}
 
 
-                        {((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0)
+                        {((isEnrolled(feed))
                             && (!(feed.isCustom || (!feed.parentName))) && (feed.moderatorUsername !== AuthService.getUsername())) &&
                         <Box className={classes.button}>
                             <Button size="medium"
@@ -396,19 +398,6 @@ function PostFeedLayout({children}) {
                             </Button>
                 </DialogActions>
             </Dialog>
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
     )
 }
