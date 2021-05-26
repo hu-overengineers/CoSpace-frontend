@@ -87,6 +87,12 @@ function ManageClub() {
     const onSubmitQuestionnaire = () => {
         setSubmitQuestionnaireTrigger(!submitQuestionnaireTrigger);
         setQuestionnaireDialog(false);
+        
+        console.log("new questions:", questions);
+        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub)) 
+        selectedClubCopy.questions = questions;
+        setSelectedClub(selectedClubCopy);    
+        
     };
 
     const handleClickOpenQuestionnaireDialog = () => {
