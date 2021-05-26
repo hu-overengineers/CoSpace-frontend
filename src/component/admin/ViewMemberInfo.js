@@ -50,7 +50,7 @@ function ViewMemberInfo() {
                 setSelectedMember({...selectedMember, "sub-clubs": response.data.map(subClub => subClub.name)});
             });
         }
-    }, [selectedMember])
+    }, [])
 
     return (
         <Box className={classes.root}>
