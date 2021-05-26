@@ -171,6 +171,11 @@ function PostFeedLayout({children}) {
             })
         }
     }, [feed]);
+    
+    useEffect(() => {
+        console.log("Sorting changed:", sorting);
+        history.replace(`/feed/${feed.name}/${sorting}`);
+    }, [feed.name, history, sorting]);
 
     // create post pop-up
     const handleCreatePostDialogOpen = () => {
