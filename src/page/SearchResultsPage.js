@@ -92,7 +92,7 @@ export default function SearchResultsPage() {
     });
 
     useEffect(() => {
-        SearchService.search(params.query).then(r => {
+        SearchService.search(params.query.trim()).then(r => {
             setSearchResults(r.data);
         });
     }, [params]);
