@@ -51,7 +51,11 @@ export default function PostFeed({preloadedPosts}) {
                     <Box key={post.id} className={classes.feedItem}>
                         {<PostFeedItem props={post}/>}
                     </Box>
-                )) : <Container><Typography variant={"h5"}>It's quiet around here...</Typography></Container>): history.push("/notfound")}
+                )) : <Container>
+                    <Typography variant={"h5"}>
+                        It's quiet around here...
+                    </Typography>
+                </Container>) : history.push("/notfound")}
             </List>
         </div>
     );
