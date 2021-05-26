@@ -8,6 +8,7 @@ import {
     SUB_CLUB_STATS
 } from "../api_config";
 import {headersWithToken} from "./headers";
+import {subDays} from "date-fns";
 
 const getClubs = () => {
     return axios.get(BASE_URL + CLUB_LIST)
@@ -17,7 +18,7 @@ const getSubClubs = () => {
     return axios.get(BASE_URL + SUB_CLUB_LIST)
 }
 
-const getSubClubStatistics = (subClubName, startTime, endTime) => {
+const getSubClubStatistics = (subClubName, startTime = subDays(new Date(), 7), endTime = new Date()) => {
     return axios.get(BASE_URL + SUB_CLUB_STATS, {
         params: {
             subClubName: subClubName,
