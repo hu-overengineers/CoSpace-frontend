@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Divider} from '@material-ui/core';
+import {Divider, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import ClubTree from '../component/common/ClubTree';
@@ -15,7 +15,7 @@ import {AuthService} from "../service/AuthService";
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
     divider: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(1),
         marginBottom: theme.spacing(2),
     },
     feedItem: {
@@ -69,16 +69,10 @@ export default function ProfilePage() {
 
     const classes = useStyles();
 
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const [commonClubsAndSubClubs, setCommonClubsAndSubClubs] = useState([]);
     const [posts, setPosts] = useState([]);
     const [subClub, setSubClub] = useState({name: "Loading..."});
-    const [sortingOrder, setSortingOrder] = React.useState('new');
-
-    const handleSortingOrder = (event) => {
-        console.log("Sorting order: " + event.target.value);
-        setSortingOrder(event.target.value);
-    };
 
     useEffect(() => {
         MemberService.getUserByName(username).then(response => {
@@ -109,7 +103,9 @@ export default function ProfilePage() {
     }, [username]);
 
     const handleClubTreeItemClick = (node) => {
-        setSubClub(node);
+        if (node.parentName !== undefined) {
+            setSubClub(node);
+        }
     }
 
     useEffect(() => {
@@ -141,19 +137,7 @@ export default function ProfilePage() {
                 <Grid item xs={6} className={classes.gridItem}>
                     <Box className={classes.gridMiddleColumnBox}>
                         <Box display="flex">
-                            <ToggleButtonGroup
-                                className={classes.sortingFeedToggleGroup}
-                                value={sortingOrder}
-                                exclusive
-                                onChange={handleSortingOrder}
-                                aria-label="text alignment">
-                                <ToggleButton value="new" aria-label="centered">
-                                    <FiberNew/>
-                                </ToggleButton>
-                                <ToggleButton value="top" aria-label="right aligned">
-                                    <TrendingUp/>
-                                </ToggleButton>
-                            </ToggleButtonGroup>
+                            <Typography variant={"h4"}>{user ? user.username : "User"}'s posts in {subClub.name}</Typography>
                         </Box>
                         <Divider className={classes.divider}/>
 
