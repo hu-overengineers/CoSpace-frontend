@@ -5,6 +5,9 @@ import {Button, Container, FormControl, FormHelperText, Grid, Select} from "@mat
 import {ClubService} from "../../service/ClubService";
 import {AdminService} from "../../service/AdminService";
 import MemberInfo from "./MemberInfo";
+import Box from "@material-ui/core/Box";
+import {Casino} from "@material-ui/icons";
+import Typography from "@material-ui/core/Typography";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +34,17 @@ const useStyles = makeStyles((theme) => ({
         width: 100,
         flexWrap: 'wrap',
     },
-
+    typography: {
+        marginLeft: theme.spacing(1),
+        marginTop: theme.spacing(1),
+    },
+    button: {
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+    },
+    iconButton: {
+        margin: theme.spacing(2),
+    },
 }));
 
 function ModeratorRequests() {
@@ -82,11 +95,11 @@ function ModeratorRequests() {
     return (
 
 
-        <Container>
+        <Box>
 
-            <Container>
+            <Box>
                 <div>
-                    <FormControl className={classes.formControl}>
+                    <FormControl variant={"filled"} className={classes.formControl}>
                         <InputLabel htmlFor="age-native-helper">Sub-Club</InputLabel>
                         <Select
                             onChange={handleSubClubNameChange}
@@ -102,15 +115,16 @@ function ModeratorRequests() {
                         <FormHelperText>Select a sub-club</FormHelperText>
                     </FormControl>
                 </div>
-            </Container>
+            </Box>
 
 
             {(isRequestsVisible) && (
-                <Grid container spacing={3} style={{marginLeft:"12px"}}>
+                <Grid container spacing={3} >
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto', marginTop:"5vh"}}>
-                        <Button size="medium"
+                        <Button  className={classes.button} size="medium"
                                         variant="contained"
                                         color="primary"
+                                        startIcon={<Casino/>}
                                         disabled={selectedSubClub.moderatorUsername !== ""}
                                         onClick={() => {
                                             handleRandomSelection()
@@ -118,14 +132,14 @@ function ModeratorRequests() {
                                         disableElevation>SELECT A RANDOM MODERATOR
                         </Button>
                         {(selectedSubClub.moderatorUsername !== "") && (
-                            <p> {selectedSubClub.name} already have a moderator!</p>
+                            <Typography className={classes.typography}> {selectedSubClub.name} already have a moderator!</Typography>
                         )}
                     </Grid>
 
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                         {(isMemberInfoVisible) && (
                             <div>
-                                {(selectedModRequest !== "") && (<MemberInfo info={selectedModRequest}></MemberInfo>)}
+                                {(selectedModRequest !== "") && (<MemberInfo info={selectedModRequest}/>)}
                                 {(selectedModRequest === "") && (<p>There are no moderator request for {selectedSubClub.name}</p>)}
                                 
                             </div>
@@ -135,7 +149,7 @@ function ModeratorRequests() {
                 </Grid>
             )}
 
-        </Container>);
+        </Box>);
 
 }
 

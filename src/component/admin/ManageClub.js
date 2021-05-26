@@ -23,6 +23,7 @@ import {
 
 import {delay} from "../../util/async";
 import Box from "@material-ui/core/Box";
+import {Assignment, DeleteForever, Update} from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,16 @@ const useStyles = makeStyles((theme) => ({
         width: 100,
         flexWrap: 'wrap',
     },
-
+    typography: {
+        marginLeft: theme.spacing(1),
+    },
+    button: {
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+    },
+    iconButton: {
+        margin: theme.spacing(2),
+    }
 }));
 
 function ManageClub() {
@@ -169,27 +179,22 @@ function ManageClub() {
 
     return (
         <Box>
-            <Container>
-                <div>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel>Sub-club</InputLabel>
-                        <Select
-                            value={selectedClubRequestName.name}
-                            onChange={handleClubRequestNameChange}
-                            inputProps={{
-                                name: '',
-                            }}>
-                            <option aria-label="None" value=""/>
+            <FormControl variant={"filled"} className={classes.formControl}>
+                <InputLabel>Sub-club</InputLabel>
+                <Select
+                    value={selectedClubRequestName.name}
+                    onChange={handleClubRequestNameChange}
+                    inputProps={{
+                        name: '',
+                    }}>
+                    <option aria-label="None" value=""/>
 
-                            {subClubs.map((subClub) => (
-                                <option value={subClub.name}>{subClub.name}</option>
-                            ))}
-                        </Select>
-                        <FormHelperText>Select a sub-club to edit</FormHelperText>
-                    </FormControl>
-                </div>
-            </Container>
-
+                    {subClubs.map((subClub) => (
+                        <option value={subClub.name}>{subClub.name}</option>
+                    ))}
+                </Select>
+                <FormHelperText>Select a sub-club to edit</FormHelperText>
+            </FormControl>
 
             {isVisible ? <Grid container spacing={3}>
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
@@ -200,58 +205,57 @@ function ManageClub() {
                     </Grid>
 
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                        <Container>
-                            <div>
-                                <TextField
-                                    required
-                                    fullWidth
-                                    id="standard-full-width"
-                                    label="Sub-club name"
-                                    style={{margin: 8}}
-                                    placeholder="Sub-club name"
-                                    margin="normal"
-                                    InputLabelProps={{shrink: true,}}
-                                    value={selectedClub ? selectedClub.name : ""}
-                                    onChange={handleClubNameChange}
-                                />
-                            </div>
-                        </Container>
+                        <Box>
+                            <TextField
+                                required
+                                fullWidth
+                                id="standard-full-width"
+                                label="Sub-club name"
+                                variant={"filled"}
+                                style={{margin: 8}}
+                                placeholder="Sub-club name"
+                                margin="normal"
+                                InputLabelProps={{shrink: true,}}
+                                value={selectedClub ? selectedClub.name : ""}
+                                onChange={handleClubNameChange}
+                            />
+                        </Box>
                     </Grid>
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
 
-                        <Container>
-                            <div>
-                                <TextField
-                                    required
-                                    id="standard-full-width"
-                                    label="Sub-club description"
-                                    style={{margin: 8}}
-                                    placeholder="Sub-club description"
-                                    helperText="Description should include bla bla"
-                                    fullWidth
-                                    margin="normal"
-                                    InputLabelProps={{shrink: true,}}
-                                    value={selectedClub ? selectedClub.details : ""}
-                                    onChange={handleClubDescriptionChange}
-                                />
-                            </div>
-                        </Container>
+                        <Box>
+                            <TextField
+                                required
+                                id="standard-full-width"
+                                label="Sub-club description"
+                                style={{margin: 8}}
+                                variant={"filled"}
+                                placeholder="Sub-club description"
+                                helperText="Description should include bla bla"
+                                fullWidth
+                                margin="normal"
+                                InputLabelProps={{shrink: true,}}
+                                value={selectedClub ? selectedClub.details : ""}
+                                onChange={handleClubDescriptionChange}
+                            />
+                        </Box>
                     </Grid>
 
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                        <Container>
+                        <Box>
                             <Button
                                 variant="contained"
                                 color="primary"
-                                className={classes.submit}
+                                className={classes.button}
+                                startIcon={<Assignment/>}
                                 onClick={handleClickOpenQuestionnaireDialog}
                             >
                                 Create a new questionnaire
                             </Button>
 
                             {((questions.length < 3) &&
-                                <p style={{marginTop: "5px"}}>Please add {Math.max(0, 3 - questions.length)} or more
-                                    Questions</p>)}
+                                <Typography className={classes.typography}>Please add {Math.max(0, 3 - questions.length)} or more
+                                    questions.</Typography>)}
 
                             <Dialog
                                 open={openQuestionnaireDialog} onClose={handleClickCloseQuestionnaireDialog}
@@ -276,34 +280,32 @@ function ManageClub() {
                                     </Button>
                                 </DialogActions>
                             </Dialog>
-                        </Container>
+                        </Box>
                     </Grid>
                     <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                        <Container>
+                        <Box>
                             <Button
                                 variant="contained"
                                 color="primary"
-                                className={classes.submit}
+                                className={classes.button}
+                                startIcon={<Update/>}
                                 onClick={handleClickOpen}
                             >
                                 Apply
                             </Button>
-                        </Container>
-                    </Grid>
-                    <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                        <Container>
                             <Button
                                 variant="contained"
                                 color="primary"
-                                className={classes.submit}
+                                className={classes.button}
+                                startIcon={<DeleteForever/>}
                                 onClick={handleDeleteSubClub}
                             >
                                 Delete this sub-club
                             </Button>
-                        </Container>
+                        </Box>
                     </Grid>
 
-                    <Container>
+                    <Box>
                         <Dialog
                             fullScreen={fullScreen}
                             open={open}
@@ -327,7 +329,7 @@ function ManageClub() {
                                 </Button>
                             </DialogActions>
                         </Dialog>
-                    </Container>
+                    </Box>
 
                 </Grid>
                 : null}
