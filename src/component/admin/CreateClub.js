@@ -2,11 +2,9 @@ import React, {useEffect} from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputLabel from '@material-ui/core/InputLabel';
-import clsx from 'clsx';
+import {delay} from "../../util/async";
 import {
     Button,
-    Chip,
-    Container,
     Dialog,
     DialogActions,
     DialogContent,
@@ -16,7 +14,6 @@ import {
     FormHelperText,
     Grid,
     IconButton,
-    InputAdornment,
     Select,
     TextField,
     Typography,
@@ -25,6 +22,8 @@ import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire"
 import {AdminService} from "../../service/AdminService";
 import {ClubService} from "../../service/ClubService";
 import Box from "@material-ui/core/Box";
+import {useHistory} from "react-router";
+import {Add, Assignment} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -56,6 +55,17 @@ const useStyles = makeStyles((theme) => ({
     },
     selectFromReqs: {
         marginLeft: "5vh"
+    },
+    typography: {
+        marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(1),
+    },
+    button: {
+        marginLeft: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+    },
+    iconButton: {
+        margin: theme.spacing(2),
     }
 
 }));
@@ -64,6 +74,7 @@ function CreateClub() {
     const classes = useStyles();
     const [canCreate, setCanCreate] = React.useState(false);
 
+    const history = useHistory();
     // ------------------------ CREATE CLUB DIALOG ------------------------
     const [openClubDialog, setClubDialog] = React.useState(false);
     const [createClubName, setCreateClubName] = React.useState("");
@@ -218,20 +229,20 @@ function CreateClub() {
 
 
     const handleSubmitCreation = (event) => {
+
+
+        
         const createObject = {
             name: subclubName,
             parentName: clubName,
             questions: questions,
             details: subclubDescription
         }
-        if (chipData.length !== 0) {
-            createObject.details += " Keywords: ";
-            chipData.forEach(chp => {
-                createObject.details += " " + chp.label
-            });
-        }
         AdminService.createSubClub(createObject).then((response) => {
             console.log(response.data);
+            delay(2000).then(e => {
+                history.push(`/feed/${subclubName}/today`)
+            });
         })
 
     }
@@ -252,7 +263,6 @@ function CreateClub() {
                         id="name"
                         label="Club name"
                         onChange={onClubCreateNameChange}
-                        type="email"
                         fullWidth
                     />
                     <TextField
@@ -261,7 +271,6 @@ function CreateClub() {
                         id="name"
                         label="Club description"
                         onChange={onClubCreateDetailsChange}
-                        type="email"
 
                         fullWidth
                     />
@@ -280,9 +289,9 @@ function CreateClub() {
 
             <Grid container spacing={3}>
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
+                    <Box>
                         <div>
-                            <FormControl className={classes.formControl}>
+                            <FormControl variant="filled" className={classes.formControl}>
                                 <InputLabel>Sub-club requests</InputLabel>
                                 <Select
                                     onChange={handleClubRequestNameChange}>
@@ -295,11 +304,11 @@ function CreateClub() {
                                 <FormHelperText>Select a sub-club request</FormHelperText>
                             </FormControl>
                         </div>
-                    </Container>
+                    </Box>
                 </Grid>
                 <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <FormControl className={classes.formControl}>
+                    <Box>
+                        <FormControl variant="filled" className={classes.formControl}>
                             <InputLabel>A parent club</InputLabel>
                             <Select
                                 required
@@ -313,10 +322,10 @@ function CreateClub() {
                             </Select>
                             <FormHelperText>Select a parent club or add a new one</FormHelperText>
                         </FormControl>
-                    </Container>
+                    </Box>
                 </Grid>
                 <Grid item xs={1} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <IconButton aria-label="add" onClick={() => {
+                    <IconButton className={classes.iconButton} aria-label="add" onClick={() => {
                         setClubDialog(true)
                     }}>
                         <AddCircleOutlineIcon/>
@@ -326,12 +335,13 @@ function CreateClub() {
 
 
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
+                    <Box>
                         <div>
                             <TextField
                                 required
                                 fullWidth
                                 id="standard-full-width"
+                                variant="filled"
                                 label="Sub-club name"
                                 style={{margin: 8}}
                                 placeholder="Sub-club name"
@@ -341,14 +351,15 @@ function CreateClub() {
                                 onChange={handleSubClubNameTextChange}
                             />
                         </div>
-                    </Container>
+                    </Box>
                 </Grid>
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
 
-                    <Container>
+                    <Box>
                         <div>
                             <TextField
                                 required
+                                variant="filled"
                                 id="standard-full-width"
                                 label="Sub-club description"
                                 style={{margin: 8}}
@@ -361,71 +372,75 @@ function CreateClub() {
                                 onChange={handleClubDescriptionChange}
                             />
                         </div>
-                    </Container>
+                    </Box>
                 </Grid>
+                {/*<Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>*/}
+                {/*    <div className={classes.root}><Typography>Related keywords</Typography></div>*/}
+                {/*    <Container>*/}
+                {/*        <div className={classes.root}>*/}
+
+                {/*            {(chipData.length === 0 && (*/}
+                {/*                <Chip*/}
+                {/*                    label="Empty"*/}
+                {/*                    className={classes.chip}/>))}*/}
+
+                {/*            {chipData.map((data) => {*/}
+                {/*                return (*/}
+                {/*                    <li key={data.key}>*/}
+                {/*                        <Chip*/}
+                {/*                            label={data.label}*/}
+                {/*                            onDelete={handleChipDelete(data)}*/}
+                {/*                            className={classes.chip}*/}
+                {/*                        />*/}
+                {/*                    </li>*/}
+                {/*                );*/}
+                {/*            })}*/}
+                {/*        </div>*/}
+                {/*    </Container>*/}
+                {/*</Grid>*/}
+
+                {/*<Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>*/}
+                {/*    <Typography className={classes.root}>Add new keyword</Typography>*/}
+                {/*    <Container>*/}
+                {/*        <div>*/}
+                {/*            <TextField*/}
+                {/*                placeholder="some-tag"*/}
+                {/*                className={clsx(classes.margin, classes.textField)}*/}
+                {/*                InputProps={{*/}
+                {/*                    startAdornment: <InputAdornment position="start">#</InputAdornment>,*/}
+                {/*                }}*/}
+                {/*                value={tag}*/}
+                {/*                onChange={handleTagTextFieldChange}*/}
+                {/*            />*/}
+                {/*        </div>*/}
+                {/*    </Container>*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={1}>*/}
+                {/*    <Container>*/}
+                {/*        <IconButton aria-label="add" onClick={addTagClick}>*/}
+                {/*            <AddCircleOutlineIcon/>*/}
+                {/*        </IconButton>*/}
+                {/*    </Container>*/}
+
+                {/*</Grid>*/}
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <div className={classes.root}><Typography>Related keywords</Typography></div>
-                    <Container>
-                        <div className={classes.root}>
+                    <Box>
+                        <Box display="flex" flexDirection="row">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                startIcon={<Assignment/>}
+                                className={classes.button}
+                                onClick={handleClickOpenQuestionnaireDialog}
+                            >
+                                Add a questionnaire
+                            </Button>
 
-                            {(chipData.length === 0 && (
-                                <Chip
-                                    label="Empty"
-                                    className={classes.chip}/>))}
-
-                            {chipData.map((data) => {
-                                return (
-                                    <li key={data.key}>
-                                        <Chip
-                                            label={data.label}
-                                            onDelete={handleChipDelete(data)}
-                                            className={classes.chip}
-                                        />
-                                    </li>
-                                );
-                            })}
-                        </div>
-                    </Container>
-                </Grid>
-
-                <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Typography className={classes.root}>Add new keyword</Typography>
-                    <Container>
-                        <div>
-                            <TextField
-                                placeholder="some-tag"
-                                className={clsx(classes.margin, classes.textField)}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">#</InputAdornment>,
-                                }}
-                                value={tag}
-                                onChange={handleTagTextFieldChange}
-                            />
-                        </div>
-                    </Container>
-                </Grid>
-                <Grid item xs={1}>
-                    <Container>
-                        <IconButton aria-label="add" onClick={addTagClick}>
-                            <AddCircleOutlineIcon/>
-                        </IconButton>
-                    </Container>
-
-                </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={handleClickOpenQuestionnaireDialog}
-                        >
-                            Add a questionnaire
-                        </Button>
-
-                        {((questions.length < 3) &&
-                            <p style={{marginTop: "5px"}}>Please add {Math.max(0, 3 - questions.length)} or more
-                                Questions</p>)}
+                            {((questions.length < 3) &&
+                                <Typography className={classes.typography}>Please
+                                    add {Math.max(0, 3 - questions.length)} or more
+                                    questions.</Typography>)}
+                        </Box>
 
                         <Dialog
                             open={openQuestionnaireDialog} onClose={handleClickCloseQuestionnaireDialog}
@@ -450,20 +465,18 @@ function CreateClub() {
                                 </Button>
                             </DialogActions>
                         </Dialog>
-                    </Container>
-                </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Container>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disabled={!canCreate}
-                            onClick={handleSubmitCreation}
-                        >
-                            Create
-                        </Button>
-                    </Container>
+                    </Box>
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={<Add/>}
+                        className={classes.button}
+                        disabled={!canCreate}
+                        onClick={handleSubmitCreation}
+                    >
+                        Create
+                    </Button>
                 </Grid>
             </Grid>
 

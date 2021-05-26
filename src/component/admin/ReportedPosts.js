@@ -37,10 +37,12 @@ const useStyles = makeStyles((theme) => ({
     gridReportInfoContainer: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
+        marginBottom: theme.spacing(2),
     },
     gridHorizontalSection: {
         paddingRight: theme.spacing(2),
     },
+    postFeedItemWrapper: {}
 }));
 
 
@@ -75,37 +77,37 @@ function ReportedPosts() {
                 <Typography variant="h6" className={classes.title}>List of Reports</Typography>
                 <Paper variant={"outlined"} className={classes.paper}>
                     <List className={classes.root}>
-                        {postReports === null || postReports.length === 0 ? <NoResultsFound/> : postReports.map((report) =>
-                            <div>
-                                <ListItem
-                                    button
-                                    key={report.postId}
-                                    selected={selectedPost && report.postId === selectedPost.id}
-                                    alignItems="flex-start"
-                                    onClick={(e) => handleReportClick(e, report)}>
-                                    <ListItemIcon>
-                                        <ReportOutlinedIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary={`Reported by: ${report.author}`}
-                                        secondary={
-                                            <React.Fragment>
-                                                <Typography
-                                                    component="span"
-                                                    variant="body2"
-                                                    className={classes.inline}
-                                                    color="textPrimary"
-                                                >
-                                                    {`Reason: `}
-                                                </Typography>
-                                                {report.content}
-                                            </React.Fragment>
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider variant="inset" component="li"/>
-                            </div>
-                        )}
+                        {postReports === null || postReports.length === 0 ?
+                            <NoResultsFound/> : postReports.map((report) =>
+                                <div>
+                                    <ListItem
+                                        button
+                                        key={report.postId}
+                                        selected={selectedPost && report.postId === selectedPost.id}
+                                        alignItems="flex-start"
+                                        onClick={(e) => handleReportClick(e, report)}>
+                                        <ListItemIcon>
+                                            <ReportOutlinedIcon/>
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={`Reported by: ${report.author}`}
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        component="span"
+                                                        variant="body2"
+                                                        className={classes.inline}
+                                                        color="textPrimary">
+                                                        {`Reason: `}
+                                                    </Typography>
+                                                    {report.content}
+                                                </React.Fragment>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li"/>
+                                </div>
+                            )}
                     </List>
                 </Paper>
             </Grid>
@@ -115,37 +117,37 @@ function ReportedPosts() {
                 {selectedPost ?
                     <Box>
 
-                        <Grid item>
+                        <Grid item xs={6}>
                             <Typography variant="h6" className={classes.title}>Reported Post</Typography>
                             <Box className={classes.postFeedItemWrapper}>{selectedPost ?
                                 <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
                             </Box>
-                        </Grid>
+                            <Grid container>
 
-                        <Grid container>
-                            <Grid item key={1} xs={6} className={classes.gridHorizontalSection}>
-                                <Typography variant="h6" className={classes.title}>Author Information</Typography>
-                                {selectedPostOwner ? <MemberInfo info={selectedPostOwner}/> : null}
-                            </Grid>
+                                <Grid item key={1} xs={6} className={classes.gridHorizontalSection}>
+                                    <Typography variant="h6" className={classes.title}>Author Information</Typography>
+                                    {selectedPostOwner ? <MemberInfo info={selectedPostOwner}/> : null}
+                                </Grid>
 
-                            <Grid item key={2} xs={6} className={classes.gridHorizontalSection}>
-                                <Typography variant="h6" className={classes.title}>Actions</Typography>
-                                <Grid container>
-                                    <Grid item key={1} className={classes.button}>
-                                        <Button variant="outlined" onClick={()=>{
-                                            // TODO: call kick member function from AdminService
-                                        }}>KICK MEMBER from COSPACE</Button>
-                                    </Grid>
+                                <Grid item key={2} xs={6} className={classes.gridHorizontalSection}>
+                                    <Typography variant="h6" className={classes.title}>Actions</Typography>
+                                    <Grid container spacing={1} >
+                                        <Grid item key={1} className={classes.button}>
+                                            <Button variant="outlined" onClick={() => {
+                                                // TODO: call kick member function from AdminService
+                                            }}>KICK MEMBER FROM COSPACE</Button>
+                                        </Grid>
 
-                                    <Grid item key={2} className={classes.button}>
-                                        <Button variant="outlined" onClick = {() => {
-                                            AdminService.deleteReport(selectedReport.id).then(response => {
-                                                console.log(response.data);
-                                                setSelectedReport(null);
-                                                setSelectedPost(null);
-                                                setSelectedPostOwner(null);
-                                            })
-                                        }}>REMOVE Report</Button>
+                                        <Grid item key={2} className={classes.button}>
+                                            <Button variant="outlined" onClick={() => {
+                                                AdminService.deleteReport(selectedReport.id).then(response => {
+                                                    console.log(response.data);
+                                                    setSelectedReport(null);
+                                                    setSelectedPost(null);
+                                                    setSelectedPostOwner(null);
+                                                })
+                                            }}>REMOVE Report</Button>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>

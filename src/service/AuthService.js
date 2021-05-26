@@ -42,7 +42,7 @@ const loginWithToken = () => {
 
 const logout = () => {
     localStorage.removeItem('login_token');
-    localStorage.removeItem("auth_roles")
+    localStorage.removeItem("auth_roles");
 };
 
 const saveJwtToken = (token) => {

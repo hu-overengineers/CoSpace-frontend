@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {PostFeedItem} from "./PostFeedItem";
-import {List, makeStyles} from '@material-ui/core';
+import {List, makeStyles, Typography} from '@material-ui/core';
 import Box from "@material-ui/core/Box";
 import {PostService} from "../../service/PostService";
 import {useHistory, useParams} from "react-router-dom";
+import Container from "@material-ui/core/Container";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,11 +47,15 @@ export default function PostFeed({preloadedPosts}) {
     return (
         <div>
             <List className={classes.root}>
-                {postsInFeed ? postsInFeed.map((post, index) => (
+                {postsInFeed ? (postsInFeed.length > 0 ? postsInFeed.map((post, index) => (
                     <Box key={post.id} className={classes.feedItem}>
                         {<PostFeedItem props={post}/>}
                     </Box>
-                )): history.push("/notfound")}
+                )) : <Container>
+                    <Typography variant={"h5"}>
+                        It's quiet around here...
+                    </Typography>
+                </Container>) : history.push("/notfound")}
             </List>
         </div>
     );
