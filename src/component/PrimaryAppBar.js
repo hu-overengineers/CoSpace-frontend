@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {fade, makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -67,6 +67,8 @@ export default function PrimaryAppBar() {
     const classes = useStyles();
     const history = useHistory()
 
+    const [searchQuery, setSearchQuery] = useState("");
+
     return (
         <div className={classes.grow}>
             <AppBar position="fixed" variant="outlined" className={classes.appBar}>
@@ -92,6 +94,15 @@ export default function PrimaryAppBar() {
                             classes={{
                                 root: classes.searchInputRoot,
                                 input: classes.searchInput,
+                            }}
+                            onChange={(event => {
+                                setSearchQuery(event.target.value);
+                            })}
+                            onKeyUp={(event) => {
+                                if (event.key === "Enter") {
+                                    event.preventDefault();
+                                    history.push(`/search/${searchQuery}`)
+                                }
                             }}
                             inputProps={{'aria-label': 'search'}}
                         />
