@@ -19,6 +19,7 @@ import EventItem from "../component/event/EventItem";
 import EnrollPanel from "../component/EnrollPanel";
 import RequestSubclub from "../component/RequestSubclub.js"
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
+import {Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -101,7 +102,7 @@ function PostFeedLayout({children}) {
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const [enrollDialogOpen, setEnrollDialogOpen] = React.useState(false);
-    const [requestDialogOpen, setRequestDialogOpen] = React.useState(false);
+    const [subclubRequestDialogOpen, setSubclubRequestDialogOpen] = React.useState(false);
 
     // Get stats
     useEffect(() => {
@@ -176,23 +177,41 @@ function PostFeedLayout({children}) {
         setPostDialogOpen(true);
     };
 
-    // enroll subclub pop-up
+    // enrollment pop-up
     const handleEnrollDialogOpen = () => {
         setEnrollDialogOpen(true);
     };
 
-    // enroll subclub pop-up
-    const handleRequestDialogOpen = () => {
-        setRequestDialogOpen(true);
+    // subclub request pop-up
+    const handleSubclubRequestDialogOpen = () => {
+        setSubclubRequestDialogOpen(true);
     };
 
-    // enroll subclub pop-up
+    // on enrollment, refresh the enrolled ones
     const handleEnrollment = (isEnrolled) => {
         if (isEnrolled) {
             setEnrolledSubClubs([...enrolledSubClubs, feed])
         }
     };
 
+    // request to being a moderator
+    const [modRequestDialogOpen, setModRequestDialogOpen] = React.useState(false);
+    const [modRequestResponse, setModRequestResponse] = React.useState("");
+    const handleModeratorRequest = () => {
+        MemberService.requestForModerating(feed.name).then((response) => {
+            setModRequestDialogOpen(true);
+            console.log(response.data);
+            setModRequestResponse(response.data)
+        }).catch((err) => {
+            if (401 === err.response.status) {
+                console.log(err.response.data);
+                setModRequestResponse(err.response.data)
+                setModRequestDialogOpen(true);
+            }
+        })
+        // setModRequestDialogOpen(true);
+
+    };
 
     // event for new post creation
     const handleNewPost = (postCreated) => {
@@ -325,20 +344,34 @@ function PostFeedLayout({children}) {
 
 
                         {((!feed.isCustom) && (!feed.parentName)) &&
-                        <Box>
-                            <Button className={classes.button}
-                                    size="medium"
+                        <Box className={classes.button}>
+                            <Button size="medium"
                                     variant="contained"
                                     color="primary"
                                     startIcon={<Add/>}
                                     onClick={() => {
-                                        handleRequestDialogOpen()
+                                        handleSubclubRequestDialogOpen()
                                     }}
                                     fullWidth
                                     disableElevation>REQUEST NEW SUB-CLUB
                             </Button>
                         </Box>}
 
+
+                        {((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0)
+                            && (!(feed.isCustom || (!feed.parentName))) && (feed.moderatorUsername !== AuthService.getUsername())) &&
+                        <Box className={classes.button}>
+                            <Button size="medium"
+                                    variant="contained"
+                                    color="primary"
+                                    startIcon={<Add/>}
+                                    onClick={() => {
+                                        handleModeratorRequest()
+                                    }}
+                                    fullWidth
+                                    disableElevation>REQUEST TO BE A MODERATOR
+                            </Button>
+                        </Box>}
 
                     </Box>
                 </Grid>
@@ -349,7 +382,31 @@ function PostFeedLayout({children}) {
             <EnrollPanel open={enrollDialogOpen} setOpenDialog={setEnrollDialogOpen} setEnrolled={handleEnrollment}
                          clickedSubClub={feed}/>}
 
-            {(requestDialogOpen) && <RequestSubclub open={requestDialogOpen} setOpenDialog={setRequestDialogOpen}club={feed}/>}
+            {(subclubRequestDialogOpen) && <RequestSubclub open={subclubRequestDialogOpen} setOpenDialog={setSubclubRequestDialogOpen}club={feed}/>}
+
+
+            <Dialog open={modRequestDialogOpen} onClose={() => {setModRequestDialogOpen(false)}} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Moderator Request</DialogTitle>
+                <DialogContent >
+                    <p>{modRequestResponse}</p>                        
+                </DialogContent>
+                <DialogActions>
+                            <Button onClick={() => {setModRequestDialogOpen(false)}}color="primary">
+                                OK
+                            </Button>
+                </DialogActions>
+            </Dialog>
+
+
+
+
+
+
+
+
+
+
+
 
 
         </div>
