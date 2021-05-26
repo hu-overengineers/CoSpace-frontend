@@ -120,8 +120,8 @@ export function ReportedPosts() {
 
                     <Grid item>
                         <Typography variant="h6" className={classes.title}>Reported Post</Typography>
-                        <Box className={classes.postFeedItemWrapper}>{selectedPost ?
-                            <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
+                        <Box>
+                            {selectedPost ? <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
                         </Box>
                     </Grid>
 
@@ -138,7 +138,7 @@ export function ReportedPosts() {
                                     <Button variant="outlined" onClick={()=>{
                                        ModeratorService.ban(selectedPostOwner.username, "voluptatem", "reason").then(response => {
                                         console.log("BAN: ", response.data);
-                                       
+
                                     })
                                     }}>Ban Member</Button>
                                 </Grid>

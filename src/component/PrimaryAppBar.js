@@ -80,7 +80,7 @@ export default function PrimaryAppBar() {
                         variant="h6"
                         style={{color: '#00e3aa', fontWeight: 'bold', "cursor": "pointer"}}
                         className={classes.title}
-                        onClick={() => history.push("/")}
+                        onClick={() => history.push("/feed/Popular")}
                     >
                         CoSpace
                     </Typography>
