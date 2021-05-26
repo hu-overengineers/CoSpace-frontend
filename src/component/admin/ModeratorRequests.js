@@ -1,29 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputLabel from '@material-ui/core/InputLabel';
-import clsx from 'clsx';
-import {
-    Button,
-    Chip,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    FormControl,
-    FormHelperText,
-    Grid,
-    IconButton,
-    InputAdornment,
-    NativeSelect,
-    TextField,
-    Typography,
-    useMediaQuery
-} from "@material-ui/core";
-import { ClubService } from "../../service/ClubService";
-import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire";
+import {Button, Container, FormControl, FormHelperText, Grid, Select} from "@material-ui/core";
+import {ClubService} from "../../service/ClubService";
 import {AdminService} from "../../service/AdminService";
 import MemberInfo from "./MemberInfo";
 
@@ -109,7 +88,7 @@ function ModeratorRequests() {
                 <div>
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="age-native-helper">Sub-Club</InputLabel>
-                        <NativeSelect
+                        <Select
                             onChange={handleSubClubNameChange}
                             inputProps={{
                                 name: '',
@@ -119,7 +98,7 @@ function ModeratorRequests() {
                             {subClubs.map((subClub) => (
                                 <option value={subClub.name}>{subClub.name}</option>
                             ))}
-                        </NativeSelect>
+                        </Select>
                         <FormHelperText>Select a sub-club</FormHelperText>
                     </FormControl>
                 </div>

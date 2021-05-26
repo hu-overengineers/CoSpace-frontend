@@ -30,7 +30,7 @@ const adminMenu = [
                 path: "/admin/view-member-info"
             },
             {
-                text: "Assign New Moderators",
+                text: "Assign new moderators",
                 path: "/admin/moderator-requests"
             },
         ]
