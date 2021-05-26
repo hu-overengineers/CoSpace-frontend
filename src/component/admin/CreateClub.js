@@ -24,6 +24,7 @@ import {
 import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire"
 import {AdminService} from "../../service/AdminService";
 import {ClubService} from "../../service/ClubService";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -237,7 +238,7 @@ function CreateClub() {
 
 
     return (
-        <Container>
+        <Box>
 
             <Dialog open={openClubDialog} onClose={handleCloseCreateClub} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Add a new parent club</DialogTitle>
@@ -467,7 +468,7 @@ function CreateClub() {
             </Grid>
 
 
-        </Container>);
+        </Box>);
 
 }
 

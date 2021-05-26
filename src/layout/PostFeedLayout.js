@@ -1,7 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import {Divider, List} from "@material-ui/core";
+import {
+    Avatar,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText
+} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {ClubService} from "../service/ClubService";
 import {subDays} from "date-fns";
@@ -19,7 +30,8 @@ import EventItem from "../component/event/EventItem";
 import EnrollPanel from "../component/EnrollPanel";
 import RequestSubclub from "../component/RequestSubclub.js"
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
-import {Dialog, DialogActions, DialogContent, DialogTitle} from '@material-ui/core';
+import TitledSection from "../component/common/TitledSection";
+import {unstable_batchedUpdates} from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -70,6 +82,16 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(2),
     },
+    avatarContainer: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+    },
+    avatar: {
+        color: theme.palette.getContrastText('#00e3aa'),
+        backgroundColor: '#00e3aa',
+    },
 }));
 
 
@@ -89,12 +111,13 @@ function PostFeedLayout({children}) {
     };
 
     useEffect(() => {
-        
+
     }, [sorting])
 
     // Clubs and sub-clubs
     const [clubs, setClubs] = useState(customFeeds);
-    const [enrolledSubClubs, setEnrolledSubClubs] = useState([]);
+    const [subClubs, setSubClubs] = useState(null);
+    const [enrolledSubClubs, setEnrolledSubClubs] = useState(null);
     const [feed, setFeed] = useState(customFeeds[0]);
     const [events, setEvents] = useState([]);
 
@@ -124,12 +147,16 @@ function PostFeedLayout({children}) {
         ClubService.getSubClubs().then(response => {
             console.log("Parsing sub-clubs");
             console.log(response.data);
+            const subClubs = response.data;
             ClubService.parseSubClubs(response.data).then(tree => {
                 console.log("Parsed club tree:", tree)
                 customFeeds.slice().reverse().forEach(customFeed => {
                     tree.splice(0, 0, customFeed);
                 });
-                setClubs(tree);
+                unstable_batchedUpdates(() => {
+                    setClubs(tree);
+                    setSubClubs(subClubs);
+                });
             })
         });
     }, [refreshFeed]);
@@ -171,6 +198,11 @@ function PostFeedLayout({children}) {
             })
         }
     }, [feed]);
+
+    useEffect(() => {
+        console.log("Sorting changed:", sorting);
+        history.replace(`/feed/${feed.name}/${sorting}`);
+    }, [feed.name, history, sorting]);
 
     // create post pop-up
     const handleCreatePostDialogOpen = () => {
@@ -225,6 +257,26 @@ function PostFeedLayout({children}) {
         history.push(`/feed/${node.name}`);
     }
 
+    const isEnrolled = (feed) => enrolledSubClubs ? enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0 : false;
+
+    const getNewlyCreatedSubClubs = () => {
+        if (subClubs !== null && enrolledSubClubs !== null) {
+            const uncommon = [];
+            const time = new Date();
+            subClubs.forEach(subClub => {
+                enrolledSubClubs.forEach(enrolled => {
+                    if (enrolled.name !== subClub.name) {
+                        if (subClub.created > time) {
+                            uncommon.push(subClub)
+                        }
+                    }
+                })
+            });
+            return uncommon;
+        }
+        return [];
+    }
+
     return (
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
@@ -266,7 +318,7 @@ function PostFeedLayout({children}) {
                             <Button size="medium"
                                     variant="contained"
                                     color="primary"
-                                    disabled={enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0}
+                                    disabled={!isEnrolled(feed)}
                                     startIcon={<Edit/>}
                                     onClick={() => {
                                         handleCreatePostDialogOpen()
@@ -283,7 +335,7 @@ function PostFeedLayout({children}) {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
-                           
+
                             <AboutFeed feedInfo={feed}/>
                         </Box>
                         {feed.parentName && <Box className={classes.sectionBox}>
@@ -312,7 +364,7 @@ function PostFeedLayout({children}) {
                                 }/>
                         </Box>}
 
-                        {((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length === 0)
+                        {((!isEnrolled(feed))
                             && (!(feed.isCustom || (!feed.parentName)))) &&
                         <Box>
                             <Button size="medium"
@@ -326,8 +378,8 @@ function PostFeedLayout({children}) {
                                     disableElevation>ENROLL
                             </Button>
                         </Box>}
-                        
-                        {/** Change visibility */}
+
+                        {(isEnrolled(feed)) &&
                         <Box className={classes.button}>
                             <Button size="medium"
                                     variant="outlined"
@@ -339,9 +391,7 @@ function PostFeedLayout({children}) {
                                     fullWidth
                                     disableElevation>{feed.name} META
                             </Button>
-                        </Box>
-    
-
+                        </Box>}
 
                         {((!feed.isCustom) && (!feed.parentName)) &&
                         <Box className={classes.button}>
@@ -357,8 +407,7 @@ function PostFeedLayout({children}) {
                             </Button>
                         </Box>}
 
-
-                        {((enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0)
+                        {((isEnrolled(feed))
                             && (!(feed.isCustom || (!feed.parentName))) && (feed.moderatorUsername !== AuthService.getUsername())) &&
                         <Box className={classes.button}>
                             <Button size="medium"
@@ -373,6 +422,26 @@ function PostFeedLayout({children}) {
                             </Button>
                         </Box>}
 
+                        {AuthService.hasJwtToken() && getNewlyCreatedSubClubs().length > 0 &&
+                        <Box>
+                            <TitledSection titleIcon={<FiberNew/>}
+                                           title={"Newly created sub-clubs"}>
+                                <List>
+                                    {getNewlyCreatedSubClubs().map(subClub =>
+                                        <ListItem
+                                            onClick={() => history.push(`/feed/${subClub.name}`)} key={subClub.name}>
+                                            <ListItemAvatar className={classes.avatarContainer}>
+                                                <Avatar
+                                                    className={classes.avatar}>{subClub.name[0].toUpperCase()}</Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={subClub.name}
+                                                          secondary={`Sub-club of ${subClub.parentName}`}/>
+                                        </ListItem>
+                                    )}
+                                </List>
+                            </TitledSection>
+                        </Box>}
+
                     </Box>
                 </Grid>
             </Grid>
@@ -382,33 +451,25 @@ function PostFeedLayout({children}) {
             <EnrollPanel open={enrollDialogOpen} setOpenDialog={setEnrollDialogOpen} setEnrolled={handleEnrollment}
                          clickedSubClub={feed}/>}
 
-            {(subclubRequestDialogOpen) && <RequestSubclub open={subclubRequestDialogOpen} setOpenDialog={setSubclubRequestDialogOpen}club={feed}/>}
+            {(subclubRequestDialogOpen) &&
+            <RequestSubclub open={subclubRequestDialogOpen} setOpenDialog={setSubclubRequestDialogOpen} club={feed}/>}
 
 
-            <Dialog open={modRequestDialogOpen} onClose={() => {setModRequestDialogOpen(false)}} aria-labelledby="form-dialog-title">
+            <Dialog open={modRequestDialogOpen} onClose={() => {
+                setModRequestDialogOpen(false)
+            }} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Moderator Request</DialogTitle>
-                <DialogContent >
-                    <p>{modRequestResponse}</p>                        
+                <DialogContent>
+                    <p>{modRequestResponse}</p>
                 </DialogContent>
                 <DialogActions>
-                            <Button onClick={() => {setModRequestDialogOpen(false)}}color="primary">
-                                OK
-                            </Button>
+                    <Button onClick={() => {
+                        setModRequestDialogOpen(false)
+                    }} color="primary">
+                        OK
+                    </Button>
                 </DialogActions>
             </Dialog>
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
     )
 }

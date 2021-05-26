@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import PostFeed from "../component/post/PostFeed";
 import {SearchService} from "../service/SearchService";
 import List from "@material-ui/core/List";
-import {InfoOutlined, Person} from "@material-ui/icons";
+import {Person} from "@material-ui/icons";
 import Divider from "@material-ui/core/Divider";
 import NoResultsFound from "../component/common/NoResultsFound";
 
@@ -50,15 +50,15 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
     },
+    avatar: {
+        color: theme.palette.getContrastText('#00e3aa'),
+        backgroundColor: '#00e3aa',
+    },
     usernameContainer: {
         display: 'flex',
         flexGrow: 1,
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    avatar: {
-        color: theme.palette.getContrastText('#00e3aa'),
-        backgroundColor: '#00e3aa',
     },
     divider: {
         marginTop: theme.spacing(2),
@@ -109,14 +109,15 @@ export default function SearchResultsPage() {
                                             </ListItemAvatar>
                                             <ListItemText primary={club.name} secondary={"Club"}/>
                                         </ListItem>)}
-                                {searchResults.subClubs.slice(0, 3).map(subClub => <ListItem
-                                    onClick={() => history.push(`/feed/${subClub.name}`)} key={subClub.name}>
-                                    <ListItemAvatar className={classes.avatarContainer}>
-                                        <Avatar className={classes.avatar}>{subClub.name[0].toUpperCase()}</Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary={subClub.name}
-                                                  secondary={`Sub-club of ${subClub.parentName}`}/>
-                                </ListItem>)}
+                                {searchResults.subClubs.slice(0, 3).map(subClub =>
+                                    <ListItem
+                                        onClick={() => history.push(`/feed/${subClub.name}`)} key={subClub.name}>
+                                        <ListItemAvatar className={classes.avatarContainer}>
+                                            <Avatar className={classes.avatar}>{subClub.name[0].toUpperCase()}</Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText primary={subClub.name}
+                                                      secondary={`Sub-club of ${subClub.parentName}`}/>
+                                    </ListItem>)}
                             </List>
                         </Paper>
 
