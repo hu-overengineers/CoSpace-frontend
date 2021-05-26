@@ -14,6 +14,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Grid from '@material-ui/core/Grid';
 import Box from "@material-ui/core/Box";
 import parse from "html-react-parser";
+import {delay} from "../../util/async";
 import {
     Dialog,
     DialogActions,
@@ -183,6 +184,8 @@ export function PostFeedItem({props}) {
 
        PostService.deleteOwnPost(props.id).then(response => {
             console.log(response.data);
+            window.location.reload()
+          
        });
     };
 
