@@ -22,6 +22,7 @@ import {
 } from "@material-ui/core";
 
 import {delay} from "../../util/async";
+import Box from "@material-ui/core/Box";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -165,11 +166,11 @@ function ManageClub() {
     };
 
     return (
-        <Container>
+        <Box>
             <Container>
                 <div>
                     <FormControl className={classes.formControl}>
-                        <InputLabel >Sub-club</InputLabel>
+                        <InputLabel>Sub-club</InputLabel>
                         <Select
                             value={selectedClubRequestName.name}
                             onChange={handleClubRequestNameChange}
@@ -330,7 +331,7 @@ function ManageClub() {
                 : null}
 
 
-        </Container>);
+        </Box>);
 
 }
 
