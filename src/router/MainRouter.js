@@ -11,7 +11,7 @@ import PrivateMessagePage from "../page/PrivateMessagePage";
 import ModeratorPage from "../page/ModeratorPage";
 import MetaPanelPage from "../page/MetaPanelPage";
 import SearchResultsPage from "../page/SearchResultsPage";
-
+import SubClubRecommend from "../page/SubClubRecommend"
 
 
 export default function MainRouter() {
@@ -36,6 +36,9 @@ export default function MainRouter() {
                     </Route>
                     <Route path="/sign-in">
                         <SignInPage/>
+                    </Route>
+                    <Route path="/subclub-recommendation">
+                        <SubClubRecommend/>
                     </Route>
                     <Route path="/password-reset/:token?">
                         <PasswordResetPage/>
