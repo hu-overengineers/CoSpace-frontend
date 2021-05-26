@@ -11,7 +11,8 @@ import {
     ONE_SUB_CLUB_ENROLL,
     SUB_CLUB,
     REQUEST_SUBCLUB,
-    MOD_REQUEST
+    MOD_REQUEST,
+    BULK_ENROLL
 } from "../api_config.js";
 import {headersWithToken} from "./headers";
 
@@ -29,6 +30,10 @@ const getCommonSubClubs = (username) => {
 
 const enrollToSubClub = (answers) => {
     return axios.post(BASE_URL + ONE_SUB_CLUB_ENROLL, answers, headersWithToken());
+}
+
+const bulkEnrollment = (answers) => {
+    return axios.post(BASE_URL + BULK_ENROLL, answers, headersWithToken());
 }
 
 const getPostsByAuthorAndSubClub = (author, subClubName) => {
@@ -61,5 +66,6 @@ export const MemberService = {
     attendEvent,
     requestSubClub,
     requestForModerating,
-    getUserByName
+    getUserByName,
+    bulkEnrollment
 };
