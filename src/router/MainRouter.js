@@ -21,7 +21,7 @@ export default function MainRouter() {
             <MainLayout>
                 <Switch>
                     <Route exact path="/">
-                        <HomePageSwitch/>
+                        <HomePage/>
                     </Route>
                     <Route path="/feed">
                         <HomePageSwitch/>
