@@ -46,7 +46,7 @@ export default function MainRouter() {
                     <Route path="/mod">
                         <ModeratorPage/>
                     </Route>
-                    <Route path="/metapanel/:subclubname">
+                    <Route path="/meta/:subClubName">
                         <MetaPanelPage/>
                     </Route>
                     <Route path="/search/:query">

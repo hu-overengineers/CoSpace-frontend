@@ -315,10 +315,10 @@ function PostFeedLayout({children}) {
                                     color="primary"
                                     startIcon={<RateReviewOutlinedIcon/>}
                                     onClick={() => {
-                                        history.push(`/metapanel/${feed.name}`)
+                                        history.push(`/meta/${feed.name}`)
                                     }}
                                     fullWidth
-                                    disableElevation>{feed.name} metapanel
+                                    disableElevation>{feed.name} META
                             </Button>
                         </Box>
     
@@ -326,7 +326,8 @@ function PostFeedLayout({children}) {
 
                         {((!feed.isCustom) && (!feed.parentName)) &&
                         <Box>
-                            <Button size="medium"
+                            <Button className={classes.button}
+                                    size="medium"
                                     variant="contained"
                                     color="primary"
                                     startIcon={<Add/>}
@@ -334,7 +335,7 @@ function PostFeedLayout({children}) {
                                         handleRequestDialogOpen()
                                     }}
                                     fullWidth
-                                    disableElevation>REQUEST NEW SUBCLUB
+                                    disableElevation>REQUEST NEW SUB-CLUB
                             </Button>
                         </Box>}
 
