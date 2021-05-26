@@ -14,7 +14,7 @@ export const SUB_CLUB_EVENTS = "/subclub/events";
 export const ATTEND_SUB_CLUB_EVENT = "/subclub/attend-event";
 export const SUB_CLUB_QUESTIONNAIRE = "/subclub/questionnaire-sub";
 export const ONE_SUB_CLUB_ENROLL = "/subclub/enroll-subclub";
-
+export const DELETE_SUB_CLUB = "/delete-sub-club";
 export const MODERATOR = "/moderator";
 export const EVENT = "/event";
 export const DELETE_POST = "/delete-post";

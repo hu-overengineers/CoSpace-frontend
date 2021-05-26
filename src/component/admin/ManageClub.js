@@ -55,6 +55,13 @@ function ManageClub() {
         setOpen(true);
     };
 
+    const handleDeleteSubClub = () => {
+        AdminService.deleteSubClub(selectedClub.id).then(response => {
+            console.log(response.data);
+        });
+    }
+
+
     const editAndSubmit = () =>{
         let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub)) 
         selectedClubCopy.questions = questions;
@@ -253,7 +260,7 @@ function ManageClub() {
                         </Dialog>
                         </Container>
                     </Grid>
-                    <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                    <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
                         <Container>
                             <Button
                                 variant="contained"
@@ -262,6 +269,18 @@ function ManageClub() {
                                 onClick={handleClickOpen}
                             >
                                 Apply
+                            </Button>
+                        </Container>
+                    </Grid>
+                    <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
+                        <Container>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={handleDeleteSubClub}
+                            >
+                                Delete this subclub
                             </Button>
                         </Container>
                     </Grid>
