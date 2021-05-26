@@ -169,7 +169,7 @@ function ManageClub() {
             <Container>
                 <div>
                     <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="age-native-helper">Sub-club</InputLabel>
+                        <InputLabel >Sub-club</InputLabel>
                         <Select
                             value={selectedClubRequestName.name}
                             onChange={handleClubRequestNameChange}

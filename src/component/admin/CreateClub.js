@@ -249,7 +249,7 @@ function CreateClub() {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="Club Name"
+                        label="Club name"
                         onChange={onClubCreateNameChange}
                         type="email"
                         fullWidth
@@ -258,7 +258,7 @@ function CreateClub() {
                         autoFocus
                         margin="dense"
                         id="name"
-                        label="Club Description"
+                        label="Club description"
                         onChange={onClubCreateDetailsChange}
                         type="email"
 
@@ -282,7 +282,7 @@ function CreateClub() {
                     <Container>
                         <div>
                             <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="age-native-helper">Sub-club Requests</InputLabel>
+                                <InputLabel>Sub-club requests</InputLabel>
                                 <Select
                                     onChange={handleClubRequestNameChange}>
                                     <option aria-label="None" value=""/>
@@ -299,7 +299,7 @@ function CreateClub() {
                 <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
                     <Container>
                         <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="age-native-helper">A Parent Club * </InputLabel>
+                            <InputLabel>A parent club</InputLabel>
                             <Select
                                 required
                                 onChange={handleClubNameChange}
@@ -331,7 +331,7 @@ function CreateClub() {
                                 required
                                 fullWidth
                                 id="standard-full-width"
-                                label="Sub-club Name"
+                                label="Sub-club name"
                                 style={{margin: 8}}
                                 placeholder="Sub-club name"
                                 margin="normal"
@@ -349,7 +349,7 @@ function CreateClub() {
                             <TextField
                                 required
                                 id="standard-full-width"
-                                label="Sub-club Description"
+                                label="Sub-club description"
                                 style={{margin: 8}}
                                 placeholder="Sub-club description"
                                 helperText="Description should include bla bla"
@@ -363,7 +363,7 @@ function CreateClub() {
                     </Container>
                 </Grid>
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <div className={classes.root}><Typography>Related Keywords</Typography></div>
+                    <div className={classes.root}><Typography>Related keywords</Typography></div>
                     <Container>
                         <div className={classes.root}>
 
@@ -388,7 +388,7 @@ function CreateClub() {
                 </Grid>
 
                 <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Typography className={classes.root}>Add New Keyword</Typography>
+                    <Typography className={classes.root}>Add new keyword</Typography>
                     <Container>
                         <div>
                             <TextField
