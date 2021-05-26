@@ -29,6 +29,10 @@ const adminMenu = [
                 text: "View member information",
                 path: "/admin/view-member-info"
             },
+            {
+                text: "Moderation Request",
+                path: "/admin/moderator-requests"
+            },
         ]
     },
     {
