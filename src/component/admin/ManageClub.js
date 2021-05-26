@@ -1,14 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputLabel from '@material-ui/core/InputLabel';
-import clsx from 'clsx';
-import { ClubService } from "../../service/ClubService";
+import {ClubService} from "../../service/ClubService";
 import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire";
 import {AdminService} from "../../service/AdminService";
-import { Button,Chip,Container, Dialog, DialogActions,DialogContent,DialogContentText,
-        DialogTitle,FormControl,FormHelperText, Grid,IconButton,InputAdornment,
-        NativeSelect,TextField,Typography,useMediaQuery} from "@material-ui/core";
+import {
+    Button,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormControl,
+    FormHelperText,
+    Grid,
+    Select,
+    TextField,
+    Typography,
+    useMediaQuery
+} from "@material-ui/core";
 
 import {delay} from "../../util/async";
 
@@ -62,14 +73,14 @@ function ManageClub() {
     }
 
 
-    const editAndSubmit = () =>{
-        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub)) 
+    const editAndSubmit = () => {
+        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub))
         selectedClubCopy.questions = questions;
-        setSelectedClub(selectedClubCopy);    
+        setSelectedClub(selectedClubCopy);
 
 
         const createObject = {
-            id : selectedClub.id,
+            id: selectedClub.id,
             name: selectedClub.name,
             parentName: selectedClub.parentName,
             questions: questions,
@@ -77,7 +88,7 @@ function ManageClub() {
         }
 
         AdminService.updateSubClub(createObject).then((response) => {
-           delay(2000).then(() => window.location.reload());
+            delay(2000).then(() => window.location.reload());
         })
         setOpen(false);
     }
@@ -86,7 +97,7 @@ function ManageClub() {
     };
 
     // ------------------------ QUESTIONNAIRE ------------------------
-    
+
     const [openQuestionnaireDialog, setQuestionnaireDialog] = React.useState(false);
     const [submitQuestionnaireTrigger, setSubmitQuestionnaireTrigger] = React.useState(false);
     const [questions, setQuestions] = React.useState([]);
@@ -94,12 +105,12 @@ function ManageClub() {
     const onSubmitQuestionnaire = () => {
         setSubmitQuestionnaireTrigger(!submitQuestionnaireTrigger);
         setQuestionnaireDialog(false);
-        
+
         console.log("new questions:", questions);
-        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub)) 
+        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub))
         selectedClubCopy.questions = questions;
-        setSelectedClub(selectedClubCopy);    
-        
+        setSelectedClub(selectedClubCopy);
+
     };
 
     const handleClickOpenQuestionnaireDialog = () => {
@@ -127,8 +138,9 @@ function ManageClub() {
             name: "",
             parentName: "",
             questions: [],
-            rating: 0}
-        );
+            rating: 0
+        }
+    );
 
     const handleClubRequestNameChange = (event) => {
         setSelectedClubRequestName(event.target.value);
@@ -141,13 +153,13 @@ function ManageClub() {
     };
 
     const handleClubNameChange = (event) => {
-        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub)) 
+        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub))
         selectedClubCopy.name = event.target.value;
         setSelectedClub(selectedClubCopy);
     };
 
     const handleClubDescriptionChange = (event) => {
-        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub)) 
+        let selectedClubCopy = JSON.parse(JSON.stringify(selectedClub))
         selectedClubCopy.details = event.target.value;
         setSelectedClub(selectedClubCopy);
     };
@@ -158,7 +170,7 @@ function ManageClub() {
                 <div>
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="age-native-helper">Sub-Club</InputLabel>
-                        <NativeSelect
+                        <Select
                             value={selectedClubRequestName.name}
                             onChange={handleClubRequestNameChange}
                             inputProps={{
@@ -169,7 +181,7 @@ function ManageClub() {
                             {subClubs.map((subClub) => (
                                 <option value={subClub.name}>{subClub.name}</option>
                             ))}
-                        </NativeSelect>
+                        </Select>
                         <FormHelperText>Select a sub-club to edit</FormHelperText>
                     </FormControl>
                 </div>
@@ -222,42 +234,45 @@ function ManageClub() {
                             </div>
                         </Container>
                     </Grid>
-                    
+
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                         <Container>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            onClick={handleClickOpenQuestionnaireDialog}
-                        >
-                            Create a new questionnaire
-                        </Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.submit}
+                                onClick={handleClickOpenQuestionnaireDialog}
+                            >
+                                Create a new questionnaire
+                            </Button>
 
-                        {((questions.length < 3) && <p style={{marginTop:"5px"}}>Please add {Math.max(0, 3-questions.length)} or more Questions</p>)}
+                            {((questions.length < 3) &&
+                                <p style={{marginTop: "5px"}}>Please add {Math.max(0, 3 - questions.length)} or more
+                                    Questions</p>)}
 
-                        <Dialog 
-                            open={openQuestionnaireDialog} onClose={handleClickCloseQuestionnaireDialog}
-                            aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"md"} >
-                            <DialogTitle id="form-dialog-title">Create a new questionnaire</DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    To edit this sub-club, please create a new questionnaire;
-                                </DialogContentText>
+                            <Dialog
+                                open={openQuestionnaireDialog} onClose={handleClickCloseQuestionnaireDialog}
+                                aria-labelledby="form-dialog-title" fullWidth={true} maxWidth={"md"}>
+                                <DialogTitle id="form-dialog-title">Create a new questionnaire</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        To edit this sub-club, please create a new questionnaire;
+                                    </DialogContentText>
 
-                                <CreateQuestionnaire onSubmitTrigger={submitQuestionnaireTrigger} oldQuestions={questions} callBackQuestions={setQuestions}/>
+                                    <CreateQuestionnaire onSubmitTrigger={submitQuestionnaireTrigger}
+                                                         oldQuestions={questions} callBackQuestions={setQuestions}/>
 
 
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={handleClickCloseQuestionnaireDialog} color="primary">
-                                    Cancel
-                                </Button>
-                                <Button onClick={onSubmitQuestionnaire} color="primary">
-                                    Add
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleClickCloseQuestionnaireDialog} color="primary">
+                                        Cancel
+                                    </Button>
+                                    <Button onClick={onSubmitQuestionnaire} color="primary">
+                                        Add
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </Container>
                     </Grid>
                     <Grid item xs={3} style={{maxHeight: '100vh', overflow: 'auto'}}>
