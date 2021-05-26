@@ -10,7 +10,8 @@ import {
     MEMBER,
     ONE_SUB_CLUB_ENROLL,
     SUB_CLUB,
-    REQUEST_SUBCLUB
+    REQUEST_SUBCLUB,
+    MOD_REQUEST
 } from "../api_config.js";
 import {headersWithToken} from "./headers";
 
@@ -43,6 +44,10 @@ const requestSubClub = (parentName, subclubName, details) => {
     return axios.post(BASE_URL + MEMBER + REQUEST_SUBCLUB, body, headersWithToken());
 }
 
+const requestForModerating = (subclubName) => {
+    return axios.post(BASE_URL + MOD_REQUEST, {}, headersWithToken({subClubName:subclubName}));
+}
+
 const getUserByName = (username) => {
     return axios.get(BASE_URL + MEMBER, {params: {username: username}});
 }
@@ -54,5 +59,7 @@ export const MemberService = {
     getCommonSubClubs,
     getAttendedEventsOfCurrentlySignedInUser,
     attendEvent,
-    requestSubClub,getUserByName
+    requestSubClub,
+    requestForModerating,
+    getUserByName
 };
