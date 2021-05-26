@@ -18,6 +18,7 @@ import {Snackbar} from "@material-ui/core";
 import Copyright from "../component/common/Copyright";
 import {Alert} from "@material-ui/lab";
 import {delay} from "../util/async";
+import {MemberService} from "../service/MemberService";
 
 const useStyles = makeStyles((theme) => ({
     paper: {

@@ -49,7 +49,7 @@ const requestForModerating = (subclubName) => {
 }
 
 const getUserByName = (username) => {
-    return axios.get(BASE_URL + MEMBER, {params: {username: username}});
+    return axios.get(BASE_URL + MEMBER, {params: {username: username}} );
 }
 
 export const MemberService = {

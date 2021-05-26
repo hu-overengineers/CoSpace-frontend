@@ -120,12 +120,22 @@ function PostFeedLayout({children}) {
     const [enrolledSubClubs, setEnrolledSubClubs] = useState(null);
     const [feed, setFeed] = useState(customFeeds[0]);
     const [events, setEvents] = useState([]);
+    const [userInfo, setUserInfo] = useState(null);
 
     // Refresh event for posts
     const [refreshFeed, doRefresh] = useState(0)
     const [postDialogOpen, setPostDialogOpen] = React.useState(false);
     const [enrollDialogOpen, setEnrollDialogOpen] = React.useState(false);
     const [subclubRequestDialogOpen, setSubclubRequestDialogOpen] = React.useState(false);
+
+    useEffect(() => {
+        if (AuthService.hasJwtToken()) {
+            MemberService.getUserByName(AuthService.getUsername()).then(r => {
+                console.log("Member  info:", r.data);
+                setUserInfo(r.data);
+            });
+        }
+    }, []);
 
     // Get stats
     useEffect(() => {
@@ -260,14 +270,14 @@ function PostFeedLayout({children}) {
     const isEnrolled = (feed) => enrolledSubClubs ? enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0 : false;
 
     const getNewlyCreatedSubClubs = () => {
-        if (subClubs !== null && enrolledSubClubs !== null) {
+        if (subClubs !== null && enrolledSubClubs !== null && userInfo !== null) {
             const uncommon = [];
-            const time = new Date();
+            const time = new Date(userInfo.created);
             subClubs.forEach(subClub => {
                 enrolledSubClubs.forEach(enrolled => {
                     if (enrolled.name !== subClub.name) {
-                        if (subClub.created > time) {
-                            uncommon.push(subClub)
+                        if (new Date(subClub.created) > time) {
+                            uncommon.push(subClub);
                         }
                     }
                 })
@@ -422,7 +432,7 @@ function PostFeedLayout({children}) {
                             </Button>
                         </Box>}
 
-                        {AuthService.hasJwtToken() && getNewlyCreatedSubClubs().length > 0 &&
+                        {feed.name === "Popular" && AuthService.hasJwtToken() && getNewlyCreatedSubClubs().length > 0 &&
                         <Box>
                             <TitledSection titleIcon={<FiberNew/>}
                                            title={"Newly created sub-clubs"}>
