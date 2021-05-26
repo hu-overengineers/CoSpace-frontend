@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Divider} from '@material-ui/core';
+import {Divider, Typography} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import ClubTree from '../component/common/ClubTree';
 import Box from "@material-ui/core/Box";
-import {AccountCircle, FiberNew, PublicOutlined, TrendingUp} from "@material-ui/icons";
-import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import {AccountCircle, PublicOutlined} from "@material-ui/icons";
 import PostFeed from "../component/post/PostFeed";
 import {MemberService} from "../service/MemberService";
 import AboutMember from "../component/profile/AboutMember";
@@ -15,7 +14,7 @@ import {AuthService} from "../service/AuthService";
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
     divider: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(1),
         marginBottom: theme.spacing(2),
     },
     feedItem: {
@@ -69,16 +68,10 @@ export default function ProfilePage() {
 
     const classes = useStyles();
 
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const [commonClubsAndSubClubs, setCommonClubsAndSubClubs] = useState([]);
     const [posts, setPosts] = useState([]);
     const [subClub, setSubClub] = useState({name: "Loading..."});
-    const [sortingOrder, setSortingOrder] = React.useState('new');
-
-    const handleSortingOrder = (event) => {
-        console.log("Sorting order: " + event.target.value);
-        setSortingOrder(event.target.value);
-    };
 
     useEffect(() => {
         MemberService.getUserByName(username).then(response => {
@@ -109,8 +102,16 @@ export default function ProfilePage() {
     }, [username]);
 
     const handleClubTreeItemClick = (node) => {
-        setSubClub(node);
+        if (node.parentName !== undefined) {
+            setSubClub(node);
+        }
     }
+
+    useEffect(() => {
+        if (commonClubsAndSubClubs.length > 0) {
+            setSubClub(commonClubsAndSubClubs[0].children[0]);
+        }
+    }, [commonClubsAndSubClubs]);
 
     useEffect(() => {
         MemberService.getPostsByAuthorAndSubClub(username, subClub.name).then(response => {
@@ -134,6 +135,7 @@ export default function ProfilePage() {
                                 titleIcon={isSelf ? <AccountCircle/> : <PublicOutlined/>}
                                 callbackOnTreeItemClick={handleClubTreeItemClick}
                                 clubs={commonClubsAndSubClubs}
+                                selected={subClub.name}
                                 title={isSelf ? "Your Clubs" : "Common Clubs"}/>
                         </Box>
                     </Box>
@@ -141,19 +143,8 @@ export default function ProfilePage() {
                 <Grid item xs={6} className={classes.gridItem}>
                     <Box className={classes.gridMiddleColumnBox}>
                         <Box display="flex">
-                            <ToggleButtonGroup
-                                className={classes.sortingFeedToggleGroup}
-                                value={sortingOrder}
-                                exclusive
-                                onChange={handleSortingOrder}
-                                aria-label="text alignment">
-                                <ToggleButton value="new" aria-label="centered">
-                                    <FiberNew/>
-                                </ToggleButton>
-                                <ToggleButton value="top" aria-label="right aligned">
-                                    <TrendingUp/>
-                                </ToggleButton>
-                            </ToggleButtonGroup>
+                            <Typography variant={"h4"}>{user ? user.username : "User"}'s posts
+                                in {subClub.name}</Typography>
                         </Box>
                         <Divider className={classes.divider}/>
 
@@ -163,11 +154,11 @@ export default function ProfilePage() {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
-                            <AboutMember 
-                                        hasCommonSubClub = {commonClubsAndSubClubs.length > 0}
-                                        isSelf = {isSelf}
-                                        username={username}
-                                        timeRegistered={user ? user.created : null }
+                            <AboutMember
+                                hasCommonSubClub={commonClubsAndSubClubs.length > 0}
+                                isSelf={isSelf}
+                                username={username}
+                                timeRegistered={user ? user.created : null}
                             />
                         </Box>
                     </Box>
