@@ -5,6 +5,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import { Avatar, IconButton, Typography } from "@material-ui/core";
 import { MoreVertOutlined } from "@material-ui/icons";
+import {formatDistance} from "date-fns";
 
 
 
@@ -51,7 +52,7 @@ export default function ReviewCard({review}) {
                         </IconButton>
                     }
                     title={review.author}
-                    subheader = "review.date will be added"
+                    subheader ={formatDistance(new Date(review.created), new Date())}
                 />
                 <CardContent>
                     <Typography variant = "body" color="textSecondary">
