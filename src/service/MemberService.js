@@ -45,7 +45,7 @@ const requestSubClub = (parentName, subclubName, details) => {
 }
 
 const requestForModerating = (subclubName) => {
-    return axios.post(BASE_URL + MOD_REQUEST, {}, headersWithToken({subClubName:subclubName}));
+    return axios.post(BASE_URL + SUB_CLUB + MOD_REQUEST, {}, headersWithToken({subClubName:subclubName}));
 }
 
 const getUserByName = (username) => {
