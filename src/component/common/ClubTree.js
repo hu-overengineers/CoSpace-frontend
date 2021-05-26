@@ -15,7 +15,7 @@ export default function ClubTree(
         clubs,
         selected,
         callbackOnTreeItemClick,
-        title = "Clubs & Sub-Clubs",
+        title = "Clubs & Sub-clubs",
         titleIcon = <PublicOutlined/>
     }) {
     const classes = useStyles();

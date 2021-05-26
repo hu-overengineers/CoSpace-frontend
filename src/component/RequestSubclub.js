@@ -59,7 +59,7 @@ export default function EnrollPanel({open, setOpenDialog, club}) {
                             autoFocus
                             required
                             error={nameEmpty}
-                            label="SubClub Name"
+                            label="Sub-club name"
                             variant="outlined"
                             type="input"
                             onChange={onNameChange}
@@ -68,7 +68,7 @@ export default function EnrollPanel({open, setOpenDialog, club}) {
                     <TextField 
                         style={{marginTop:"5vh"}}
                         id="outlined-multiline"
-                        label="details"
+                        label="Details"
                         multiline
                         rowsMax={4}
                         onChange={onDetailsChange}

@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import {PostService} from "../../service/PostService";
 import Box from "@material-ui/core/Box";
 import MemberInfo from "./MemberInfo";
+import NoResultsFound from "../common/NoResultsFound";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,7 +75,7 @@ function ReportedPosts() {
                 <Typography variant="h6" className={classes.title}>List of Reports</Typography>
                 <Paper variant={"outlined"} className={classes.paper}>
                     <List className={classes.root}>
-                        {postReports ? postReports.map((report) =>
+                        {postReports === null || postReports.length === 0 ? <NoResultsFound/> : postReports.map((report) =>
                             <div>
                                 <ListItem
                                     button
@@ -104,7 +105,7 @@ function ReportedPosts() {
                                 </ListItem>
                                 <Divider variant="inset" component="li"/>
                             </div>
-                        ) : null}
+                        )}
                     </List>
                 </Paper>
             </Grid>

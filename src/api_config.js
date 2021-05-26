@@ -14,11 +14,13 @@ export const SUB_CLUB_EVENTS = "/subclub/events";
 export const ATTEND_SUB_CLUB_EVENT = "/subclub/attend-event";
 export const SUB_CLUB_QUESTIONNAIRE = "/subclub/questionnaire-sub";
 export const ONE_SUB_CLUB_ENROLL = "/subclub/enroll-subclub";
-
+export const DELETE_SUB_CLUB = "/delete-sub-club";
 export const MODERATOR = "/moderator";
 export const EVENT = "/event";
 export const DELETE_POST = "/delete-post";
-export const BAN = "/ban;"
+export const DELETE_OWN_POST = "/delete-own-by-id";
+export const BAN = "/ban"
+export const POST = "/post";
 // TODO: Fix some inconsistencies in naming.
 export const GET_POSTS = "/post";
 export const CREATE_POST = "/post/create";
@@ -41,6 +43,7 @@ export const REQUEST_SUBCLUB= "/request-subclub";
 export const SUBCLUB_REQUESTS = "/admin/subclub-requests";
 export const CREATE_CLUB = "/admin/create-club";
 export const CREATE_SUBCLUB = "/admin/create-sub-club";
+export const SEARCH = "/search";
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
 export const MOD_REQUEST = "/subclub/mod-request";
 

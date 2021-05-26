@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MetaPanelPage() {
     const classes = useStyles();
     const params = useParams();
-    const subclubname = params.subclubname;
+    const subClubName = params.subClubName;
 
   
 
@@ -26,18 +26,18 @@ export default function MetaPanelPage() {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        ReviewService.getReviews(subclubname).then(response => {
+        ReviewService.getReviews(subClubName).then(response => {
             console.log("get reviews", response.data);
             setReviews(response.data);
         });
-    }, [])
+    }, [subClubName])
 
     return (
         
         <Container>
 
             <Container className={classes.summaryContainer}>
-                <SummaryCard subClubName = {subclubname} reviews={reviews}/>
+                <SummaryCard subClubName = {subClubName} reviews={reviews}/>
             </Container>
         
 

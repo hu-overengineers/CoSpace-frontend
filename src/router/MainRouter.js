@@ -10,6 +10,7 @@ import PasswordResetPage from '../page/PasswordResetPage';
 import PrivateMessagePage from "../page/PrivateMessagePage";
 import ModeratorPage from "../page/ModeratorPage";
 import MetaPanelPage from "../page/MetaPanelPage";
+import SearchResultsPage from "../page/SearchResultsPage";
 
 
 
@@ -45,8 +46,11 @@ export default function MainRouter() {
                     <Route path="/mod">
                         <ModeratorPage/>
                     </Route>
-                    <Route path="/metapanel/:subclubname">
+                    <Route path="/meta/:subClubName">
                         <MetaPanelPage/>
+                    </Route>
+                    <Route path="/search/:query">
+                        <SearchResultsPage/>
                     </Route>
                     <Route path="*">
                         <NotFoundPage/>

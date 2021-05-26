@@ -334,10 +334,10 @@ function PostFeedLayout({children}) {
                                     color="primary"
                                     startIcon={<RateReviewOutlinedIcon/>}
                                     onClick={() => {
-                                        history.push(`/metapanel/${feed.name}`)
+                                        history.push(`/meta/${feed.name}`)
                                     }}
                                     fullWidth
-                                    disableElevation>{feed.name} metapanel
+                                    disableElevation>{feed.name} META
                             </Button>
                         </Box>
     
@@ -353,7 +353,7 @@ function PostFeedLayout({children}) {
                                         handleSubclubRequestDialogOpen()
                                     }}
                                     fullWidth
-                                    disableElevation>REQUEST NEW SUBCLUB
+                                    disableElevation>REQUEST NEW SUB-CLUB
                             </Button>
                         </Box>}
 
