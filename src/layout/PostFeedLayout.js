@@ -99,7 +99,12 @@ const customFeeds = [
     {isCustom: true, name: "Popular", details: "Popular posts in all clubs and sub-clubs right now.", children: []},
 ];
 
-
+/**
+ * TODO: Refactor.
+ * @param children
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function PostFeedLayout({children}) {
     const classes = useStyles();
     const history = useHistory();
