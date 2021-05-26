@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import InputLabel from '@material-ui/core/InputLabel';
 import clsx from 'clsx';
+import {delay} from "../../util/async";
 import {
     Button,
     Chip,
@@ -25,6 +26,7 @@ import CreateQuestionnaire from "../questionnaire/CreateQuestionnaire"
 import {AdminService} from "../../service/AdminService";
 import {ClubService} from "../../service/ClubService";
 import Box from "@material-ui/core/Box";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -64,6 +66,7 @@ function CreateClub() {
     const classes = useStyles();
     const [canCreate, setCanCreate] = React.useState(false);
 
+    const history = useHistory();
     // ------------------------ CREATE CLUB DIALOG ------------------------
     const [openClubDialog, setClubDialog] = React.useState(false);
     const [createClubName, setCreateClubName] = React.useState("");
@@ -218,6 +221,9 @@ function CreateClub() {
 
 
     const handleSubmitCreation = (event) => {
+
+
+        
         const createObject = {
             name: subclubName,
             parentName: clubName,
@@ -232,6 +238,9 @@ function CreateClub() {
         }
         AdminService.createSubClub(createObject).then((response) => {
             console.log(response.data);
+            delay(2000).then(e => {
+                history.push(`/feed/${subclubName}/today`)
+            });
         })
 
     }
