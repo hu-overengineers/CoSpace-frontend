@@ -8,6 +8,7 @@ import {SearchService} from "../service/SearchService";
 import List from "@material-ui/core/List";
 import {InfoOutlined, Person} from "@material-ui/icons";
 import Divider from "@material-ui/core/Divider";
+import NoResultsFound from "../component/common/NoResultsFound";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,20 +65,6 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
 }));
-
-
-function NoResultsFound() {
-    const classes = useStyles();
-
-    return (<ListItem
-        key={"no-result"}>
-        <ListItemAvatar className={classes.avatarContainer}>
-            <Avatar className={classes.avatar}><InfoOutlined/></Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={"No results found"}/>
-    </ListItem>);
-}
-
 
 export default function SearchResultsPage() {
     const classes = useStyles();

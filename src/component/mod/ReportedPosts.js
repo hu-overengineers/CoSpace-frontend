@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import {PostService} from "../../service/PostService";
 import Box from "@material-ui/core/Box";
 import MemberInfo from "../admin/MemberInfo";
+import NoResultsFound from "../common/NoResultsFound";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -55,7 +56,7 @@ export function ReportedPosts() {
     // Get Reports
     useEffect(() => {
         ModeratorService.getPostReports().then(response => {
-            console.log("reports",response.data)
+            console.log("reports", response.data)
             setPostReports(response.data);
         });
     }, [selectedReport]);
@@ -74,102 +75,103 @@ export function ReportedPosts() {
 
     return (
         <Grid container>
-        <Grid key={1} item xs={4}>
-            <Typography variant="h6" className={classes.title}>List of Reports</Typography>
-            <Paper variant={"outlined"} className={classes.paper}>
-                <List className={classes.root}>
-                    {postReports ? postReports.map((report) =>
-                        <div>
-                            <ListItem
-                                button
-                                key={report.postId}
-                                selected={selectedPost && report.postId === selectedPost.id}
-                                alignItems="flex-start"
-                                onClick={(e) => handleReportClick(e, report)}>
-                                <ListItemIcon>
-                                    <ReportOutlinedIcon/>
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={`Reported by: ${report.author}`}
-                                    secondary={
-                                        <React.Fragment>
-                                            <Typography
-                                                component="span"
-                                                variant="body2"
-                                                className={classes.inline}
-                                                color="textPrimary"
-                                            >
-                                                {`Reason: `}
-                                            </Typography>
-                                            {report.content}
-                                        </React.Fragment>
-                                    }
-                                />
-                            </ListItem>
-                            <Divider variant="inset" component="li"/>
-                        </div>
-                    ) : null}
-                </List>
-            </Paper>
-        </Grid>
+            <Grid key={1} item xs={4}>
+                <Typography variant="h6" className={classes.title}>List of Reports</Typography>
+                <Paper variant={"outlined"} className={classes.paper}>
+                    <List className={classes.root}>
+                        {postReports === null || postReports.length === 0 ?
+                            <NoResultsFound/> : postReports.map((report) =>
+                                <div>
+                                    <ListItem
+                                        button
+                                        key={report.postId}
+                                        selected={selectedPost && report.postId === selectedPost.id}
+                                        alignItems="flex-start"
+                                        onClick={(e) => handleReportClick(e, report)}>
+                                        <ListItemIcon>
+                                            <ReportOutlinedIcon/>
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={`Reported by: ${report.author}`}
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        component="span"
+                                                        variant="body2"
+                                                        className={classes.inline}
+                                                        color="textPrimary"
+                                                    >
+                                                        {`Reason: `}
+                                                    </Typography>
+                                                    {report.content}
+                                                </React.Fragment>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li"/>
+                                </div>
+                            )}
+                    </List>
+                </Paper>
+            </Grid>
 
 
-        <Grid className={classes.gridReportInfoContainer} key={2} container xs={8}>
-            {selectedPost ?
-                <Box>
+            <Grid className={classes.gridReportInfoContainer} key={2} container xs={8}>
+                {selectedPost ?
+                    <Box>
 
-                    <Grid item>
-                        <Typography variant="h6" className={classes.title}>Reported Post</Typography>
-                        <Box>
-                            {selectedPost ? <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
-                        </Box>
-                    </Grid>
-
-                    <Grid container>
-                        <Grid item key={1} xs={6} className={classes.gridHorizontalSection}>
-                            <Typography variant="h6" className={classes.title}>Author Information</Typography>
-                            {selectedPostOwner ? <MemberInfo info={selectedPostOwner}/> : null}
+                        <Grid item>
+                            <Typography variant="h6" className={classes.title}>Reported Post</Typography>
+                            <Box>
+                                {selectedPost ? <PostFeedItem key={selectedPost.postId} props={selectedPost}/> : null}
+                            </Box>
                         </Grid>
 
-                        <Grid item key={2} xs={6} className={classes.gridHorizontalSection}>
-                            <Typography variant="h6" className={classes.title}>Actions</Typography>
-                            <Grid container>
-                                <Grid item key={1} className={classes.button}>
-                                    <Button variant="outlined" onClick={()=>{
-                                       ModeratorService.ban(selectedPostOwner.username, "voluptatem", "reason").then(response => {
-                                        console.log("BAN: ", response.data);
+                        <Grid container>
+                            <Grid item key={1} xs={6} className={classes.gridHorizontalSection}>
+                                <Typography variant="h6" className={classes.title}>Author Information</Typography>
+                                {selectedPostOwner ? <MemberInfo info={selectedPostOwner}/> : null}
+                            </Grid>
 
-                                    })
-                                    }}>Ban Member</Button>
-                                </Grid>
+                            <Grid item key={2} xs={6} className={classes.gridHorizontalSection}>
+                                <Typography variant="h6" className={classes.title}>Actions</Typography>
+                                <Grid container>
+                                    <Grid item key={1} className={classes.button}>
+                                        <Button variant="outlined" onClick={() => {
+                                            ModeratorService.ban(selectedPostOwner.username, "voluptatem", "reason").then(response => {
+                                                console.log("BAN: ", response.data);
 
-                                <Grid item key={2} className={classes.button}>
-                                    <Button variant="outlined" onClick = {() => {
-                                        ModeratorService.deleteReport(selectedReport.id).then(response => {
-                                            console.log("DELETE REPORT", response.data);
-                                            setSelectedReport(null);
-                                            setSelectedPost(null);
-                                            setSelectedPostOwner(null);
-                                        })
-                                    }}>Delete Report</Button>
-                                </Grid>
-                                <Grid item key={3} className={classes.button}>
-                                    <Button variant="outlined" onClick = {() => {
-                                        ModeratorService.deletePost(selectedPost.id).then(response => {
-                                            console.log("DELETE POST", response.data);
-                                            setSelectedReport(null);
-                                            setSelectedPost(null);
-                                        })
-                                    }}>Delete Post</Button>
+                                            })
+                                        }}>Ban Member</Button>
+                                    </Grid>
+
+                                    <Grid item key={2} className={classes.button}>
+                                        <Button variant="outlined" onClick={() => {
+                                            ModeratorService.deleteReport(selectedReport.id).then(response => {
+                                                console.log("DELETE REPORT", response.data);
+                                                setSelectedReport(null);
+                                                setSelectedPost(null);
+                                                setSelectedPostOwner(null);
+                                            })
+                                        }}>Delete Report</Button>
+                                    </Grid>
+                                    <Grid item key={3} className={classes.button}>
+                                        <Button variant="outlined" onClick={() => {
+                                            ModeratorService.deletePost(selectedPost.id).then(response => {
+                                                console.log("DELETE POST", response.data);
+                                                setSelectedReport(null);
+                                                setSelectedPost(null);
+                                            })
+                                        }}>Delete Post</Button>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
 
 
-                </Box>
-                : <Typography className={classes.title}>Select a report to see the details.</Typography>}
+                    </Box>
+                    : <Typography className={classes.title}>Select a report to see the details.</Typography>}
+            </Grid>
         </Grid>
-    </Grid>
     );
 }
