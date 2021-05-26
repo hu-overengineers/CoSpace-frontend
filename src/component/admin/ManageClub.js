@@ -203,7 +203,7 @@ function ManageClub() {
                                     required
                                     fullWidth
                                     id="standard-full-width"
-                                    label="Sub-club Name"
+                                    label="Sub-club name"
                                     style={{margin: 8}}
                                     placeholder="Sub-club name"
                                     margin="normal"
@@ -221,7 +221,7 @@ function ManageClub() {
                                 <TextField
                                     required
                                     id="standard-full-width"
-                                    label="Sub-club Description"
+                                    label="Sub-club description"
                                     style={{margin: 8}}
                                     placeholder="Sub-club description"
                                     helperText="Description should include bla bla"
@@ -295,7 +295,7 @@ function ManageClub() {
                                 className={classes.submit}
                                 onClick={handleDeleteSubClub}
                             >
-                                Delete this subclub
+                                Delete this sub-club
                             </Button>
                         </Container>
                     </Grid>
@@ -311,8 +311,8 @@ function ManageClub() {
                                 id="responsive-dialog-title">{"Create a club with the following information?"}</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    <Typography>Club Name: {selectedClub.name}</Typography>
-                                    <Typography>Club Description: {selectedClub.details} </Typography>
+                                    <Typography>Club name: {selectedClub.name}</Typography>
+                                    <Typography>Club description: {selectedClub.details} </Typography>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
