@@ -18,7 +18,9 @@ export const DELETE_SUB_CLUB = "/delete-sub-club";
 export const MODERATOR = "/moderator";
 export const EVENT = "/event";
 export const DELETE_POST = "/delete-post";
-export const BAN = "/ban;"
+export const DELETE_OWN_POST = "/delete-own-by-id";
+export const BAN = "/ban"
+export const POST = "/post";
 // TODO: Fix some inconsistencies in naming.
 export const GET_POSTS = "/post";
 export const CREATE_POST = "/post/create";

@@ -177,6 +177,16 @@ export function PostFeedItem({props}) {
 
     const handleAuthorClick = () => history.push(`/profile/${props.author}`);
 
+
+    
+    const handleDeletePost = () => {
+
+       PostService.deleteOwnPost(props.id).then(response => {
+            console.log(response.data);
+       });
+    };
+
+
     return (
         <Box>
             <Card variant="outlined" className={classes.root}>
@@ -203,6 +213,13 @@ export function PostFeedItem({props}) {
                                 <MenuItem key="report" onClick={handleReportDialogOpen}>
                                     Report
                                 </MenuItem>
+                                
+                                {AuthService.getUsername() === props.author ? 
+                                <MenuItem key="delete" onClick={handleDeletePost}>
+                                    Delete
+                                </MenuItem>
+                                : null}
+                                
                             </Menu>
                         </CardActions>
                     }

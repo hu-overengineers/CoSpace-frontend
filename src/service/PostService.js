@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, CREATE_POST, DOWNVOTE_POST, FEED, GET_POSTS, REPORT_POST, UPVOTE_POST} from "../api_config";
+import {BASE_URL, CREATE_POST, DOWNVOTE_POST, FEED, GET_POSTS, REPORT_POST, UPVOTE_POST, DELETE_OWN_POST, POST} from "../api_config";
 import {headersWithToken} from "./headers";
 import {subDays} from "date-fns";
 
@@ -52,5 +52,8 @@ const getPostById = (postId) => {
     return axios.get(BASE_URL + GET_POSTS, {params: {postId: postId}})
 };
 
+const deleteOwnPost = (postId) => {
+    return axios.post(BASE_URL + POST + DELETE_OWN_POST, null, headersWithToken({id: postId}));
+}
 
-export const PostService = {getPosts, createPost, reportPost, upvotePost, downvotePost, getPostById};
+export const PostService = {getPosts, createPost, reportPost, upvotePost, downvotePost, getPostById, deleteOwnPost};
