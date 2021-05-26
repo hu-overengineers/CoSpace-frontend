@@ -60,14 +60,13 @@ function ModeratorRequests() {
 
 
     useEffect(() => {
-        ClubService.getSubClubs().then(response => {
+        AdminService.getModeratorRequests().then(response => {
             setSubClubs(response.data);
         })
     }, []);
 
     const handleSubClubNameChange = (event) => {
-        const tempSubClub = subClubs.filter(subc => {return subc.name === event.target.value})[0]
-        setSelectedSubClub(tempSubClub);
+        setSelectedSubClub(event.target.value);
         if (event.target.value === "") {
             setIsRequestsVisible(false);
         } else {
@@ -78,7 +77,7 @@ function ModeratorRequests() {
 
 
     const handleRandomSelection = (event) => {
-        AdminService.assignRandomModerator(selectedSubClub.name).then((response) => {
+        AdminService.assignRandomModerator(selectedSubClub).then((response) => {
             if (response.data === "") {
                 setSelectedModRequest("")                
             }
@@ -90,13 +89,8 @@ function ModeratorRequests() {
         })
     }
 
-
-
     return (
-
-
         <Box>
-
             <Box>
                 <div>
                     <FormControl variant={"filled"} className={classes.formControl}>
@@ -109,11 +103,14 @@ function ModeratorRequests() {
                             <option aria-label="None" value=""/>
 
                             {subClubs.map((subClub) => (
-                                <option value={subClub.name}>{subClub.name}</option>
+                                <option value={subClub}>{subClub}</option>
                             ))}
                         </Select>
                         <FormHelperText>Select a sub-club</FormHelperText>
                     </FormControl>
+                    {(subClubs.length === 0 ) && (
+                        <h3>There are no moderation request.</h3>
+                    )}
                 </div>
             </Box>
 
@@ -125,23 +122,17 @@ function ModeratorRequests() {
                                         variant="contained"
                                         color="primary"
                                         startIcon={<Casino/>}
-                                        disabled={selectedSubClub.moderatorUsername !== ""}
+                                        disabled={isMemberInfoVisible}
                                         onClick={() => {
                                             handleRandomSelection()
                                         }}
                                         disableElevation>SELECT A RANDOM MODERATOR
                         </Button>
-                        {(selectedSubClub.moderatorUsername !== "") && (
-                            <Typography className={classes.typography}> {selectedSubClub.name} already have a moderator!</Typography>
-                        )}
                     </Grid>
-
                     <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                         {(isMemberInfoVisible) && (
                             <div>
-                                {(selectedModRequest !== "") && (<MemberInfo info={selectedModRequest}/>)}
-                                {(selectedModRequest === "") && (<p>There are no moderator request for {selectedSubClub.name}</p>)}
-                                
+                                {(selectedModRequest !== "") && (<MemberInfo info={selectedModRequest}/>)}                                
                             </div>
                         )}
                     </Grid>

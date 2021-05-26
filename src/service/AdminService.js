@@ -46,8 +46,8 @@ const deleteSubClub = (subClubId) => {
     return axios.post(BASE_URL + ADMIN + DELETE_SUB_CLUB, null, headersWithToken({id: subClubId}));
 }
 
-const getModeratorRequests = (subclubname) => {
-    return axios.get(BASE_URL + ADMIN + MOD_REQUESTS, headersWithToken({subClubName:subclubname}));
+const getModeratorRequests = () => {
+    return axios.get(BASE_URL + ADMIN + MOD_REQUESTS, headersWithToken());
 }
 
 const assignRandomModerator = (subclubname) => {
