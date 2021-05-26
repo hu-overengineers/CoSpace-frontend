@@ -15,6 +15,8 @@ import { ReviewService } from "../../service/ReviewService";
 import { Chart, ArgumentAxis, ValueAxis, BarSeries,} from '@devexpress/dx-react-chart-material-ui';
 import { useHistory } from "react-router";
 import {delay} from "../../util/async";
+import { ClubService } from "../../service/ClubService";
+import {subDays} from "date-fns";
   
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,7 +80,7 @@ export default function SummaryCard({subClubName, reviews}) {
 
     let totalRating=0;
     let rateStructure = {
-        state: '',
+        state: '+1',
         one: 0,
         two: 0,
         three: 0,
@@ -111,6 +113,7 @@ export default function SummaryCard({subClubName, reviews}) {
     rateStructure.five = rateStructure.five / totalRating;
 
 
+    // make this feed dynamic
     const feed = {
         created: "2021-05-25T17:00:26.586+00:00",
         details: "Molestiae nulla itaque quaerat dolor molestiae illo est.",
@@ -122,6 +125,9 @@ export default function SummaryCard({subClubName, reviews}) {
         parentName: "quia",
     }
 
+    //ClubService.getSubClubStatistics(subClubName, subDays(new Date(), 7), new Date()).then(response => {
+    //    console.log(response.data);
+    //});
     
     return (
         <div>
@@ -157,12 +163,12 @@ export default function SummaryCard({subClubName, reviews}) {
                         <Grid key="3" item xs={4}>
                         <Paper>
                             <Chart data={[rateStructure]} rotated height="250">
-                    
-                                            <ArgumentAxis />
+
                                             <ValueAxis />
                                             <BarSeries
                                                 valueField="five"
                                                 argumentField="state"
+                                                
                                                 color="#57bb8a"
                                             />
 
@@ -224,7 +230,7 @@ export default function SummaryCard({subClubName, reviews}) {
                     <TextField
                             autoFocus
                             required
-                 
+                            multiline
                             label="Your Review"
                             variant="outlined"
                             type="input"
