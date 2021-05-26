@@ -282,7 +282,7 @@ function CreateClub() {
                     <Container>
                         <div>
                             <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="age-native-helper">Sub-Club Requests</InputLabel>
+                                <InputLabel htmlFor="age-native-helper">Sub-club Requests</InputLabel>
                                 <Select
                                     onChange={handleClubRequestNameChange}>
                                     <option aria-label="None" value=""/>
@@ -331,9 +331,9 @@ function CreateClub() {
                                 required
                                 fullWidth
                                 id="standard-full-width"
-                                label="Sub-Club Name"
+                                label="Sub-club Name"
                                 style={{margin: 8}}
-                                placeholder="Sub-Club name"
+                                placeholder="Sub-club name"
                                 margin="normal"
                                 InputLabelProps={{shrink: true,}}
                                 value={subclubName}
@@ -349,9 +349,9 @@ function CreateClub() {
                             <TextField
                                 required
                                 id="standard-full-width"
-                                label="Sub-Club Description"
+                                label="Sub-club Description"
                                 style={{margin: 8}}
-                                placeholder="Sub-Club description"
+                                placeholder="Sub-club description"
                                 helperText="Description should include bla bla"
                                 fullWidth
                                 margin="normal"

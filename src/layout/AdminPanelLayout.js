@@ -10,7 +10,7 @@ import Box from "@material-ui/core/Box";
 
 const adminMenu = [
     {
-        text: "Clubs & Sub-Clubs",
+        text: "Clubs & Sub-clubs",
         children: [
             {
                 text: "Create club",
