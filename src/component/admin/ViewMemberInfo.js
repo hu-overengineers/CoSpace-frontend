@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "50%",
+        marginBottom: theme.spacing(2),
     },
     divider: {
         marginTop: theme.spacing(2),

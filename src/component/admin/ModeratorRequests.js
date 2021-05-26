@@ -100,7 +100,7 @@ function ModeratorRequests() {
             <Box>
                 <div>
                     <FormControl variant={"filled"} className={classes.formControl}>
-                        <InputLabel htmlFor="age-native-helper">Sub-Club</InputLabel>
+                        <InputLabel htmlFor="age-native-helper">Sub-club</InputLabel>
                         <Select
                             onChange={handleSubClubNameChange}
                             inputProps={{
