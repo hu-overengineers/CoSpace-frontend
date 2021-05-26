@@ -4,8 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from "@material-ui/core/styles";
 import ClubTree from '../component/common/ClubTree';
 import Box from "@material-ui/core/Box";
-import {AccountCircle, FiberNew, PublicOutlined, TrendingUp} from "@material-ui/icons";
-import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import {AccountCircle, PublicOutlined} from "@material-ui/icons";
 import PostFeed from "../component/post/PostFeed";
 import {MemberService} from "../service/MemberService";
 import AboutMember from "../component/profile/AboutMember";
@@ -109,6 +108,12 @@ export default function ProfilePage() {
     }
 
     useEffect(() => {
+        if (commonClubsAndSubClubs.length > 0) {
+            setSubClub(commonClubsAndSubClubs[0].children[0]);
+        }
+    }, [commonClubsAndSubClubs]);
+
+    useEffect(() => {
         MemberService.getPostsByAuthorAndSubClub(username, subClub.name).then(response => {
             console.log(`Posts of ${username} on ${subClub.name}`, response.data);
             setPosts(response.data);
@@ -130,6 +135,7 @@ export default function ProfilePage() {
                                 titleIcon={isSelf ? <AccountCircle/> : <PublicOutlined/>}
                                 callbackOnTreeItemClick={handleClubTreeItemClick}
                                 clubs={commonClubsAndSubClubs}
+                                selected={subClub.name}
                                 title={isSelf ? "Your Clubs" : "Common Clubs"}/>
                         </Box>
                     </Box>
@@ -137,7 +143,8 @@ export default function ProfilePage() {
                 <Grid item xs={6} className={classes.gridItem}>
                     <Box className={classes.gridMiddleColumnBox}>
                         <Box display="flex">
-                            <Typography variant={"h4"}>{user ? user.username : "User"}'s posts in {subClub.name}</Typography>
+                            <Typography variant={"h4"}>{user ? user.username : "User"}'s posts
+                                in {subClub.name}</Typography>
                         </Box>
                         <Divider className={classes.divider}/>
 
@@ -147,11 +154,11 @@ export default function ProfilePage() {
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
-                            <AboutMember 
-                                        hasCommonSubClub = {commonClubsAndSubClubs.length > 0}
-                                        isSelf = {isSelf}
-                                        username={username}
-                                        timeRegistered={user ? user.created : null }
+                            <AboutMember
+                                hasCommonSubClub={commonClubsAndSubClubs.length > 0}
+                                isSelf={isSelf}
+                                username={username}
+                                timeRegistered={user ? user.created : null}
                             />
                         </Box>
                     </Box>
