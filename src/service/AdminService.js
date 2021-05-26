@@ -6,7 +6,7 @@ import {ADMIN,
         REPORTS,
         SEARCH_MEMBER_BY_NAME,
         SUBCLUB_REQUESTS,
-        CREATE_CLUB, CREATE_SUBCLUB, DELETE_REPORT} from "../api_config";
+        CREATE_CLUB, CREATE_SUBCLUB, DELETE_REPORT, SUB_CLUB} from "../api_config";
 
 
 const searchMembersByName = (username, page, size) => {
@@ -34,8 +34,12 @@ const createSubClub = (body) => {
     return axios.post(BASE_URL + CREATE_SUBCLUB, body, headersWithToken());
 }
 
+const updateSubClub = (body) => {
+    return axios.put(BASE_URL + ADMIN + SUB_CLUB, body, headersWithToken());
+}
+
 const deleteReport = (reportId) => {
     return axios.post(BASE_URL + ADMIN + DELETE_REPORT, null, headersWithToken({reportId: reportId}));
 }
 
-export const AdminService = {searchMembersByName, getEnrolledSubClubs, getPostReports, getRequestedSubclubs, createClub, createSubClub, deleteReport}
+export const AdminService = {searchMembersByName, getEnrolledSubClubs, getPostReports, getRequestedSubclubs, updateSubClub, createClub, createSubClub, deleteReport}
