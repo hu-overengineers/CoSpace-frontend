@@ -3,6 +3,7 @@ import ReportedPosts from "../component/admin/ReportedPosts";
 import ViewMemberInfo from "../component/admin/ViewMemberInfo";
 import ManageClub from "../component/admin/ManageClub";
 import CreateClub from "../component/admin/CreateClub";
+import ModeratorRequests from "../component/admin/ModeratorRequests";
 
 export default function AdminPanelSwitch() {
     return (
@@ -15,6 +16,9 @@ export default function AdminPanelSwitch() {
             </Route>
             <Route path="/admin/view-member-info">
                 <ViewMemberInfo/>
+            </Route>
+            <Route path="/admin/moderator-requests">
+                <ModeratorRequests/>
             </Route>
             <Route path="/admin/reported-posts">
                 <ReportedPosts/>
