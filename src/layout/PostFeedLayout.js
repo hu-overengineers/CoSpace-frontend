@@ -444,6 +444,7 @@ function PostFeedLayout({children}) {
                                 <List>
                                     {getNewlyCreatedSubClubs().map(subClub =>
                                         <ListItem
+                                            button
                                             onClick={() => history.push(`/feed/${subClub.name}`)} key={subClub.name}>
                                             <ListItemAvatar className={classes.avatarContainer}>
                                                 <Avatar
