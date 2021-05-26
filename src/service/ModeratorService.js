@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BASE_URL, EVENT, MODERATOR, REPORTS, DELETE_REPORT, DELETE_POST, BAN} from "../api_config";
+import {BASE_URL, EVENT, MODERATOR, REPORTS, DELETE_REPORT, DELETE_POST, BAN, DISMISS_LIST, DISMISS} from "../api_config";
 import {headersWithToken} from "./headers";
 
 
@@ -46,4 +46,13 @@ const ban = (username, subClubName, reason) => {
         reason: reason}));
 }
 
-export const ModeratorService = {createEvent, getEvents, updateEvent, deleteEvent, getPostReports, deleteReport, deletePost, ban};
+const getDismissList = () => {
+    return axios.get(BASE_URL + MODERATOR + DISMISS_LIST, headersWithToken());
+}
+
+const dismiss = (username) => {
+    return axios.post(BASE_URL + MODERATOR + DISMISS, headersWithToken({username: username}));
+
+}
+
+export const ModeratorService = {createEvent, getEvents, updateEvent, deleteEvent, getPostReports, deleteReport, dismiss,  deletePost, ban, getDismissList};

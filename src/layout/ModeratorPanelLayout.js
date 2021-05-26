@@ -29,6 +29,10 @@ const modMenu = [
                 text: "Reported posts",
                 path: "/mod/reported-posts"
             },
+            {
+                text: "Dismiss List",
+                path: "/mod/dismiss"
+            },
         ]
     },
 ];
