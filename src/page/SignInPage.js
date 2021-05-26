@@ -119,7 +119,12 @@ export default function SignInPage() {
                                 setSnackbarOpen(true);
 
                                 delay(1000).then(() => {
-                                    history.push("/")
+                                    if(r.data.enrollmentCount === 0){
+                                        history.push("/subclub-recommendation");
+                                    }
+                                    else{
+                                        history.push("/")
+                                    }
                                 })
                             }).catch(e => {
                                 setSnackbarSeverity("error");

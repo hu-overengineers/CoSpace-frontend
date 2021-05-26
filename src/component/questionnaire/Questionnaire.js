@@ -26,7 +26,6 @@ export default function Questionnaire({questions, callBackOnAnswer}) {
     
 
     const handleQuestionAnswering = (question_id, newGivenAnswer) => {
-      console.log(givenAnswers);
       let givenAnswerIndex = givenAnswers.findIndex(a => a.id === question_id)
       let givenAnswer = givenAnswers[givenAnswerIndex]
       givenAnswer.groundTruth = newGivenAnswer;
