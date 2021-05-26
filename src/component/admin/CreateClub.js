@@ -224,12 +224,6 @@ function CreateClub() {
             questions: questions,
             details: subclubDescription
         }
-        if (chipData.length !== 0) {
-            createObject.details += " Keywords: ";
-            chipData.forEach(chp => {
-                createObject.details += " " + chp.label
-            });
-        }
         AdminService.createSubClub(createObject).then((response) => {
             console.log(response.data);
         })
@@ -363,55 +357,55 @@ function CreateClub() {
                         </div>
                     </Container>
                 </Grid>
-                <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <div className={classes.root}><Typography>Related keywords</Typography></div>
-                    <Container>
-                        <div className={classes.root}>
+                {/*<Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>*/}
+                {/*    <div className={classes.root}><Typography>Related keywords</Typography></div>*/}
+                {/*    <Container>*/}
+                {/*        <div className={classes.root}>*/}
 
-                            {(chipData.length === 0 && (
-                                <Chip
-                                    label="Empty"
-                                    className={classes.chip}/>))}
+                {/*            {(chipData.length === 0 && (*/}
+                {/*                <Chip*/}
+                {/*                    label="Empty"*/}
+                {/*                    className={classes.chip}/>))}*/}
 
-                            {chipData.map((data) => {
-                                return (
-                                    <li key={data.key}>
-                                        <Chip
-                                            label={data.label}
-                                            onDelete={handleChipDelete(data)}
-                                            className={classes.chip}
-                                        />
-                                    </li>
-                                );
-                            })}
-                        </div>
-                    </Container>
-                </Grid>
+                {/*            {chipData.map((data) => {*/}
+                {/*                return (*/}
+                {/*                    <li key={data.key}>*/}
+                {/*                        <Chip*/}
+                {/*                            label={data.label}*/}
+                {/*                            onDelete={handleChipDelete(data)}*/}
+                {/*                            className={classes.chip}*/}
+                {/*                        />*/}
+                {/*                    </li>*/}
+                {/*                );*/}
+                {/*            })}*/}
+                {/*        </div>*/}
+                {/*    </Container>*/}
+                {/*</Grid>*/}
 
-                <Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                    <Typography className={classes.root}>Add new keyword</Typography>
-                    <Container>
-                        <div>
-                            <TextField
-                                placeholder="some-tag"
-                                className={clsx(classes.margin, classes.textField)}
-                                InputProps={{
-                                    startAdornment: <InputAdornment position="start">#</InputAdornment>,
-                                }}
-                                value={tag}
-                                onChange={handleTagTextFieldChange}
-                            />
-                        </div>
-                    </Container>
-                </Grid>
-                <Grid item xs={1}>
-                    <Container>
-                        <IconButton aria-label="add" onClick={addTagClick}>
-                            <AddCircleOutlineIcon/>
-                        </IconButton>
-                    </Container>
+                {/*<Grid item xs={5} style={{maxHeight: '100vh', overflow: 'auto'}}>*/}
+                {/*    <Typography className={classes.root}>Add new keyword</Typography>*/}
+                {/*    <Container>*/}
+                {/*        <div>*/}
+                {/*            <TextField*/}
+                {/*                placeholder="some-tag"*/}
+                {/*                className={clsx(classes.margin, classes.textField)}*/}
+                {/*                InputProps={{*/}
+                {/*                    startAdornment: <InputAdornment position="start">#</InputAdornment>,*/}
+                {/*                }}*/}
+                {/*                value={tag}*/}
+                {/*                onChange={handleTagTextFieldChange}*/}
+                {/*            />*/}
+                {/*        </div>*/}
+                {/*    </Container>*/}
+                {/*</Grid>*/}
+                {/*<Grid item xs={1}>*/}
+                {/*    <Container>*/}
+                {/*        <IconButton aria-label="add" onClick={addTagClick}>*/}
+                {/*            <AddCircleOutlineIcon/>*/}
+                {/*        </IconButton>*/}
+                {/*    </Container>*/}
 
-                </Grid>
+                {/*</Grid>*/}
                 <Grid item xs={6} style={{maxHeight: '100vh', overflow: 'auto'}}>
                     <Container>
                         <Button
