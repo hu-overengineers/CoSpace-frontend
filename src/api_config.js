@@ -42,6 +42,7 @@ export const SUBCLUB_REQUESTS = "/admin/subclub-requests";
 export const CREATE_CLUB = "/admin/create-club";
 export const CREATE_SUBCLUB = "/admin/create-sub-club";
 export const LOGIN_WITH_TOKEN = "/auth/login_with_token";
+export const MOD_REQUEST = "/subclub/mod-request";
 
 export const SEARCH_MEMBER_BY_NAME = "/admin/search-member"
 export const RESET_PASSWORD = "/reset-password";
