@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     gridReportInfoContainer: {
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2),
+        display: "flex"
     },
     gridHorizontalSection: {
         paddingRight: theme.spacing(2),
