@@ -2,7 +2,7 @@ import Box from "@material-ui/core/Box";
 import {Chip, IconButton, List, ListItem, ListItemAvatar, ListItemText, makeStyles} from "@material-ui/core";
 import React from 'react';
 import Typography from "@material-ui/core/Typography";
-import {Event, EventAvailable, PinDrop, Public} from "@material-ui/icons";
+import {Event, EventAvailable, PinDrop, Public, Schedule} from "@material-ui/icons";
 import {formatRelative} from "date-fns";
 import {openInNewTab} from "../../util/redirect";
 
@@ -79,6 +79,9 @@ export default function EventItem(
                                     <Chip variant={"outlined"} size="small" color="primary" label={event.location}
                                           onClick={event.location.includes("http") ? (() => openInNewTab(event.location)) : null}
                                           icon={<PinDrop/>}/>
+                                    <Chip variant={"outlined"} size="small" color="primary" label={event.utilLink}
+                                          onClick={event.utilLink.includes("http") ? (() => openInNewTab(event.utilLink)) : null}
+                                          icon={<Schedule/>}/>
                                 </Box>
                             </List>
                         </React.Fragment>

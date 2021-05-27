@@ -171,7 +171,7 @@ export function ManageEvent() {
                                         }}
                             />} label="Will it be online?"/>
                     </Box>
-                    
+
                     <TextField
                         className={classes.formInput}
                         key="event location"
@@ -179,12 +179,28 @@ export function ManageEvent() {
                         variant={"filled"}
                         disabled={eventChanged}
                         onChange={(e) => {
-                            let eventCopy = JSON.parse(JSON.stringify(selectedEvent)) 
+                            let eventCopy = JSON.parse(JSON.stringify(selectedEvent))
                             eventCopy.location = e.target.value;
                             setSelectedEvent(eventCopy);
                         }}
                         value ={selectedEvent.location}
                         label = "Location of event"
+
+                    />
+
+                    <TextField
+                        className={classes.formInput}
+                        key="event util link"
+                        required
+                        variant={"filled"}
+                        disabled={eventChanged}
+                        onChange={(e) => {
+                            let eventCopy = JSON.parse(JSON.stringify(selectedEvent))
+                            eventCopy.utilLink = e.target.value;
+                            setSelectedEvent(eventCopy);
+                        }}
+                        value ={selectedEvent.utilLink}
+                        label = "When2meet"
 
                     />
 
