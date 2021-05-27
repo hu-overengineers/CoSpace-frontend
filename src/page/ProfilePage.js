@@ -156,7 +156,7 @@ export default function ProfilePage() {
                     <Box className={classes.gridMiddleColumnBox}>
                         <Box display="flex">
                             <Typography variant={"h4"}>{user ? user.username : "User"}'s posts
-                                in {subClub.name}</Typography>
+                                {subClub.name !== "Loading..." ? "" : `in ${subClub.name}`}</Typography>
                         </Box>
                         <Divider className={classes.divider}/>
 
