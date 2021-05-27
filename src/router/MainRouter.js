@@ -12,6 +12,7 @@ import ModeratorPage from "../page/ModeratorPage";
 import MetaPanelPage from "../page/MetaPanelPage";
 import SearchResultsPage from "../page/SearchResultsPage";
 import SubClubRecommend from "../page/SubClubRecommend"
+import HomePageSwitch from "./HomePageSwitch";
 
 
 export default function MainRouter() {
@@ -23,7 +24,7 @@ export default function MainRouter() {
                         <HomePage/>
                     </Route>
                     <Route path="/feed">
-                        <HomePage/>
+                        <HomePageSwitch/>
                     </Route>
                     <Route path="/admin">
                         <AdminPage/>

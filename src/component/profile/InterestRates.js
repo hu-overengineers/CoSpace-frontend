@@ -88,7 +88,7 @@ export default function InterestRates({interests, isSelf}) {
                             )}
                         </List>)}
                     {(interests.length === 0) && (
-                        <p style={{marginLeft:"2vh"}}>{isSelf ? ("Not enrolled to any subclub yet.") : ("No common interest.")}</p>
+                        <p style={{marginLeft:"2vh"}}>{isSelf ? ("Not enrolled to any sub-club yet.") : ("No common interests.")}</p>
                     )}
 
                 </TitledSection>

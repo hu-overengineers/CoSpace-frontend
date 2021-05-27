@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function AboutFeed({feedInfo}) {
+export default function AboutFeed({feedInfo, stats}) {
     const classes = useStyles();
 
     const history = useHistory();
@@ -98,7 +98,7 @@ export default function AboutFeed({feedInfo}) {
                             <Grid key={1} item>
                                 <Container>
                                     <Typography variant="h6">
-                                        {feedInfo.numberOfMembers}
+                                        {stats ? stats.numberOfMembers : "0"}
                                     </Typography>
                                     <Typography variant="body1">
                                         {"members"}
@@ -109,7 +109,7 @@ export default function AboutFeed({feedInfo}) {
                             {<Grid key={2} item>
                                 <Container>
                                     <Typography variant="h6">
-                                        {feedInfo.numberOfPostsInLastWeek}
+                                        {stats ? stats.numberOfPostsInLastWeek : "0"}
                                     </Typography>
                                     <Typography variant="body1">
                                         {"posts last week"}
