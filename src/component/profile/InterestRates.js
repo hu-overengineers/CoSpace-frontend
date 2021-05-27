@@ -1,15 +1,9 @@
-import {Container, Divider, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography} from '@material-ui/core';
+import {List, ListItem, ListItemAvatar, ListItemText} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Avatar from '@material-ui/core/Avatar';
-import CakeIcon from '@material-ui/icons/Cake';
-import Button from "@material-ui/core/Button";
-import {AuthService} from "../../service/AuthService";
 import {useHistory} from "react-router-dom";
-import Tooltip from '@material-ui/core/Tooltip';
-import {PrivateMessagingService} from "../../service/PrivateMessagingService"
-import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
-import {FiberNew, MeetingRoom, SupervisorAccount} from "@material-ui/icons";
+import {EmojiSymbols} from "@material-ui/icons";
 import TitledSection from '../common/TitledSection';
 
 const useStyles = makeStyles((theme) => ({
@@ -78,10 +72,11 @@ export default function InterestRates({interests, isSelf}) {
 
     return (
             <Box>
-                <TitledSection titleIcon={<FiberNew/>}
+                <TitledSection titleIcon={<EmojiSymbols/>}
                             title={title}>
-                    <List>
-                        {interests.map(interest =>
+                    {(interests.length !== 0) && (
+                        <List>
+                            {interests.map(interest =>
                             <ListItem>
                                 <ListItemAvatar className={classes.avatarContainer}>
                                     <Avatar
@@ -90,8 +85,12 @@ export default function InterestRates({interests, isSelf}) {
                                 <ListItemText primary={interest.subClubName}
                                             secondary={`% ${interest.interestRate}`}/>
                             </ListItem>
-                        )}
-                    </List>
+                            )}
+                        </List>)}
+                    {(interests.length === 0) && (
+                        <p style={{marginLeft:"2vh"}}>{isSelf ? ("Not enrolled to any subclub yet.") : ("No common interest.")}</p>
+                    )}
+
                 </TitledSection>
             </Box>
     );
