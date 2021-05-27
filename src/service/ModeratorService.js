@@ -34,7 +34,7 @@ const deleteReport = (reportId) => {
     return axios.post(BASE_URL + MODERATOR + DELETE_REPORT, null, headersWithToken({reportId: reportId}));
 }
 
-const deletePost= (postId) => {
+const deletePost = (postId) => {
     return axios.post(BASE_URL + MODERATOR + DELETE_POST, null, headersWithToken({postId: postId}));
 }
 

@@ -66,6 +66,13 @@ const inputFields = [
         required: true,
     },
     {
+        name: "utilLink",
+        label: "When2meet",
+        id: "util-link",
+        type: "text",
+        required: true,
+    },
+    {
         name: "location",
         conditionalLabel: {
             condition: "isOnline",
