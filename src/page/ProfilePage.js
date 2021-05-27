@@ -10,6 +10,7 @@ import {MemberService} from "../service/MemberService";
 import AboutMember from "../component/profile/AboutMember";
 import {useParams} from "react-router-dom";
 import {AuthService} from "../service/AuthService";
+import InterestRates from '../component/profile/InterestRates';
 
 const useStyles = makeStyles((theme) => ({
     gridContainer: {},
@@ -72,6 +73,7 @@ export default function ProfilePage() {
     const [commonClubsAndSubClubs, setCommonClubsAndSubClubs] = useState([]);
     const [posts, setPosts] = useState([]);
     const [subClub, setSubClub] = useState({name: "Loading..."});
+    const [interests, setInterests] = useState([]);
 
     useEffect(() => {
         MemberService.getUserByName(username).then(response => {
@@ -122,6 +124,16 @@ export default function ProfilePage() {
         })
     }, [username, subClub]);
 
+    useEffect(() => {
+        MemberService.getEnrollmentsInfo(username).then(response => {
+            console.log(`Interests of ${username}`, response.data);
+            setInterests(response.data);
+        }).catch(error => {
+            console.error(`Error while fetching interests of ${username}`, error);
+        })
+    }, [username]);
+
+
     const isSelf = AuthService.getUsername() === username;
 
     return (
@@ -159,6 +171,12 @@ export default function ProfilePage() {
                                 isSelf={isSelf}
                                 username={username}
                                 timeRegistered={user ? user.created : null}
+                            />
+                        </Box>
+                        <Box className={classes.sectionBox}>
+                            <InterestRates
+                                isSelf={isSelf}
+                                interests={interests}
                             />
                         </Box>
                     </Box>

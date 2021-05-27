@@ -41,6 +41,7 @@ export const ADMIN = "/admin";
 export const REPORTS = "/reports";
 export const DELETE_REPORT = "/delete-report";
 export const ENROLLED_SUBCLUBS = "/enrolled-subclubs";
+export const ENROLLMENT = "/enrollment";
 export const ATTENDED_EVENTS = "/attended-events";
 export const PRIVATE_MESSAGE = "/private-message";
 export const REQUEST_SUBCLUB= "/request-subclub";
