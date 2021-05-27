@@ -121,7 +121,7 @@ export default function DismissList() {
         <Grid className={classes.gridReportInfoContainer} key={2} container xs={6}>
             {selectedMember ?
                 <Box>
-                    <Grid container>
+                    <Grid item>
                         <Typography variant="h6" className={classes.title}>Selected Member</Typography>
                         <Box>
                             {selectedMember ? <MemberInfo info={selectedMember}/> : null}

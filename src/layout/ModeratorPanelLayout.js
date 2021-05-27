@@ -30,7 +30,7 @@ const modMenu = [
                 path: "/mod/reported-posts"
             },
             {
-                text: "Dismiss List",
+                text: "Dismiss list",
                 path: "/mod/dismiss"
             },
         ]
@@ -39,8 +39,7 @@ const modMenu = [
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-    },
+    root: {},
     divider: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
@@ -85,10 +84,12 @@ function ModeratorPanelLayout({children}) {
                 </Box>
             </Grid>
 
-            <Grid item xs={6} className={classes.gridRightColumnBox}>
+            <Grid item xs={9} className={classes.gridRightColumnBox}>
                 <Typography variant="h4">Moderator Panel</Typography>
                 <Divider className={classes.divider}/>
-                {children}
+                <Grid item xs={12}>
+                    {children}
+                </Grid>
             </Grid>
 
         </Grid>
