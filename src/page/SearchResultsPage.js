@@ -145,7 +145,7 @@ export default function SearchResultsPage() {
                         <Divider className={classes.divider}/>
                         <Box>
                             {searchResults.posts.length === 0 ? <NoResultsFound/> :
-                                <PostFeed preloadedPosts={searchResults.posts}/>}
+                                <PostFeed posts={searchResults.posts}/>}
                         </Box>
                     </Box>
                 </Grid>

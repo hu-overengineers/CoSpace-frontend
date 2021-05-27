@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
+    divider: {
+
+    },
     chatSection: {
         width: "100%",
     },
@@ -24,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#e0e0e0",
     },
     borderRight500: {
-        borderRight: "1px solid #e0e0e0",
+        borderRight: `1px solid ${theme.palette.secondary.dark}`,
     },
     messageArea: {
         height: "70vh",
@@ -142,12 +145,11 @@ function PrivateMessagePage() {
                     </Grid>
                     <Grid item xs={9}>
                         <PrivateMessageFeed messages={filteredMessages}/>
-                        <Divider/>
+                        <Divider className={classes.divider}/>
                         <Grid container style={{padding: "20px"}}>
                             <Grid item xs={11}>
                                 <TextField
                                     value={messageContent}
-                                    id="outlined-basic-email"
                                     label="Type something..."
                                     onChange={(event) => setMessageContent(event.target.value)}
                                     fullWidth

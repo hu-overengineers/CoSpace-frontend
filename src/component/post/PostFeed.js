@@ -18,32 +18,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PostFeed({posts}) {
-    // const {feedName, sort = "today", page = 0} = useParams();
-
-    // console.log("Feed: ", feedName, sort, page);
-
     const classes = useStyles();
     const history = useHistory();
-
-    // const [postsInFeed, setPostsInFeed] = useState(preloadedPosts ?? []);
-    //
-    // // Get posts
-    // useEffect(() => {
-    //     if (preloadedPosts === undefined) {
-    //         PostService.getPosts(feedName, page, 10, sort).then(response => {
-    //             console.log(`Fetched posts of ${feedName}`);
-    //             console.log(response.data)
-    //             setPostsInFeed(response.data);
-    //         }).catch(e => {
-    //             console.error(e);
-    //             console.log(`No posts in ${feedName}`);
-    //             setPostsInFeed([]);
-    //         });
-    //     } else {
-    //         setPostsInFeed(preloadedPosts);
-    //     }
-    // }, [feedName, page, preloadedPosts]);
-
+    
     return (
         <div>
             <List className={classes.root}>

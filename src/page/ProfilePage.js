@@ -77,7 +77,7 @@ export default function ProfilePage() {
         MemberService.getUserByName(username).then(response => {
             setUser(response.data);
         });
-    }, [])
+    }, [username])
 
 
     // Get the member's enrolled sub-clubs
@@ -148,7 +148,7 @@ export default function ProfilePage() {
                         </Box>
                         <Divider className={classes.divider}/>
 
-                        <PostFeed preloadedPosts={posts} subclub={subClub.name}/>
+                        <PostFeed posts={posts}/>
                     </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>

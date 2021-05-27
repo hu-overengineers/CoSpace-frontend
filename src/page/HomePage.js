@@ -94,8 +94,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#00e3aa',
     },
     pagination: {
-        marginBottom: theme.spacing(2),
-        marginTop: theme.spacing(2),
+        display: "flex",
+        marginRight: theme.spacing(2),
     }
 }));
 
@@ -371,6 +371,9 @@ function HomePage() {
                                 </ToggleButton>
                             </ToggleButtonGroup>
 
+                            <Pagination page={state.page} onChange={handlePageChange} className={classes.pagination}
+                                        count={10} color="primary" variant="outlined" shape="rounded"/>
+
 
                             {(!(state.feedInfo.isCustom || (!state.feedInfo.parentName))) &&
                             <Button size="medium"
@@ -387,8 +390,6 @@ function HomePage() {
 
                         {/* Feed */}
                         <PostFeed posts={state.posts}/>
-                        <Pagination page={state.page} onChange={handlePageChange} className={classes.pagination}
-                                    count={20} color="primary" variant="outlined" shape="rounded"/>
 
                     </Box>
                 </Grid>
