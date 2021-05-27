@@ -20,7 +20,7 @@ import {AuthService} from "../service/AuthService";
 import {MemberService} from "../service/MemberService";
 import Box from "@material-ui/core/Box";
 import ClubTree from "../component/common/ClubTree";
-import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
+import {Pagination, ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import {Add, Edit, FiberNew, TrendingUp, Whatshot} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import AboutFeed from "../component/AboutFeed";
@@ -31,7 +31,6 @@ import EnrollPanel from "../component/EnrollPanel";
 import RequestSubclub from "../component/RequestSubclub.js"
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import TitledSection from "../component/common/TitledSection";
-import {unstable_batchedUpdates} from "react-dom";
 import PostFeed from "../component/post/PostFeed";
 import {PostService} from "../service/PostService";
 
@@ -94,6 +93,9 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.getContrastText('#00e3aa'),
         backgroundColor: '#00e3aa',
     },
+    pagination: {
+        marginBottom: theme.spacing(2),
+    }
 }));
 
 
@@ -111,161 +113,167 @@ function HomePage() {
     const classes = useStyles();
     const {feedName = "Popular", sort = 'today', page = 0} = useParams();
     const history = useHistory();
-    const [sorting, setSorting] = useState(sort);
+
+    const [state, setState] = useState({
+        feedInfo: {name: feedName},
+        sorting: sort,
+        page: page,
+        clubs: customFeeds,
+        subClubs: [],
+        enrolledSubClubs: [],
+        events: [],
+        userInfo: {},
+        posts: []
+    });
+
+    console.log("State:",);
 
     const handleSorting = (event, sorting) => {
-        console.log("Sorting order: " + sorting);
-        setSorting(sorting);
+        setState(s => {
+            return {...s, sorting: sorting};
+        });
     };
 
+    const isOnSubClub = (feedInfo) => {
+        return !(feedInfo.isCustom) && feedInfo.parentName;
+    }
+
+    // Fetch user info
     useEffect(() => {
-
-    }, [sorting])
-
-    // Clubs and sub-clubs
-    const [clubs, setClubs] = useState(customFeeds);
-    const [subClubs, setSubClubs] = useState(null);
-    const [enrolledSubClubs, setEnrolledSubClubs] = useState(null);
-    const [feedInfo, setFeedInfo] = useState({name: feedName});
-    const [events, setEvents] = useState([]);
-    const [userInfo, setUserInfo] = useState(null);
-
-    // Refresh event for posts
-    const [refreshFeed, doRefresh] = useState(0);
-    const [postDialogOpen, setPostDialogOpen] = useState(false);
-    const [enrollDialogOpen, setEnrollDialogOpen] = useState(false);
-    const [subclubRequestDialogOpen, setSubclubRequestDialogOpen] = useState(false);
-
-    useEffect(() => {
-        if (AuthService.hasJwtToken()) {
+        if (AuthService.hasLoggedIn()) {
             MemberService.getUserByName(AuthService.getUsername()).then(r => {
-                console.log("Member  info:", r.data);
-                setUserInfo(r.data);
+                console.log("Member info:", r.data);
+                const userInfo = r.data;
+                setState(s => {
+                    return {...s, userInfo: userInfo};
+                });
             });
         }
     }, []);
 
-    // Get stats
+    // Fetch stats
     useEffect(() => {
-        if (!(feedInfo.isCustom) || feedInfo.parentName) {
-            ClubService.getSubClubStatistics(feedInfo.name, subDays(new Date(), 7), new Date()).then(response => {
-                console.log(`Fetched stats of ${feedInfo.name}`, response.data);
-                console.log(response.data);
-                feedInfo.numberOfMembers = response.data.numberOfMembers;
-                feedInfo.numberOfPostsInLastWeek = response.data.numberOfPostsInTimeFrame;
-                setFeedInfo(feedInfo);
+        if (isOnSubClub(state.feedInfo)) {
+            ClubService.getSubClubStatistics(state.feedInfo.name, subDays(new Date(), 7), new Date()).then(response => {
+                console.log(`Fetched stats of ${state.feedInfo.name}`, response.data);
+                const stats = response.data;
+                setState(s => {
+                    return {
+                        ...s, stats: {
+                            numberOfMembers: stats.numberOfMembers,
+                            numberOfPostsInLastWeek: stats.numberOfPostsInTimeFrame
+                        }
+                    };
+                });
             }).catch(response => {
                 console.error("Error while fetching sub-club statistics:", response);
             });
         }
-    }, [refreshFeed]);  // TODO: Figure out a better way to update feed info object with stats.
+    }, [state.feedInfo]);
 
-    // Get club and sub-clubs
+    // Fetch club and sub-clubs
     useEffect(() => {
         ClubService.getSubClubs().then(response => {
             console.log("Parsing sub-clubs");
             console.log(response.data);
             const subClubs = response.data;
-            ClubService.parseSubClubs(response.data).then(tree => {
-                console.log("Parsed club tree:", tree)
+            ClubService.parseSubClubs(subClubs).then(tree => {
+                console.log("Parsed club tree:", tree);
+
                 customFeeds.slice().reverse().forEach(customFeed => {
                     tree.splice(0, 0, customFeed);
                 });
-                unstable_batchedUpdates(() => {
-                    setClubs(tree);
-                    setSubClubs(subClubs);
-                });
-            })
-        });
-    }, [refreshFeed]);
 
+                setState(s => {
+                    let feedInfo;
+                    const clubFilter = tree.filter(club => club.name === s.feedInfo.name)
+                    if (clubFilter.length === 0) {
+                        const subClubFilter = subClubs.filter(subClub => subClub.name === s.feedInfo.name);
+                        feedInfo = subClubFilter[0];
+                    } else {
+                        feedInfo = clubFilter[0];
+                    }
+                    return {
+                        ...s, feedInfo: feedInfo,  clubs: tree, subClubs: subClubs
+                    };
+                });
+            });
+        });
+    }, []);
+
+    // Fetch enrolled sub-clubs:
     useEffect(() => {
-        if (AuthService.hasJwtToken()) {
+        if (AuthService.hasLoggedIn()) {
             MemberService.getEnrolledSubClubsOfCurrentlySignedInUser().then(response => {
                 console.log("Enrolled sub-clubs:", response.data);
-                setEnrolledSubClubs(response.data);
+                const enrolledSubClubs = response.data;
+                setState(s => {
+                    return {...s, enrolledSubClubs: enrolledSubClubs};
+                });
             });
         }
-    }, [refreshFeed]);
+    }, []);
 
     useEffect(() => {
-        if (!(feedInfo.isCustom) || feedInfo.parentName) {
-            ClubService.getEvents(feedInfo.name).then(response => {
-                console.log(`Events of ${feedInfo.name}`, response.data);
-
-                if (AuthService.hasJwtToken()) {
-
-                    MemberService.getAttendedEventsOfCurrentlySignedInUser().then(attendedEventsResponse => {
-                        console.log("Attended events:", response.data);
-
-                        const allEvents = response.data.map(event => {
-                            event.hasAttended = attendedEventsResponse.data.filter(anAttendedEventOfMember => anAttendedEventOfMember.id === event.id).length !== 0;
-                            return event;
-                        })
-
-                        setEvents(allEvents);
-
-                    }).catch(error => {
-                        console.log("Error while fetching attended events:", error);
+        if (isOnSubClub(state.feedInfo)) {
+            ClubService.getEvents(state.feedInfo.name).then(response => {
+                console.log(`Events of ${state.feedInfo.name}`, response.data);
+                const events = response.data;
+                if (AuthService.hasLoggedIn()) {
+                    const allEvents = events.map(event => {
+                        event.hasAttended = state.userInfo.attendedEvents
+                            .filter(anAttendedEventOfMember => anAttendedEventOfMember.id === event.id).length !== 0;
+                        return event;
                     })
+
+                    setState(s => {
+                        return {...s, events: allEvents};
+                    });
                 } else {
-                    setEvents(response.data);
+                    setState(s => {
+                        return {...s, events: events};
+                    });
                 }
             }).catch(error => {
-                console.error(error);
+                console.error("Error while fetching events:", error);
             })
         }
-    }, [feedInfo]);
+    }, [state.feedInfo, state.userInfo]);
 
-    useEffect(() => {
-        console.log("Sorting changed:", sorting);
-        history.replace(`/feed/${feedName}/${sorting}`);
-    }, [feedName, history, sorting]);
-
-    const [postsInFeed, setPostsInFeed] = useState([]);
-    
     // Get posts
     useEffect(() => {
-        if (feedName) {
-            PostService.getPosts(feedName, page, 10, sort).then(response => {
-                console.log(`Fetched posts of ${feedName}`);
-                console.log(response.data)
-                setPostsInFeed(response.data);
+        if (state.feedInfo.name) {
+            PostService.getPosts(state.feedInfo.name, state.page, 10, state.sorting).then(response => {
+                console.log(`Fetched posts of ${state.feedInfo.name}`);
+                const posts = response.data;
+                setState(s => {
+                    return {...s, posts: posts};
+                });
             }).catch(e => {
                 console.error(e);
-                console.log(`No posts in ${feedName}`);
-                setPostsInFeed([]);
+                console.log(`No posts in ${state.feedInfo.name}`);
+                setState(s => {
+                    return {...s, posts: []};
+                });
             });
         }
-    }, [feedName, page, sort]);
-
-    // create post pop-up
-    const handleCreatePostDialogOpen = () => {
-        setPostDialogOpen(true);
-    };
-
-    // enrollment pop-up
-    const handleEnrollDialogOpen = () => {
-        setEnrollDialogOpen(true);
-    };
-
-    // subclub request pop-up
-    const handleSubclubRequestDialogOpen = () => {
-        setSubclubRequestDialogOpen(true);
-    };
+    }, [state.feedInfo, state.page, state.sorting]);
 
     // on enrollment, refresh the enrolled ones
     const handleEnrollment = (isEnrolled) => {
         if (isEnrolled) {
-            setEnrolledSubClubs([...enrolledSubClubs, feedInfo])
+            setState(s => {
+                return {...s, enrolledSubClubs: [...state.enrolledSubClubs, state.feedInfo]};
+            });
         }
     };
 
     // request to being a moderator
     const [modRequestDialogOpen, setModRequestDialogOpen] = React.useState(false);
     const [modRequestResponse, setModRequestResponse] = React.useState("");
+
     const handleModeratorRequest = () => {
-        MemberService.requestForModerating(feedInfo.name).then((response) => {
+        MemberService.requestForModerating(state.feedInfo.name).then((response) => {
             setModRequestDialogOpen(true);
             console.log(response.data);
             setModRequestResponse(response.data)
@@ -283,23 +291,33 @@ function HomePage() {
     // event for new post creation
     const handleNewPost = (postCreated) => {
         // refresh the posts when the new one sended to db
-        doRefresh(!refreshFeed);
+        // doRefresh(!refreshFeed);
+        history.replace(`/feed/${state.feedInfo.name}/new`);
+        window.location.reload();
     }
 
     const handleClubTreeItemClick = (node) => {
-        setFeedInfo(node);
-        doRefresh(!refreshFeed);
+        setState(s => {
+            return {...s, feedInfo: node};
+        });
         history.push(`/feed/${node.name}`);
     }
 
-    const isEnrolled = (feed) => enrolledSubClubs ? enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0 : false;
+    const handlePageChange = (event, newPage) => {
+        console.log("Page:", newPage);
+        setState(s => {
+            return {...s, page: newPage};
+        });
+    }
+
+    const isEnrolled = (feed) => state.enrolledSubClubs ? state.enrolledSubClubs.filter(subClub => subClub.name === feed.name).length !== 0 : false;
 
     const getNewlyCreatedSubClubs = () => {
-        if (subClubs !== null && enrolledSubClubs !== null && userInfo !== null) {
+        if (state.subClubs !== null && state.enrolledSubClubs !== null && state.userInfo !== null) {
             const uncommon = [];
-            const time = new Date(userInfo.created);
-            subClubs.forEach(subClub => {
-                enrolledSubClubs.forEach(enrolled => {
+            const time = new Date(state.userInfo.created);
+            state.subClubs.forEach(subClub => {
+                state.enrolledSubClubs.forEach(enrolled => {
                     if (enrolled.name !== subClub.name) {
                         if (new Date(subClub.created) > time) {
                             uncommon.push(subClub);
@@ -312,6 +330,10 @@ function HomePage() {
         return [];
     }
 
+    const [postDialogOpen, setPostDialogOpen] = useState(false);
+    const [enrollDialogOpen, setEnrollDialogOpen] = useState(false);
+    const [subClubRequestDialogOpen, setSubClubRequestDialogOpen] = useState(false);
+
     return (
         <div>
             <Grid container spacing={1} className={classes.gridContainer}>
@@ -320,9 +342,9 @@ function HomePage() {
                         <Box className={classes.sectionBox}>
                             <ClubTree
                                 title={"Browse"}
-                                selected={feedInfo.name}
+                                selected={state.feedInfo.name}
                                 callbackOnTreeItemClick={handleClubTreeItemClick}
-                                clubs={clubs}/>
+                                clubs={state.clubs}/>
                         </Box>
                     </Box>
                 </Grid>
@@ -333,7 +355,7 @@ function HomePage() {
                         <Box display="flex">
                             <ToggleButtonGroup
                                 className={classes.sortingFeedToggleGroup}
-                                value={sorting}
+                                value={state.sorting}
                                 exclusive
                                 onChange={handleSorting}
                                 aria-label="text alignment">
@@ -349,46 +371,50 @@ function HomePage() {
                             </ToggleButtonGroup>
 
 
-                            {(!(feedInfo.isCustom || (!feedInfo.parentName))) &&
+                            {(!(state.feedInfo.isCustom || (!state.feedInfo.parentName))) &&
                             <Button size="medium"
                                     variant="contained"
                                     color="primary"
-                                    disabled={!isEnrolled(feedInfo)}
+                                    disabled={!isEnrolled(state.feedInfo)}
                                     startIcon={<Edit/>}
                                     onClick={() => {
-                                        handleCreatePostDialogOpen()
+                                        setPostDialogOpen(true);
                                     }}
                                     disableElevation>CREATE POST</Button>}
                         </Box>
                         <Divider className={classes.divider}/>
 
                         {/* Feed */}
-                        <PostFeed posts={postsInFeed}/>
+                        <PostFeed posts={state.posts}/>
+                        <Pagination page={state.page} onChange={handlePageChange} className={classes.pagination}
+                                    count={20} color="primary" variant="outlined" shape="rounded"/>
 
                     </Box>
                 </Grid>
                 <Grid item xs={3} className={classes.gridItem}>
                     <Box className={classes.gridRightColumnBox}>
                         <Box className={classes.sectionBox}>
-                            {feedInfo.name !== undefined &&
-                                <AboutFeed feedInfo={feedInfo}/>}
+                            {state.feedInfo.name !== undefined &&
+                            <AboutFeed feedInfo={state.feedInfo} stats={state.stats}/>}
                         </Box>
-                        {feedInfo.parentName && <Box className={classes.sectionBox}>
+                        {state.feedInfo.parentName && <Box className={classes.sectionBox}>
                             <EventContainer
                                 events={
                                     <List>
-                                        {events && events.length !== 0 ? events.map(event =>
+                                        {state.events && state.events.length !== 0 ? state.events.map(event =>
                                             <EventItem
                                                 key={event.id}
                                                 event={event}
                                                 attendCallback={(id) => {
                                                     MemberService.attendEvent(id).then(response => {
                                                         console.log("Successfully attended event:", response.data);
-                                                        const aux = events.slice();
+                                                        const aux = state.events.slice();
                                                         aux.filter(event => event.id === response.data.id).forEach(event => {
                                                             event.hasAttended = true;
                                                         })
-                                                        setEvents(aux);
+                                                        setState(s => {
+                                                            return {...s, events: aux};
+                                                        });
                                                     }).catch(error => {
                                                         console.error("Error while attending event:", error);
                                                     })
@@ -399,51 +425,52 @@ function HomePage() {
                                 }/>
                         </Box>}
 
-                        {((!isEnrolled(feedInfo))
-                            && (!(feedInfo.isCustom || (!feedInfo.parentName)))) &&
+                        {((!isEnrolled(state.feedInfo))
+                            && (!(state.feedInfo.isCustom || (!state.feedInfo.parentName)))) &&
                         <Box>
                             <Button size="medium"
                                     variant="contained"
                                     color="primary"
                                     startIcon={<Add/>}
                                     onClick={() => {
-                                        handleEnrollDialogOpen()
+                                        setEnrollDialogOpen(true);
                                     }}
                                     fullWidth
                                     disableElevation>ENROLL
                             </Button>
                         </Box>}
 
-                        {(isEnrolled(feedInfo)) &&
+                        {(isEnrolled(state.feedInfo)) &&
                         <Box className={classes.button}>
                             <Button size="medium"
                                     variant="outlined"
                                     color="primary"
                                     startIcon={<RateReviewOutlinedIcon/>}
                                     onClick={() => {
-                                        history.push(`/meta/${feedInfo.name}`)
+                                        history.push(`/meta/${state.feedInfo.name}`)
                                     }}
                                     fullWidth
-                                    disableElevation>{feedInfo.name} META
+                                    disableElevation>{state.feedInfo.name} META
                             </Button>
                         </Box>}
 
-                        {((!feedInfo.isCustom) && (!feedInfo.parentName)) &&
+                        {((!state.feedInfo.isCustom) && (!state.feedInfo.parentName)) &&
                         <Box className={classes.button}>
                             <Button size="medium"
                                     variant="contained"
                                     color="primary"
                                     startIcon={<Add/>}
                                     onClick={() => {
-                                        handleSubclubRequestDialogOpen()
+                                        setSubClubRequestDialogOpen(true);
                                     }}
                                     fullWidth
                                     disableElevation>REQUEST NEW SUB-CLUB
                             </Button>
                         </Box>}
 
-                        {((isEnrolled(feedInfo))
-                            && (!(feedInfo.isCustom || (!feedInfo.parentName))) && (feedInfo.moderatorUsername !== AuthService.getUsername())) &&
+                        {((isEnrolled(state.feedInfo))
+                            && (!(state.feedInfo.isCustom || (!state.feedInfo.parentName)))
+                            && (state.feedInfo.moderatorUsername !== AuthService.getUsername())) &&
                         <Box className={classes.button}>
                             <Button size="medium"
                                     variant="contained"
@@ -457,7 +484,7 @@ function HomePage() {
                             </Button>
                         </Box>}
 
-                        {feedInfo.name === "Popular" && AuthService.hasJwtToken() && getNewlyCreatedSubClubs().length > 0 &&
+                        {state.feedInfo.name === "Popular" && AuthService.hasJwtToken() && getNewlyCreatedSubClubs().length > 0 &&
                         <Box>
                             <TitledSection titleIcon={<FiberNew/>}
                                            title={"Newly created sub-clubs"}>
@@ -482,13 +509,14 @@ function HomePage() {
                 </Grid>
             </Grid>
             <CreatePost open={postDialogOpen} setOpen={setPostDialogOpen} newPostEvent={handleNewPost}
-                        subclub={feedInfo}/>
+                        subclub={state.feedInfo}/>
             {(enrollDialogOpen) &&
             <EnrollPanel open={enrollDialogOpen} setOpenDialog={setEnrollDialogOpen} setEnrolled={handleEnrollment}
-                         clickedSubClub={feedInfo}/>}
+                         clickedSubClub={state.feedInfo}/>}
 
-            {(subclubRequestDialogOpen) &&
-            <RequestSubclub open={subclubRequestDialogOpen} setOpenDialog={setSubclubRequestDialogOpen} club={feedInfo}/>}
+            {(subClubRequestDialogOpen) &&
+            <RequestSubclub open={subClubRequestDialogOpen} setOpenDialog={setSubClubRequestDialogOpen}
+                            club={state.feedInfo}/>}
 
 
             <Dialog open={modRequestDialogOpen} onClose={() => {

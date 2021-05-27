@@ -78,11 +78,15 @@ const changePasswordWithToken = (newPassword, token) => {
     return axios.post(BASE_URL +  AUTH + CHANGE_PASSWORD_WITH_TOKEN, null, {params: {token: token, newPassword: newPassword}});
 }
 
+const hasLoggedIn = () => {
+    return hasJwtToken();
+};
+
 
 export const AuthService = {
     login, register, logout, loginWithToken, saveJwtToken, getJwtToken, hasJwtToken,
     getUsername,
     removeUsername,
     resetPassword,changePasswordWithToken, 
-    isAdmin, saveAuthRoles, getAuthRoles
+    isAdmin, saveAuthRoles, getAuthRoles, hasLoggedIn
 };
