@@ -29,7 +29,7 @@ function PostSubmit({enrolledSubClubs}) {
     return (
         <Dialog open={open} onClose={() => {setOpen(false)}} aria-labelledby="form-dialog-title" maxWidth={"md"}>
 
-        <DialogTitle id="form-dialog-title">Recommended SubClubs</DialogTitle>
+        <DialogTitle id="form-dialog-title">Recommended Sub-clubs</DialogTitle>
         <DialogContent> 
             <Box margin="10px">
                 {enrolledSubClubs.map(sc => {
@@ -79,7 +79,7 @@ function SubClubRecommend() {
     return (
         <Grid container>
             <Grid item xs={12} className={classes.gridRightColumnBox}>
-                <Typography variant="h4">SubClub Recommendation Form</Typography>
+                <Typography variant="h4">Sub-club Recommendation Form</Typography>
                 <Divider className={classes.divider}/>
             </Grid>
             <Grid item xs={3}>
