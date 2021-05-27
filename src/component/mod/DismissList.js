@@ -40,28 +40,12 @@ const useStyles = makeStyles((theme) => ({
 export default function DismissList() {
     const classes = useStyles();
 
-    const [dismissList, setDismissList] = useState([
-    {
-        "username": "tammara.kemmer",
-        "email": "tammara.kemmer@gmail.com",
-        "created": "2021-05-26T22:49:16.503+00:00",
-        "lastLogin": null,
-        "attendedEvents": []
-    },
-    {
-        "username": "jimmie.mante",
-        "email": "jimmie.mante@gmail.com",
-        "created": "2021-05-26T22:49:17.907+00:00",
-        "lastLogin": null,
-        "attendedEvents": []
-    }
-
-    ]);
+    const [dismissList, setDismissList] = useState([]);
 
     useEffect(() => {
         ModeratorService.getDismissList().then(response => {
-            console.log(response);
-            //setDismissList(reponse.data);
+            
+            setDismissList(response.data);
         });
     }, []);
     
