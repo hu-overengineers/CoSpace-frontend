@@ -115,10 +115,12 @@ function HomePage() {
     const {feedName = "Popular", sort = 'today', page = 1} = useParams();
     const history = useHistory();
 
+    console.log("URL params:", feedName, sort, page);
+
     const [state, setState] = useState({
         feedInfo: {name: feedName},
         sorting: sort,
-        page: page,
+        currentPage: page,
         clubs: customFeeds,
         subClubs: [],
         enrolledSubClubs: [],
@@ -126,8 +128,6 @@ function HomePage() {
         userInfo: {},
         posts: []
     });
-
-    console.log("State:",);
 
     const handleSorting = (event, sorting) => {
         setState(s => {
@@ -244,7 +244,7 @@ function HomePage() {
     // Get posts
     useEffect(() => {
         if (state.feedInfo.name) {
-            PostService.getPosts(state.feedInfo.name, state.page - 1, 10, state.sorting).then(response => {
+            PostService.getPosts(state.feedInfo.name, state.currentPage - 1, 10, state.sorting).then(response => {
                 console.log(`Fetched posts of ${state.feedInfo.name}`);
                 const posts = response.data;
                 setState(s => {
@@ -258,7 +258,7 @@ function HomePage() {
                 });
             });
         }
-    }, [state.feedInfo, state.page, state.sorting]);
+    }, [state.feedInfo, state.currentPage, state.sorting]);
 
     // on enrollment, refresh the enrolled ones
     const handleEnrollment = (isEnrolled) => {
@@ -307,7 +307,7 @@ function HomePage() {
     const handlePageChange = (event, newPage) => {
         console.log("Page:", newPage);
         setState(s => {
-            return {...s, page: newPage};
+            return {...s, currentPage: newPage};
         });
     }
 
@@ -371,7 +371,7 @@ function HomePage() {
                                 </ToggleButton>
                             </ToggleButtonGroup>
 
-                            <Pagination page={state.page} onChange={handlePageChange} className={classes.pagination}
+                            <Pagination page={state.currentPage} onChange={handlePageChange} className={classes.pagination}
                                         count={10} color="primary" variant="outlined" shape="rounded"/>
 
 
