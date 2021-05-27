@@ -1,7 +1,14 @@
 import React from "react";
+import AdminPanelSwitch from "../router/AdminPanelSwitch";
+import AdminPanelLayout from "../layout/AdminPanelLayout";
 
-export default function AdminPage() {
+function AdminPage() {
     return (
-        <div>Admin</div>
+        <AdminPanelLayout>
+            <AdminPanelSwitch/>
+        </AdminPanelLayout>
+
     );
 }
+
+export default AdminPage;
