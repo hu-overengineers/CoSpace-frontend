@@ -95,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
     },
     pagination: {
         marginBottom: theme.spacing(2),
+        marginTop: theme.spacing(2),
     }
 }));
 
@@ -111,7 +112,7 @@ const customFeeds = [
  */
 function HomePage() {
     const classes = useStyles();
-    const {feedName = "Popular", sort = 'today', page = 0} = useParams();
+    const {feedName = "Popular", sort = 'today', page = 1} = useParams();
     const history = useHistory();
 
     const [state, setState] = useState({
@@ -243,7 +244,7 @@ function HomePage() {
     // Get posts
     useEffect(() => {
         if (state.feedInfo.name) {
-            PostService.getPosts(state.feedInfo.name, state.page, 10, state.sorting).then(response => {
+            PostService.getPosts(state.feedInfo.name, state.page - 1, 10, state.sorting).then(response => {
                 console.log(`Fetched posts of ${state.feedInfo.name}`);
                 const posts = response.data;
                 setState(s => {
