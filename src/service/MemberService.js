@@ -12,7 +12,8 @@ import {
     SUB_CLUB,
     REQUEST_SUBCLUB,
     MOD_REQUEST,
-    BULK_ENROLL
+    BULK_ENROLL,
+    ENROLLMENT
 } from "../api_config.js";
 import {headersWithToken} from "./headers";
 
@@ -57,6 +58,11 @@ const getUserByName = (username) => {
     return axios.get(BASE_URL + MEMBER, {params: {username: username}} );
 }
 
+const getEnrollmentsInfo = (username) => {
+    return axios.get(BASE_URL + MEMBER + ENROLLMENT, headersWithToken({username: username}) );
+}
+
+
 export const MemberService = {
     getEnrolledSubClubsOfCurrentlySignedInUser,
     enrollToSubClub,
@@ -67,5 +73,6 @@ export const MemberService = {
     requestSubClub,
     requestForModerating,
     getUserByName,
-    bulkEnrollment
+    bulkEnrollment,
+    getEnrollmentsInfo
 };

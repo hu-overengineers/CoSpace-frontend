@@ -105,7 +105,6 @@ function ReportedPosts() {
                                             }
                                         />
                                     </ListItem>
-                                    <Divider variant="inset" component="li"/>
                                 </div>
                             )}
                     </List>
@@ -132,11 +131,7 @@ function ReportedPosts() {
                                 <Grid item key={2} xs={6} className={classes.gridHorizontalSection}>
                                     <Typography variant="h6" className={classes.title}>Actions</Typography>
                                     <Grid container spacing={1} >
-                                        <Grid item key={1} className={classes.button}>
-                                            <Button variant="outlined" onClick={() => {
-                                                // TODO: call kick member function from AdminService
-                                            }}>KICK MEMBER FROM COSPACE</Button>
-                                        </Grid>
+                                       
 
                                         <Grid item key={2} className={classes.button}>
                                             <Button variant="outlined" onClick={() => {
