@@ -16,7 +16,8 @@ export const SUB_CLUB_QUESTIONNAIRE = "/subclub/questionnaire-sub";
 export const RANDOM_QUESTIONNAIRE = "/subclub/questionnaire";
 export const ONE_SUB_CLUB_ENROLL = "/subclub/enroll-subclub";
 export const BULK_ENROLL = "/subclub/enroll";
-
+export const DISMISS_LIST = "/dismiss-list";
+export const DISMISS = "/dismiss";
 export const DELETE_SUB_CLUB = "/delete-sub-club";
 export const MODERATOR = "/moderator";
 export const EVENT = "/event";
